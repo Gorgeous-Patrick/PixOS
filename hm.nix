@@ -15,6 +15,8 @@
         pkgs.lazygit
         pkgs.bat
         pkgs.nixfmt-rfc-style
+        pkgs.gnumake42
+        pkgs.eza
       ];
       programs.git = {
         enable = true;
@@ -25,7 +27,11 @@
         enable = true;
         enableCompletion = true;
         shellAliases = {
-          ll = "ls -l";
+          ls = "eza";
+          ll = "eza -l";
+          lt = "eza --tree";
+          la = "eza -a";
+          lal = "eza -al";
           v = "nvim";
           r = "ranger";
           update = "sudo nixos-rebuild switch";
