@@ -2,6 +2,7 @@
   home-manager.users.patrickli =
     { config, pkgs, ... }:
     {
+      imports = [./hyprland.nix];
       # The home.stateVersion option does not have a default and must be set
       home.stateVersion = "24.11";
       # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
@@ -17,6 +18,10 @@
         pkgs.nixfmt-rfc-style
         pkgs.gnumake42
         pkgs.eza
+        pkgs.neofetch
+
+        # GUI Programs
+        pkgs.firefox
       ];
       programs.git = {
         enable = true;
