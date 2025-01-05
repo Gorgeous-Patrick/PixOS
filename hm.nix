@@ -17,6 +17,7 @@
         pkgs.nixfmt-rfc-style
         pkgs.gnumake42
         pkgs.eza
+        pkgs.htop
       ];
       programs.git = {
         enable = true;
@@ -36,6 +37,7 @@
           r = "ranger";
           update = "sudo nixos-rebuild switch";
           cat = "bat";
+          q = "exit";
         };
         oh-my-zsh = {
           enable = true;
