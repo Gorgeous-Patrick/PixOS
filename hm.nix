@@ -41,6 +41,7 @@
           r = "ranger";
           update = "sudo nixos-rebuild switch";
           cat = "bat";
+          q = "exit";
         };
         oh-my-zsh = {
           enable = true;
