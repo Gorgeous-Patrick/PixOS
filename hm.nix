@@ -22,6 +22,12 @@
 
         # GUI Programs
         pkgs.firefox
+
+        # Fonts
+      pkgs.noto-fonts
+      pkgs.noto-fonts-cjk-sans
+      pkgs.noto-fonts-emoji
+      pkgs.fira-code-nerdfont
       ];
       programs.git = {
         enable = true;
