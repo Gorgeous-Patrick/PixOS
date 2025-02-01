@@ -4,14 +4,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    pixos-zsh.url = "./applications/zsh";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, pixos-zsh }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         tools = with pkgs; [
-          zsh
           neovim    # Modern Vim
           eza       # Replacement for 'ls'
           git       # Version control
@@ -31,6 +31,7 @@
           name = "pixos-cli-tools";
           paths = tools;
         };
+        packages.pixos-zsh = pixos-zsh;
       });
 }
 

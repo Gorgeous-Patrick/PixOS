@@ -1,18 +1,19 @@
 {
   "nodes": {
-    "cli-toolkit": {
+    "cli-tools": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "pixos-zsh": "pixos-zsh"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-7Cx45C2G+dUie/V9Lpt1vIUA4ahX+Ej2yAnPAUfz8p4=",
-        "path": "/nix/store/2bwjxkxqlnp165x71cqsagnlwq6472rd-source/bundles/cli-tools",
+        "narHash": "sha256-asYM8Eon44o9RbgdY4jyUXpOhfL4F9FvKdLjqo0tRfM=",
+        "path": "/nix/store/xf59fgx5jfi8mh8d7lc954326zhyiyw5-source/bundles/cli-tools",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/2bwjxkxqlnp165x71cqsagnlwq6472rd-source/bundles/cli-tools",
+        "path": "/nix/store/xf59fgx5jfi8mh8d7lc954326zhyiyw5-source/bundles/cli-tools",
         "type": "path"
       }
     },
@@ -37,6 +38,24 @@
     "flake-utils_2": {
       "inputs": {
         "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_3": {
+      "inputs": {
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -84,11 +103,43 @@
         "type": "github"
       }
     },
-    "root": {
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1738142207,
+        "narHash": "sha256-NGqpVVxNAHwIicXpgaVqJEJWeyqzoQJ9oc8lnK9+WC4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9d3ae807ebd2981d593cddd0080856873139aa40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pixos-zsh": {
       "inputs": {
-        "cli-toolkit": "cli-toolkit",
         "flake-utils": "flake-utils_2",
         "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-hpZRdI2jlZ7TIzrNhDWKA065TSEDt/Sv2+7Bo1PqzEI=",
+        "path": "/nix/store/v8hiv7p9ijn63lxn4kac2aqsdi81jdxs-source/applications/zsh",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/v8hiv7p9ijn63lxn4kac2aqsdi81jdxs-source/applications/zsh",
+        "type": "path"
+      }
+    },
+    "root": {
+      "inputs": {
+        "cli-tools": "cli-tools",
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "systems": {
@@ -107,6 +158,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
