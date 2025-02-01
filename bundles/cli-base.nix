@@ -23,7 +23,6 @@
     enable = true;
     enableCompletion = true;
     initExtraFirst = ''
-        neofetch
         echo Welcome to PixOS! 🚀
     '';
     shellAliases = {
