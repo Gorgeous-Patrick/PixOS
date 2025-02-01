@@ -4,16 +4,11 @@
   home.stateVersion = "24.11";
   # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
   home.packages = [
-    pkgs.cargo
-    pkgs.gcc14
-    pkgs.yarn
     pkgs.ranger
     pkgs.thefuck
-    pkgs.nodejs
     pkgs.lazygit
     pkgs.bat
     pkgs.nixfmt-rfc-style
-    pkgs.gnumake42
     pkgs.eza
     pkgs.htop
     pkgs.devenv
