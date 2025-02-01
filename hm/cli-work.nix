@@ -3,6 +3,6 @@
     imports = [
         ../bundles/cli-base.nix
         ../bundles/programming.nix
-        ../applications/nvim/nvim.nix
+        ../applications/nvim-nix/nvim.nix
     ];
 }
