@@ -16,6 +16,7 @@
     pkgs.gnumake42
     pkgs.eza
     pkgs.htop
+    pkgs.devenv
   ];
   programs.git = {
     enable = true;
