@@ -1,14 +1,30 @@
-{ pkgs, ... }:
-
+{ config, pkgs, ... }:
 {
-  # Common Packages
+  # The home.stateVersion option does not have a default and must be set
+  home.stateVersion = "24.11";
+  # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
+  home.packages = [
+    pkgs.cargo
+    pkgs.gcc14
+    pkgs.yarn
+    pkgs.ranger
+    pkgs.thefuck
+    pkgs.nodejs
+    pkgs.lazygit
+    pkgs.bat
+    pkgs.nixfmt-rfc-style
+    pkgs.gnumake42
+    pkgs.eza
+    pkgs.htop
+  ];
+  programs.git = {
+    enable = true;
+    userName = "Gorgeous-Patrick";
+    userEmail = "baichuanli@yahoo.com";
+  };
   programs.zsh = {
     enable = true;
-    oh-my-zsh = {
-      enable = true;
-      theme = "agnoster";
-      plugins = [ "git" "docker" ];
-    };
+    enableCompletion = true;
     shellAliases = {
       ls = "eza";
       ll = "eza -l";
@@ -21,26 +37,13 @@
       cat = "bat";
       q = "exit";
     };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "thefuck"
+      ];
+      theme = "robbyrussell";
+    };
   };
-
-  programs.neovim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [
-      nerdtree
-      vim-airline
-      gruvbox
-      vim-fugitive
-    ];
-  };
-
-  # Common Packages for Shell and Docker
-  home.packages = with pkgs; [
-    git
-    neovim
-    zsh
-    python3
-    nodejs
-    docker
-  ];
 }
-
