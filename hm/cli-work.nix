@@ -1,11 +1,8 @@
+{ config, pkgs, ... }:
 {
-  home-manager.users.patrickli =
-    { config, pkgs, ... }:
-    {
-        imports = [
-            ../bundles/cli-base.nix
-            ../bundles/programming.nix
-            ../applications/nvim/nvim.nix
-        ];
-    };
+    imports = [
+        ../bundles/cli-base.nix
+        ../bundles/programming.nix
+        ../applications/nvim/nvim.nix
+    ];
 }

@@ -12,6 +12,7 @@
     pkgs.eza
     pkgs.htop
     pkgs.devenv
+    pkgs.neofetch
   ];
   programs.git = {
     enable = true;
@@ -21,6 +22,10 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    initExtraFirst = ''
+        neofetch
+        echo Welcome to PixOS! 🚀
+    '';
     shellAliases = {
       ls = "eza";
       ll = "eza -l";

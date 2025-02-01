@@ -7,9 +7,9 @@
     pkgs.python313
 
     # C/C++
-    pkgs.gcc14
-    pkgs.gdb
     pkgs.gnumake42
+    pkgs.clang_19
+    pkgs.lldb_19
 
     # Rust
     pkgs.cargo
