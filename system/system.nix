@@ -5,10 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      <home-manager/nixos>
-    ];
 
   networking.hostName = "patrickli"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -18,7 +14,7 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  # networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Detroit";
