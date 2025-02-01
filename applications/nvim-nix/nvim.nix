@@ -44,6 +44,5 @@
   };
 
   # Specify Home Manager version
-  home.stateVersion = "23.11";
 }
 

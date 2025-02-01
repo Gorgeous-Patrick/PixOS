@@ -2,6 +2,6 @@
 {
     imports = [
         ../bundles/cli-base.nix
-        ../applications/nvim/nvim.nix
+        ../applications/nvim-nix/nvim.nix
     ];
 }
