@@ -1,0 +1,11 @@
+# Nix build outputs
+result
+result-*             # In case you have custom named symlinks like result-dev, result-test
+
+# Nix garbage collection roots
+.nix-gcroots/
+
+# Nix-related files
+.nix-channels
+.nix-defexpr/
+.cache/nix/
