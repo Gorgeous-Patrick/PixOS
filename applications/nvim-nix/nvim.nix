@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Enable Home Manager
-  programs.home-manager.enable = true;
-
   # Install Neovim and related tools
   programs.neovim = {
     enable = true;
@@ -12,7 +9,7 @@
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter
       telescope-nvim
-      gruvbox
+      catppuccin-nvim
       vim-airline
       nerdtree
     ];
@@ -22,7 +19,7 @@
       set number
       set relativenumber
       syntax enable
-      colorscheme gruvbox
+      colorscheme catppuccin
       set clipboard=unnamedplus
     '';
   };
@@ -35,8 +32,8 @@
     git
   ];
 
-  # Link custom init.lua
-  home.file.".config/nvim/init.lua".source = ./nvim/init.lua;
+  # # Link custom init.lua
+  # home.file.".config/nvim/init.lua".source = ./nvim/init.lua;
 
   # Set environment variables
   home.sessionVariables = {
