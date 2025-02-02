@@ -1,5 +1,5 @@
 {
-  description = "Builds a NixOS installer ISO with some useful stuff in it.";
+  description = "Builds a NixOS ISO with some useful stuff in it.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
