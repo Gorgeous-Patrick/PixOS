@@ -7,27 +7,27 @@ vim.opt.termguicolors = true
 
 -- OR setup with some options
 
-vim.keymap.set({ "i" }, "jk", "<Esc>", {})
-vim.keymap.set({ "n", "v" }, "<C-n>", ":NvimTreeToggle<CR>", {})
-vim.keymap.set({ "n", "v" }, "<S-h>", "^", {})
-vim.keymap.set({ "n", "v" }, "<S-l>", "$", {})
+-- vim.keymap.set({ "i" }, "jk", "<Esc>", {})
+-- vim.keymap.set({ "n", "v" }, "<C-n>", ":NvimTreeToggle<CR>", {})
+-- vim.keymap.set({ "n", "v" }, "<S-h>", "^", {})
+-- vim.keymap.set({ "n", "v" }, "<S-l>", "$", {})
 vim.keymap.set("n", "<S-n>", ":TablineBufferNext<CR>", {})
 vim.keymap.set("n", "<S-p>", ":TablineBufferPrevious<CR>", {})
 
-vim.keymap.set({"n", "t"}, "<C-CR>", "<cmd>ToggleTerm direction=float<CR>", {})
+-- vim.keymap.set({"n", "t"}, "<C-CR>", "<cmd>ToggleTerm direction=float<CR>", {})
 vim.keymap.set('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
 vim.keymap.set('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
 
 
-local lsp_zero = require("lsp-zero")
-
-	lsp_zero.on_attach(function(client, bufnr)
-	-- see :help lsp-zero-keybindings to learn the available actions
-	lsp_zero.default_keymaps({
-	buffer = bufnr,
-	preserve_mappings = false
-	})
-end)
+-- local lsp_zero = require("lsp-zero")
+--
+-- 	lsp_zero.on_attach(function(client, bufnr)
+-- 	-- see :help lsp-zero-keybindings to learn the available actions
+-- 	lsp_zero.default_keymaps({
+-- 	buffer = bufnr,
+-- 	preserve_mappings = false
+-- 	})
+-- end)
 
 require("lazy-lsp").setup {}
 

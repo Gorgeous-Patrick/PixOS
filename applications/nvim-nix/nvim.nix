@@ -41,10 +41,10 @@ imports = [
     };
     plugins.toggleterm.enable = true;
     plugins.todo-comments.enable = true;
+    plugins.which-key.enable = true;
     opts = {
       number = true;         # Show line numbers
       relativenumber = true; # Show relative line numbers
-
       shiftwidth = 2;        # Tab width should be 2
     };
 
@@ -54,20 +54,53 @@ imports = [
       telescope-nvim
 
       nvim-lspconfig
-      lsp-zero-nvim
+      # lsp-zero-nvim
       lazy-lsp-nvim
       auto-save-nvim
       nvim-autopairs
     ];
 
-    # Additional Neovim settings
-    # extraConfig = ''
-    #   set number
-    #   set relativenumber
-    #   syntax enable
-    #   colorscheme catppuccin
-    #   set clipboard=unnamedplus
-    # '';
+    keymaps = [
+      {
+	action = "<Esc>";
+	key = "jk";
+	mode = ["i"];
+      }
+      {
+        action = "<cmd>NvimTreeToggle<CR>";
+        key = "<C-n>";
+        mode = ["n" "v"];
+        options = {
+          desc = "Toggle Tree View.";
+        };
+      }
+      {
+	action = "^";
+	key = "<S-h>";
+	mode = ["n" "v"];
+      }
+      {
+	action = "$";
+	key = "<S-l>";
+	mode = ["n" "v"];
+      }
+      {
+	action = "<cmd>ToggleTerm direction=float<CR>";
+	key = "<C-CR>";
+	mode = ["n" "t"];
+	options = {
+	  desc = "Toggle terminal";
+	};
+      }
+      {
+	action = "<cmd>Telescope find_files<cr>";
+	key = "<leader>ff";
+	mode = ["n" "t"];
+	options = {
+	  desc = "Find Files";
+	};
+      }
+    ];
 
     extraConfigLua = (builtins.readFile ./init.lua);
   };
