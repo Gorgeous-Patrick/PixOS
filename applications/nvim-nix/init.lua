@@ -29,7 +29,11 @@ vim.keymap.set('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
 -- 	})
 -- end)
 
-require("lazy-lsp").setup {}
+require("lazy-lsp").setup {
+  excluded_servers = {
+    "denols" -- Prefer eslint
+  }
+}
 
 -- Set up nvim-cmp.
 -- local cmp = require("cmp")
