@@ -100,6 +100,14 @@ imports = [
 	  desc = "Find Files";
 	};
       }
+      {
+	action = "<cmd>LazyGit<cr>";
+	key = "<leader>gg";
+	mode = ["n" "t" "v"];
+	options = {
+	  desc = "Git";
+	};
+      }
     ];
 
     extraConfigLua = (builtins.readFile ./init.lua);
