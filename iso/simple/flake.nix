@@ -17,7 +17,7 @@
   {
     packages.${system}.default = nixos-generators.nixosGenerate {
       system = system;
-      format = "install-iso";
+      format = "iso";
       modules = [
           home-manager.nixosModules.home-manager
           ../../system/system.nix
