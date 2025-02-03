@@ -21,7 +21,7 @@ imports = [
   # Install Neovim and related tools
   programs.nixvim = {
     enable = true;
-    colorschemes.catppuccin.enable = true;
+    # colorschemes.catppuccin.enable = true;
     plugins.lualine.enable = true;
     plugins.nvim-tree = {
       enable = true;
