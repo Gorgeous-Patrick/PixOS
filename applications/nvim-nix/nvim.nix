@@ -22,6 +22,7 @@ imports = [
   programs.nixvim = {
     enable = true;
     # colorschemes.catppuccin.enable = true;
+    colorschemes.nightfox.enable = true;
     plugins.lualine.enable = true;
     plugins.lazygit.enable = true;
     plugins.nvim-tree = {
