@@ -7,15 +7,6 @@ vim.opt.termguicolors = true
 
 -- OR setup with some options
 
-require("whichkey_setup").config{
-    hide_statusline = false,
-    default_keymap_settings = {
-        silent=true,
-        noremap=true,
-    },
-    default_mode = 'n',
-}
-
 vim.keymap.set({ "i" }, "jk", "<Esc>", {})
 vim.keymap.set({ "n", "v" }, "<C-n>", ":NvimTreeToggle<CR>", {})
 vim.keymap.set({ "n", "v" }, "<S-h>", "^", {})
@@ -41,7 +32,7 @@ end)
 require("lazy-lsp").setup {}
 
 -- Set up nvim-cmp.
-local cmp = require("cmp")
+-- local cmp = require("cmp")
 
 -- cmp.setup({
 -- 	snippet = {

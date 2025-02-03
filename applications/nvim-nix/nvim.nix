@@ -23,6 +23,7 @@ imports = [
     enable = true;
     # colorschemes.catppuccin.enable = true;
     plugins.lualine.enable = true;
+    plugins.lazygit.enable = true;
     plugins.nvim-tree = {
       enable = true;
     };
@@ -50,8 +51,6 @@ imports = [
 
     # Add Neovim plugins
     extraPlugins = with pkgs.vimPlugins; [
-      nvim-whichkey-setup-lua
-
       telescope-nvim
 
       nvim-lspconfig
