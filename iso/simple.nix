@@ -26,6 +26,8 @@
     docker
   ];
 
+  programs.zsh.enable = true;
+
   users.mutableUsers = true;
   users.groups.patrickli = {};
   users.users.patrickli = {
@@ -33,6 +35,7 @@
     isNormalUser = true;
     group = "patrickli";
     extraGroups = ["wheel" "docker"];
+    shell = pkgs.zsh;
   };
   home-manager.users.patrickli = import ../hm/cli-work.nix;
   
