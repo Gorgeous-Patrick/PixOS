@@ -25,6 +25,7 @@
     curl
     docker
   ];
+  virtualisation.docker.enable = true;
 
   programs.zsh.enable = true;
 
