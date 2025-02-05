@@ -109,6 +109,47 @@ imports = [
 	  desc = "Git";
 	};
       }
+      {
+	action = "<cmd>Trouble diagnostics toggle<cr>";
+	key = "<leader>tt";
+	mode = ["n" "v"];
+	options = {
+	  desc = "Toggle Trouble";
+	};
+      }
+      {
+	  action = "<cmd>Telescope find_files<cr>";
+	  key = "<leader>ff";
+	  mode = ["n" "v" "t"];
+	  options = {
+	    desc = "Find Files";
+	  };
+	}
+	{
+	  action = "<cmd>Telescope live_grep<cr>";
+	  key = "<leader>fg";
+	  mode = ["n" "v" "t"];
+	  options = {
+	    desc = "Live Grep";
+	  };
+	}
+	{
+	  action = "<cmd>Telescope buffers<cr>";
+	  key = "<leader>fb";
+	  mode = ["n" "v" "t"];
+	  options = {
+	    desc = "Buffers";
+	  };
+	}
+	{
+	  action = "<cmd>Telescope help_tags<cr>";
+	  key = "<leader>fh";
+	  mode = ["n" "v" "t"];
+	  options = {
+	    desc = "Help Tags";
+	  };
+	}
+
     ];
 
     extraConfigLua = (builtins.readFile ./init.lua);
