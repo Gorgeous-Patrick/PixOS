@@ -14,6 +14,7 @@
     pkgs.htop
     pkgs.devenv
     pkgs.neofetch
+    pkgs.tmux
   ];
   programs.git = {
     enable = true;
