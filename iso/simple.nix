@@ -19,8 +19,8 @@
   users.mutableUsers = true;
   users.groups.patrickli = {};
   users.users.patrickli = {
-    initialPassword = "";
-    isSystemUser = true;
+    initialPassword = "password";
+    isSystemUser = false;
     group = "patrickli";
     extraGroups = ["wheel"];
   };
