@@ -38,6 +38,7 @@
       update = "sudo nixos-rebuild switch";
       cat = "bat";
       q = "exit";
+      c = "clear";
     };
     oh-my-zsh = {
       enable = true;
