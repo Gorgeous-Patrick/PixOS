@@ -40,13 +40,13 @@ imports = [
         { name = "buffer"; }
       ];
       settings.mapping = {
-	"<C-Space>" = "cmp.mapping.complete()";
-	"<C-d>" = "cmp.mapping.scroll_docs(-4)";
-	"<C-e>" = "cmp.mapping.close()";
-	"<C-f>" = "cmp.mapping.scroll_docs(4)";
-	"<CR>" = "cmp.mapping.confirm({ select = true })";
-	"<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-	"<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+        "<C-Space>" = "cmp.mapping.complete()";
+        "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+        "<C-e>" = "cmp.mapping.close()";
+        "<C-f>" = "cmp.mapping.scroll_docs(4)";
+        "<CR>" = "cmp.mapping.confirm({ select = true })";
+        "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+        "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
       };
     };
     plugins.toggleterm.enable = true;
@@ -73,9 +73,9 @@ imports = [
 
     keymaps = [
       {
-	action = "<Esc>";
-	key = "jk";
-	mode = ["i"];
+        action = "<Esc>";
+        key = "jk";
+        mode = ["i"];
       }
       {
         action = "<cmd>NvimTreeToggle<CR>";
@@ -86,46 +86,46 @@ imports = [
         };
       }
       {
-	action = "^";
-	key = "<S-h>";
-	mode = ["n" "v"];
+        action = "^";
+        key = "<S-h>";
+        mode = ["n" "v"];
       }
       {
-	action = "$";
-	key = "<S-l>";
-	mode = ["n" "v"];
+        action = "$";
+        key = "<S-l>";
+        mode = ["n" "v"];
       }
       {
-	action = "<cmd>ToggleTerm direction=float<CR>";
-	key = "<C-CR>";
-	mode = ["n" "t"];
-	options = {
-	  desc = "Toggle terminal";
-	};
+        action = "<cmd>ToggleTerm direction=float<CR>";
+        key = "<C-CR>";
+        mode = ["n" "t"];
+        options = {
+          desc = "Toggle terminal";
+        };
       }
       {
-	action = "<cmd>Telescope find_files<cr>";
-	key = "<leader>ff";
-	mode = ["n" "t"];
-	options = {
-	  desc = "Find Files";
-	};
+        action = "<cmd>Telescope find_files<cr>";
+        key = "<leader>ff";
+        mode = ["n" "t"];
+        options = {
+          desc = "Find Files";
+        };
       }
       {
-	action = "<cmd>LazyGit<cr>";
-	key = "<leader>gg";
-	mode = ["n" "t" "v"];
-	options = {
-	  desc = "Git";
-	};
+        action = "<cmd>LazyGit<cr>";
+        key = "<leader>gg";
+        mode = ["n" "t" "v"];
+        options = {
+          desc = "Git";
+        };
       }
       {
-	action = "<cmd>Trouble diagnostics toggle<cr>";
-	key = "<leader>tt";
-	mode = ["n" "v"];
-	options = {
-	  desc = "Toggle Trouble";
-	};
+        action = "<cmd>Trouble diagnostics toggle<cr>";
+        key = "<leader>tt";
+        mode = ["n" "v"];
+        options = {
+          desc = "Toggle Trouble";
+        };
       }
       {
 	  action = "<cmd>Telescope find_files<cr>";
