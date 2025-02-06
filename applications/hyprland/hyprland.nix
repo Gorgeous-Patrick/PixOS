@@ -6,6 +6,7 @@
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   wayland.windowManager.hyprland.settings = {
+    "$disable_hyprland_logo" = "true";
     "$mod" = "SUPER";
     bind =
       [
