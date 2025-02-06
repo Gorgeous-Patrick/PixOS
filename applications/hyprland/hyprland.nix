@@ -10,6 +10,7 @@
     bind =
       [
         "$mod, T, exec, kitty"
+        "$mod, Z, exec, wofi --normal-window --show drun --allow-images"
       ]
       ++ (
         # workspaces
