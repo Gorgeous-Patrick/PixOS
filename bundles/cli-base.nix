@@ -15,6 +15,7 @@
     pkgs.devenv
     pkgs.neofetch
     pkgs.tmux
+    pkgs.sl
   ];
   programs.git = {
     enable = true;
