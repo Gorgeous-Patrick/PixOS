@@ -25,7 +25,6 @@ imports = [
     colorschemes.nightfox.enable = true;
     plugins.lualine.enable = true;
     plugins.lazygit.enable = true;
-    plugins.obsidian.enable = true;
     plugins.nvim-tree = {
       enable = true;
     };
