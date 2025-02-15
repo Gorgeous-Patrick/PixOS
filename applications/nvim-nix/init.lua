@@ -31,7 +31,9 @@ vim.keymap.set('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
 
 require("lazy-lsp").setup {
   excluded_servers = {
-    "denols" -- Prefer eslint
+    "denols", -- Prefer eslint
+    "basepyright",
+    "pylyzer"
   }
 }
 

@@ -4,6 +4,7 @@
   home.packages = [
     # Python
     pkgs.python313
+    pkgs.black
 
     # C/C++
     pkgs.gnumake42
