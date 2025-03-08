@@ -1,5 +1,5 @@
 {
-  description = "Example nix-darwin system flake";
+  description = "PixOS setup for my MacBook";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -9,13 +9,13 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-    pixos-nixvim.url = "path:./applications/nvim-nix";
+    pixos-nixvim.url = "path:../../applications/nvim-nix";
 
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, pixos-nixvim }:
   let
-    homeconfig = import ./hm/cli-work.nix;
+    homeconfig = import ../../hm/cli-work.nix;
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
