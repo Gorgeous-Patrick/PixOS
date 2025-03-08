@@ -9,3 +9,4 @@ result-*             # In case you have custom named symlinks like result-dev, r
 .nix-channels
 .nix-defexpr/
 .cache/nix/
+.DS_Store
