@@ -21,6 +21,9 @@
       environment.systemPackages =
         [ pkgs.vim
             pkgs.zsh
+    pkgs.nano
+    pkgs.wget
+    pkgs.curl
         ];
 
       # Necessary for using flakes on this system.
