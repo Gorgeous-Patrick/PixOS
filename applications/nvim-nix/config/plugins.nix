@@ -1,4 +1,3 @@
-
 { config, pkgs, lib, ... }:
 {
     plugins.lualine.enable = true;
