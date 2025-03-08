@@ -10,6 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pixos-nixvim.url = "path:../../applications/nvim-nix";
+    nix-update.url = "path:../../applications/nix-update";
 
   };
 
@@ -20,6 +21,7 @@
       nixpkgs,
       home-manager,
       pixos-nixvim,
+      nix-update,
     }:
     let
       hostname = "Patricks-MacBook-Air-5";
@@ -39,6 +41,7 @@
             pkgs.wget
             pkgs.curl
             pixos-nixvim.packages."${platform}".default
+            nix-update.packages."${platform}".default
           ];
 
           # Necessary for using flakes on this system.
