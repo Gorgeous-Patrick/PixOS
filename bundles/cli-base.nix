@@ -37,7 +37,6 @@
       lal = "ls -al";
       v = "nvim";
       r = "ranger";
-      update = "sudo nixos-rebuild switch";
       cat = "bat";
       q = "exit";
       c = "clear";
