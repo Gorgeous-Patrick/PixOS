@@ -16,7 +16,6 @@
     pkgs.neofetch
     pkgs.tmux
     pkgs.sl
-    pkgs.valgrind
   ];
   programs.git = {
     enable = true;
