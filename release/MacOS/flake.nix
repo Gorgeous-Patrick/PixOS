@@ -23,6 +23,9 @@
     }:
     let
       hostname = "Patricks-MacBook-Air-5";
+      platform = "aarch64-darwin";
+      username = "patrickli";
+      home = "/Users/patrickli";
       homeconfig = import ../../hm/cli-work.nix;
       configuration =
         { pkgs, ... }:
@@ -35,7 +38,7 @@
             pkgs.nano
             pkgs.wget
             pkgs.curl
-            pixos-nixvim.packages.aarch64-darwin.default
+            pixos-nixvim.packages."${platform}".default
           ];
 
           # Necessary for using flakes on this system.
@@ -52,10 +55,10 @@
           system.stateVersion = 6;
 
           # The platform the configuration will be used on.
-          nixpkgs.hostPlatform = "aarch64-darwin";
+          nixpkgs.hostPlatform = "${platform}";
           users.users.patrickli = {
-            name = "patrickli";
-            home = "/Users/patrickli";
+            name = "${username}";
+            home = "${home}";
           };
         };
     in
@@ -70,7 +73,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.verbose = true;
-            home-manager.users.patrickli = homeconfig;
+            home-manager.users."${username}" = homeconfig;
           }
         ];
       };
