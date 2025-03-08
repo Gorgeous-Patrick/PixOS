@@ -19,7 +19,7 @@
       perSystem =
         { system, pkgs, ... }:
         let
-          update = if system=="aarch64-darwin" then pkgs.writeShellScriptBin "update" "echo 'hello'" else nixpkgs.legacyPackages.${system}.hello;
+          update = if system=="aarch64-darwin" then pkgs.writeShellScriptBin "update" (builtins.readFile ./scripts/macos.sh) else nixpkgs.legacyPackages.${system}.hello;
         in
         {
           packages = {
