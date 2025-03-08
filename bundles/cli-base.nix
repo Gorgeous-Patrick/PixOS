@@ -10,6 +10,7 @@
     pkgs.lazygit
     pkgs.bat
     pkgs.nixfmt-rfc-style
+    pkgs.treefmt2
     pkgs.eza
     pkgs.htop
     pkgs.devenv
@@ -29,7 +30,7 @@
         echo Welcome to PixOS! 🚀
     '';
     shellAliases = {
-      ls = toString pkgs.eza;
+      ls = "eza";
       ll = "ls -l";
       lt = "ls --tree";
       la = "ls -a";
