@@ -29,11 +29,11 @@
         echo Welcome to PixOS! 🚀
     '';
     shellAliases = {
-      ls = "eza";
-      ll = "eza -l";
-      lt = "eza --tree";
-      la = "eza -a";
-      lal = "eza -al";
+      ls = toString pkgs.eza;
+      ll = "ls -l";
+      lt = "ls --tree";
+      la = "ls -a";
+      lal = "ls -al";
       v = "nvim";
       r = "ranger";
       update = "sudo nixos-rebuild switch";

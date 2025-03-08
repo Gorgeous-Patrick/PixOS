@@ -9,10 +9,11 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+    pixos-nixvim.url = "path:./applications/nvim-nix";
 
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, pixos-nixvim }:
   let
     homeconfig = import ./hm/cli-work.nix;
     configuration = { pkgs, ... }: {
@@ -24,6 +25,7 @@
     pkgs.nano
     pkgs.wget
     pkgs.curl
+    pixos-nixvim.packages.aarch64-darwin.default
         ];
 
       # Necessary for using flakes on this system.
@@ -59,7 +61,6 @@
                 home-manager.users.patrickli = homeconfig;
             }
         ];
-
     };
   };
 }
