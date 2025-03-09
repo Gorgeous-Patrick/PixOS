@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-    imports = [
-        ../bundles/cli-base.nix
-    ];
+  imports = [
+    ../bundles/cli-base.nix
+  ];
 }

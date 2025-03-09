@@ -1,6 +1,12 @@
-{ pkgs, modulesPath, lib, ... }: {
+{
+  pkgs,
+  modulesPath,
+  lib,
+  ...
+}:
+{
   imports = [
-   <home-manager/nixos>
+    <home-manager/nixos>
     # base profiles
     "${modulesPath}/profiles/base.nix"
     "${modulesPath}/profiles/all-hardware.nix"
@@ -15,7 +21,15 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Needed for https://github.com/NixOS/nixpkgs/issues/58959
-  boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+  boot.supportedFilesystems = lib.mkForce [
+    "btrfs"
+    "reiserfs"
+    "vfat"
+    "f2fs"
+    "xfs"
+    "ntfs"
+    "cifs"
+  ];
   # ISO naming.
   isoImage.isoName = "PixOS-simple.iso";
 
@@ -30,14 +44,17 @@
   programs.zsh.enable = true;
 
   users.mutableUsers = true;
-  users.groups.patrickli = {};
+  users.groups.patrickli = { };
   users.users.patrickli = {
     initialPassword = "password";
     isNormalUser = true;
     group = "patrickli";
-    extraGroups = ["wheel" "docker"];
+    extraGroups = [
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
   home-manager.users.patrickli = import ../hm/cli-work.nix;
-  
+
 }
