@@ -20,13 +20,12 @@
         { system, pkgs, ... }:
         let
           rebuild = if system=="aarch64-darwin" then pkgs.writeShellScriptBin "update" (builtins.readFile ./rebuild-scripts/macos.sh) else nixpkgs.legacyPackages.${system}.hello;
-          update = if system=="aarch64-darwin" then pkgs.writeShellScriptBin "update" (builtins.readFile ./rebuild-scripts/macos.sh) else nixpkgs.legacyPackages.${system}.hello;
+          update = if system=="aarch64-darwin" then pkgs.writeShellScriptBin "update" (builtins.readFile ./update-scripts/macos.sh) else nixpkgs.legacyPackages.${system}.hello;
         in
         {
           packages = {
-            # Lets you run `nix run .` to start nixvim
             rebuild = rebuild;
-            default = update;
+            update = update;
           };
         };
     };
