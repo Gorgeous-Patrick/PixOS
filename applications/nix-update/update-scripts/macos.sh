@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd ~/Space/PixOS/release/MacOS/ || exit
+pushd ~/Space/PixOS/ || exit
 pushd applications/nix-update/ || exit
 nix flake update
 popd || exit

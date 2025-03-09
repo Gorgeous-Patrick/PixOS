@@ -41,7 +41,8 @@
             pkgs.wget
             pkgs.curl
             pixos-nixvim.packages."${platform}".default
-            nix-update.packages."${platform}".default
+            nix-update.packages."${platform}".rebuild
+            nix-update.packages."${platform}".update
           ];
 
           # Necessary for using flakes on this system.
