@@ -34,6 +34,25 @@
   plugins.toggleterm.enable = true;
   plugins.todo-comments.enable = true;
   plugins.which-key.enable = true;
+  plugins.flash = {
+    enable = true;
+    settings = {
+
+      search = {
+        mode = "fuzzy";
+      };
+      jump = {
+        autojump = true;
+      };
+      label = {
+        uppercase = false;
+        rainbow = {
+          enabled = false;
+          shade = 5;
+        };
+      };
+    };
+  };
   opts = {
     number = true; # Show line numbers
     relativenumber = true; # Show relative line numbers

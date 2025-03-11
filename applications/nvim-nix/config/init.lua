@@ -37,6 +37,9 @@ require("lazy-lsp").setup {
   }
 }
 
+require'flash'.toggle({true})
+
+
 -- Set up nvim-cmp.
 -- local cmp = require("cmp")
 
