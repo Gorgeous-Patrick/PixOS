@@ -20,6 +20,7 @@
     pkgs.neofetch
     pkgs.tmux
     pkgs.sl
+    pkgs.tg
   ];
   programs.git = {
     enable = true;

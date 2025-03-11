@@ -50,5 +50,6 @@
     lazy-lsp-nvim
     auto-save-nvim
     nvim-autopairs
+    nvim-treesitter-parsers.lalrpop
   ];
 }
