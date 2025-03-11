@@ -39,8 +39,6 @@
             pkgs.nano
             pkgs.wget
             pkgs.curl
-            pkgs.darwin.libiconv
-            pkgs.libiconv
             pixos-nixvim.packages."${platform}".default
             nix-update.packages."${platform}".rebuild
             nix-update.packages."${platform}".update
