@@ -47,7 +47,7 @@
       label = {
         uppercase = false;
         rainbow = {
-          enabled = false;
+          enabled = true;
           shade = 5;
         };
       };

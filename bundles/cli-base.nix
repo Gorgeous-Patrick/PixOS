@@ -9,7 +9,6 @@
   # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
   home.packages = [
     pkgs.ranger
-    pkgs.thefuck
     pkgs.lazygit
     pkgs.bat
     pkgs.nixfmt-rfc-style
