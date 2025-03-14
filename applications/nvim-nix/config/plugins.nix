@@ -34,6 +34,10 @@
   plugins.toggleterm.enable = true;
   plugins.todo-comments.enable = true;
   plugins.which-key.enable = true;
+  plugins.neoclip = {
+    enable = true;
+    settings.enable_persistent_history = true;
+  };
   plugins.flash = {
     enable = true;
     settings = {
