@@ -12,7 +12,7 @@
     pkgs.lazygit
     pkgs.bat
     pkgs.nixfmt-rfc-style
-    pkgs.treefmt2
+    pkgs.treefmt
     pkgs.eza
     pkgs.htop
     pkgs.devenv
@@ -20,6 +20,7 @@
     pkgs.tmux
     pkgs.sl
     pkgs.tg
+    pkgs.cloc
   ];
   programs.git = {
     enable = true;
