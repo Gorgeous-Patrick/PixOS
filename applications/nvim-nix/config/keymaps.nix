@@ -1,7 +1,6 @@
 {
   config,
-  pkgs,
-  lib,
+  pkgs, lib,
   ...
 }:
 {
@@ -132,44 +131,37 @@
       };
     }
     {
-
-      key = "s";
-
-      action.__raw = ''
-
-        function()
-
-        require'flash'.jump({
-
-        })
-
-        end
-
-      '';
-
-      options.remap = true;
-
+      action = "<cmd>Telescope neoclip<cr>";
+      key = "<leader>fn";
+      mode = [
+        "n"
+        "v"
+        "t"
+      ];
+      options = {
+        desc = "Help Tags";
+      };
     }
-
     {
-
-      key = "<c-s>";
-
+      key = "s";
       action.__raw = ''
-
         function()
-
-        require'flash'.toggle({
-
+        require'flash'.jump({
         })
-
         end
-
       '';
-
       options.remap = true;
 
     }
-
+    {
+      key = "<c-s>";
+      action.__raw = ''
+        function()
+        require'flash'.toggle({
+        })
+        end
+      '';
+      options.remap = true;
+    }
   ];
 }
