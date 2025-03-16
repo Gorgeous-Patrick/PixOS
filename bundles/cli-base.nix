@@ -21,6 +21,7 @@
     pkgs.sl
     pkgs.tg
     pkgs.cloc
+    pkgs.cryfs
   ];
   programs.git = {
     enable = true;
@@ -44,6 +45,8 @@
       cat = "bat";
       q = "exit";
       c = "clear";
+      dataon = "cryfs ~/Space/PixOS/Safe_Encrypted/ ~/Safe/";
+      dataoff = "cryfs-unmount ~/Safe/";
     };
     oh-my-zsh = {
       enable = true;
