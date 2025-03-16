@@ -9,15 +9,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, nixos-wsl, pixos-nixvim, nix-update, home-manager }: 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixos-wsl,
+      pixos-nixvim,
+      nix-update,
+      home-manager,
+    }:
 
-	let
-platform =  "x86_64-linux";
-homeconfig = import ../../hm/cli-work.nix;
-config = { config, lib, pkgs, ... }:
+    let
+      platform = "x86_64-linux";
+      homeconfig = import ../../hm/cli-work.nix;
+      config =
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
 
-{
-environment.systemPackages = [
+        {
+          environment.systemPackages = [
             pkgs.vim
             pkgs.zsh
             pkgs.nano
@@ -29,22 +43,25 @@ environment.systemPackages = [
           ];
           programs.zsh.enable = true;
           users.defaultUserShell = pkgs.zsh;
-};
-in
-{
-    # replace 'joes-desktop' with your hostname here.
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ ./configuration.nix nixos-wsl.nixosModules.wsl config 
-      home-manager.nixosModules.home-manager
-      
+        };
+    in
+    {
+      # replace 'joes-desktop' with your hostname here.
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./configuration.nix
+          nixos-wsl.nixosModules.wsl
+          config
+          home-manager.nixosModules.home-manager
+
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.verbose = true;
             home-manager.users."patrickli" = homeconfig;
           }
-      ];
+        ];
+      };
     };
-  };
 }
