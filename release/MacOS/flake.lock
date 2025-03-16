@@ -225,7 +225,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-U1e+grKvj4s6jM5bhrv4zMPwc1lW3SBWxm+0BeEDXHM=",
+        "narHash": "sha256-UqmyIKmB7qDxDBBe9lCx4PQ6C2S9mDYAGStC+fZEHZw=",
         "path": "../../applications/nix-update",
         "type": "path"
       },

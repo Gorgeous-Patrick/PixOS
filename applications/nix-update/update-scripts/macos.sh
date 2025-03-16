@@ -1,6 +1,7 @@
 #!/bin/bash
 
 pushd ~/Space/PixOS/ || exit
+cryfs-unmount ~/Safe/
 git pull
 pushd applications/nix-update/ || exit
 nix flake update
