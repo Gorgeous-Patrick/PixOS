@@ -21,6 +21,8 @@
 
     let
       platform = "x86_64-linux";
+      hostname = "nixos";
+      username = "patrickli";
       homeconfig = import ../../hm/cli-work.nix;
       config =
         {
@@ -47,8 +49,8 @@
     in
     {
       # replace 'joes-desktop' with your hostname here.
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      nixosConfigurations."${hostname}" = nixpkgs.lib.nixosSystem {
+        system = platform;
         modules = [
           ./configuration.nix
           nixos-wsl.nixosModules.wsl
@@ -59,7 +61,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.verbose = true;
-            home-manager.users."patrickli" = homeconfig;
+            home-manager.users."${username}" = homeconfig;
           }
         ];
       };
