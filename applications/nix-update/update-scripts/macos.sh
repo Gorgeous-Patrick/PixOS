@@ -13,4 +13,8 @@ popd || exit
 pushd release/MacOS/ || exit
 nix flake update
 popd || exit
+
+pushd release/WSL/ || exit
+nix flake update
+popd || exit
 popd || exit

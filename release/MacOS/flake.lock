@@ -225,7 +225,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-74Lp3AgURvtYDqM2GgqYVsPE4j+KEHr2xjnuNpxJmoU=",
+        "narHash": "sha256-U1e+grKvj4s6jM5bhrv4zMPwc1lW3SBWxm+0BeEDXHM=",
         "path": "../../applications/nix-update",
         "type": "path"
       },
@@ -440,7 +440,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-1rycUr2/erU6GyeX5NFUyjk9t2qxWzbMUQUMOn0PD3Q=",
+        "narHash": "sha256-VBnS13OoWHdGpDLrn6z/r8yfucLtuDubOueG46sG4+Y=",
         "path": "../../applications/nvim-nix",
         "type": "path"
       },
