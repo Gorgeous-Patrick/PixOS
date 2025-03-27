@@ -1,5 +1,10 @@
 # Basic packages for coding
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   home.packages = [
     # Python
