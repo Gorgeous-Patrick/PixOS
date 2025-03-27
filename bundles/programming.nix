@@ -1,5 +1,5 @@
 # Basic packages for coding
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   home.packages = [
     # Python
@@ -8,7 +8,8 @@
 
     # C/C++
     pkgs.gnumake42
-    pkgs.clang_19
+    pkgs.gcc14
+    (lib.meta.hiPrio pkgs.clang_19)
     pkgs.clang-tools_19
     pkgs.lldb_19
 

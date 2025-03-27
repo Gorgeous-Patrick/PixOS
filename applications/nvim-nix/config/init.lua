@@ -33,7 +33,8 @@ require("lazy-lsp").setup {
   excluded_servers = {
     "denols", -- Prefer eslint
     "basepyright",
-    "pylyzer"
+    "pylyzer",
+    "ccls",
   }
 }
 
