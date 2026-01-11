@@ -8,4 +8,9 @@
     import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
 
   programs.home-manager.enable = true;
+  programs.nixvim = {
+    enable = true;
+
+    colorschemes.catppuccin.enable = true;
+  };
 }

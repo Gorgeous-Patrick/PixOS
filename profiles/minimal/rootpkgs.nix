@@ -9,7 +9,6 @@ pkgs.buildEnv {
     ripgrep
     fd
     less
-    neovim
     zsh
   ];
 }
