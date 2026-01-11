@@ -11,7 +11,20 @@
   programs.nixvim = {
     enable = true;
 
-    colorschemes.catppuccin.enable = true;
+    clipboard.register = "unnamedplus";
+
+    opts = {
+      number = true;
+      relativenumber = true;
+      expandtab = true;
+      shiftwidth = 2;
+      tabstop = 2;
+      smartindent = true;
+      termguicolors = true;
+      signcolumn = "yes";
+      updatetime = 300;
+    };
+
   };
 
   programs.git = {
