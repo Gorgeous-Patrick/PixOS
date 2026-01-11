@@ -14,4 +14,6 @@ with pkgs; [
   tg
   cloc
   cryfs
+  cargo
+  rustc
 ]

@@ -26,6 +26,7 @@
     };
     plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
+    plugins.nvim-tree.enable = true;
 
     ####################
     # Treesitter
@@ -48,6 +49,31 @@
           "nix"
         ];
         indent.enable = true;
+      };
+    };
+    ####################
+    # LSP
+    ####################
+    plugins.lsp = {
+      enable = true;
+
+      servers = {
+        # Frontend
+        ts_ls.enable = true;
+        html.enable = true;
+        cssls.enable = true;
+        jsonls.enable = true;
+
+        # Python
+        pyright.enable = true;
+
+        # Rust
+        rust_analyzer.enable = true;
+        rust_analyzer.installRustc = false;
+        rust_analyzer.installCargo = false;
+
+        # C / C++
+        clangd.enable = true;
       };
     };
 
