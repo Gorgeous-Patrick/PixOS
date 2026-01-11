@@ -13,18 +13,17 @@
       inherit system;
     };
 
-    pixosMinimal = import ./profiles/minimal.nix {
-      inherit pkgs;
-    };
+    pixosMinimalRootPkgs =
+      import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
   in {
     packages.${system} = {
-      minimal = pixosMinimal;
-      default = pixosMinimal;
+      minimal = pixosMinimalRootPkgs;
+      default = pixosMinimalRootPkgs;
     };
 
     devShells.${system} = {
       minimal = pkgs.mkShell {
-        packages = [ pixosMinimal ];
+        packages = [ pixosMinimalRootPkgs ];
       };
 
       default = self.devShells.${system}.minimal;
