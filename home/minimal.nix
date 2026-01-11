@@ -76,6 +76,26 @@
         clangd.enable = true;
       };
     };
+    keymaps = [
+      {
+        mode = [ "i" "v" "s" "o" ];
+        key = "jk";
+        action = "<Esc>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = ["n"];
+        key = "<C-n>";
+        action = "<cmd>NvimTreeToggle<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+    ];
 
   };
 
@@ -83,5 +103,9 @@
     enable = true;
     userName = "Patrick Li";
     userEmail = "baichuanli@yahoo.com";
+  };
+
+  programs.zsh = {
+    enable = true;
   };
 }

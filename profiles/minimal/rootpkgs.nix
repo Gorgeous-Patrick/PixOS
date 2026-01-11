@@ -9,6 +9,5 @@ pkgs.buildEnv {
     ripgrep
     fd
     less
-    zsh
   ];
 }
