@@ -13,4 +13,10 @@
 
     colorschemes.catppuccin.enable = true;
   };
+
+  programs.git = {
+    enable = true;
+    userName = "Patrick Li";
+    userEmail = "baichuanli@yahoo.com";
+  };
 }
