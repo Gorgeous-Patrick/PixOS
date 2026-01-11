@@ -24,6 +24,32 @@
       signcolumn = "yes";
       updatetime = 300;
     };
+    plugins.telescope.enable = true;
+    plugins.web-devicons.enable = true;
+
+    ####################
+    # Treesitter
+    ####################
+    plugins.treesitter = {
+      enable = true;
+      settings = {
+        ensure_installed = [
+          "c"
+          "cpp"
+          "python"
+          "rust"
+          "javascript"
+          "typescript"
+          "tsx"
+          "json"
+          "html"
+          "css"
+          "bash"
+          "nix"
+        ];
+        indent.enable = true;
+      };
+    };
 
   };
 
