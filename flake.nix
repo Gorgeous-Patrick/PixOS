@@ -43,7 +43,7 @@
     };
 
     # Home Manager configuration (your "minimal HM")
-    homeConfigurations."patrickli" =
+    homeConfigurations."minimal" =
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
