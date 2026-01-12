@@ -16,4 +16,5 @@ with pkgs; [
   cryfs
   cargo
   rustc
+  nodejs
 ]

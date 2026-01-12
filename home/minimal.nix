@@ -27,6 +27,12 @@
     plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
     plugins.nvim-tree.enable = true;
+    plugins.floaterm = {
+      enable = true;
+    };
+    plugins.gitblame.enable = true;
+    plugins.lazygit.enable = true;
+    plugins.auto-save.enable = true;
 
     ####################
     # Treesitter
@@ -76,9 +82,10 @@
         clangd.enable = true;
       };
     };
+
     keymaps = [
       {
-        mode = [ "i" "v" "s" "o" ];
+        mode = [ "i" "v" "s" "o" "t" ];
         key = "jk";
         action = "<Esc>";
         options = {
@@ -95,6 +102,44 @@
           silent = true;
         };
       }
+      {
+        mode = ["n"];
+        key = "H";
+        action = "^";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = ["n"];
+        key = "L";
+        action = "$";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = ["n" "t"];
+        key = "<leader>tt";
+        action = "<cmd>FloatermToggle<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = ["t"];
+        key = "<esc>";
+        action = "<C-\\><C-n>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+
+
     ];
 
   };
@@ -107,5 +152,23 @@
 
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    initExtraFirst = ''
+      echo Welcome to PixOS! 🚀
+    '';
+    shellAliases = {
+      ls = "eza";
+      ll = "ls -l";
+      lt = "ls --tree";
+      la = "ls -a";
+      lal = "ls -al";
+      v = "nvim";
+      r = "ranger";
+      cat = "bat";
+      q = "exit";
+      c = "clear";
+      dataon = "cryfs ~/Space/PixOS/Safe_Encrypted/ ~/Safe/";
+      dataoff = "cryfs-unmount ~/Safe/";
+    };
   };
 }
