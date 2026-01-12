@@ -33,6 +33,7 @@
     plugins.gitblame.enable = true;
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
+    plugins.autoclose.enable = true;
 
     ####################
     # Treesitter
@@ -80,6 +81,27 @@
 
         # C / C++
         clangd.enable = true;
+      };
+    };
+    ####################
+    # Completion
+    ####################
+    plugins.cmp = {
+      enable = true;
+      autoEnableSources = true;
+
+      settings = {
+        mapping = {
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Tab>" = "cmp.mapping.select_next_item()";
+          "<S-Tab>" = "cmp.mapping.select_prev_item()";
+        };
+
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "buffer"; }
+          { name = "path"; }
+        ];
       };
     };
 
@@ -138,8 +160,15 @@
           silent = true;
         };
       }
-
-
+      {
+        mode = ["n" "t"];
+        key = "<leader>gg";
+        action = "<cmd>LazyGit<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
     ];
 
   };
@@ -169,6 +198,11 @@
       c = "clear";
       dataon = "cryfs ~/Space/PixOS/Safe_Encrypted/ ~/Safe/";
       dataoff = "cryfs-unmount ~/Safe/";
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "thefuck" ];
+      theme = "robbyrussell";
     };
   };
 }
