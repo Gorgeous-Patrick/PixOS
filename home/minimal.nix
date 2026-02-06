@@ -2,7 +2,7 @@
 {
   home.username = "patrickli";
   home.homeDirectory = "/home/patrickli";
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.11";
 
   home.packages =
     import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
@@ -176,8 +176,10 @@
 
   programs.git = {
     enable = true;
-    userName = "Patrick Li";
-    userEmail = "baichuanli@yahoo.com";
+    settings = {
+      user.name = "Patrick Li";
+      user.email = "baichuanli@yahoo.com";
+    };
   };
 
   programs.zsh = {
