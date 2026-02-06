@@ -8,6 +8,7 @@
     import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
 
   programs.home-manager.enable = true;
+  programs.gh.enable = true;
   programs.nixvim = {
     enable = true;
 
