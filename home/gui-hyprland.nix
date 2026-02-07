@@ -10,6 +10,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
+      "$disable_hyprland_logo" = "true";
 
       monitor = [ ", preferred, auto, 1" ];
 
@@ -40,7 +41,7 @@
         "$mod, Return, exec, kitty"
         "$mod, Q, killactive"
         "$mod, M, exit"
-        "$mod, D, exec, wofi --show drun"
+        "$mod, Z, exec, wofi --show drun"
         "$mod, V, togglefloating"
         "$mod, P, pseudo"
         "$mod, J, togglesplit"
