@@ -3,6 +3,7 @@
   imports = [
     ./minimal.nix
   ];
+  programs.firefox.enable = true;
 
   # ── Hyprland (Wayland window manager) ──────────────────────
   wayland.windowManager.hyprland = {
