@@ -9,6 +9,17 @@
 
   programs.home-manager.enable = true;
   programs.gh.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    settings = {
+      devices = {
+        "vultr" = { id = "UQSOBLO-VSYHIY3-4JVNHYF-UPNIMZ3-ET7G5TB-DCUEWCB-IGTM7DC-DWE7VAM"; };
+      }
+    }
+  }
+
   programs.nixvim = {
     enable = true;
 
