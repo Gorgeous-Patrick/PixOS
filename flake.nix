@@ -72,6 +72,27 @@
           })
         ];
       };
+
+      kvm-gui-hyprland = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./hosts/kvm-gui-hyprland/configuration.nix
+
+          home-manager.nixosModules.home-manager
+
+          ({ ... }: {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.patrickli = import ./home/gui-hyprland.nix;
+
+            home-manager.sharedModules = [
+              nixvim.homeManagerModules.nixvim
+            ];
+          })
+        ];
+      };
     };
   };
 }
