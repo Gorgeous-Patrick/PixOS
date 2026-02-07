@@ -93,6 +93,27 @@
           })
         ];
       };
+
+      iso-minimal = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./hosts/iso-minimal/configuration.nix
+
+          home-manager.nixosModules.home-manager
+
+          ({ ... }: {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.patrickli = import ./home/minimal.nix;
+
+            home-manager.sharedModules = [
+              nixvim.homeManagerModules.nixvim
+            ];
+          })
+        ];
+      };
     };
   };
 }
