@@ -23,26 +23,22 @@
       inherit system;
     };
 
-    # Root/baseline bundle (meta-package) for the minimal profile
     pixosMinimalRootPkgs =
       import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
-  in {
-    # Export the minimal root bundle as a package
+  in
+  {
     packages.${system} = {
       minimal = pixosMinimalRootPkgs;
       default = pixosMinimalRootPkgs;
     };
 
-    # A dev shell that includes the minimal root bundle (handy for quick testing)
     devShells.${system} = {
       minimal = pkgs.mkShell {
         packages = [ pixosMinimalRootPkgs ];
       };
-
       default = self.devShells.${system}.minimal;
     };
 
-    # Home Manager configuration (your "minimal HM")
     homeConfigurations."minimal" =
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -51,5 +47,31 @@
           nixvim.homeManagerModules.nixvim
         ];
       };
+
+    # ✅ NEW: NixOS host configs
+    nixosConfigurations = {
+      xps = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./hosts/kvm/configuration.nix
+
+          # Home Manager integrated into NixOS
+          home-manager.nixosModules.home-manager
+
+          ({ ... }: {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.patrickli = import ./home/minimal.nix;
+
+            # If you want nixvim available in HM on NixOS:
+            home-manager.sharedModules = [
+              nixvim.homeManagerModules.nixvim
+            ];
+          })
+        ];
+      };
+    };
   };
 }
