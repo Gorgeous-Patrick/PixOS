@@ -17,4 +17,5 @@ with pkgs; [
   cargo
   rustc
   nodejs
+  gcc15
 ]
