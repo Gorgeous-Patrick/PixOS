@@ -49,11 +49,19 @@
     variant = "";
   };
 
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    pulseAudio.enable = true;
+    jack.enable = true;
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.patrickli = {
     isNormalUser = true;
     description = "PatrickLi";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };
