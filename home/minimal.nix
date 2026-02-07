@@ -3,6 +3,7 @@
   home.username = "patrickli";
   home.homeDirectory = "/home/patrickli";
   home.stateVersion = "25.11";
+  home.file.".ssh".source = "/home/patrickli/Safe/ssh";
 
   home.packages =
     import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
