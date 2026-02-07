@@ -53,7 +53,7 @@
     enable = true;
     audio.enable = true;
     alsa.enable = true;
-    pulseAudio.enable = true;
+    pulse.enable = true;
     jack.enable = true;
   };
 
