@@ -68,6 +68,18 @@
 
   programs.zsh.enable = true;
 
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+  ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
