@@ -50,7 +50,7 @@
 
     # ✅ NEW: NixOS host configs
     nixosConfigurations = {
-      xps = nixpkgs.lib.nixosSystem {
+      kvm = nixpkgs.lib.nixosSystem {
         inherit system;
 
         modules = [
