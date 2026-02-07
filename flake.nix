@@ -54,7 +54,7 @@
         inherit system;
 
         modules = [
-          ./hosts/kvm/configuration.nix
+          ./hosts/kvm-minimal/configuration.nix
 
           # Home Manager integrated into NixOS
           home-manager.nixosModules.home-manager
