@@ -209,6 +209,7 @@
       cat = "bat";
       q = "exit";
       c = "clear";
+      g = "lazygit";
     };
     oh-my-zsh = {
       enable = true;
