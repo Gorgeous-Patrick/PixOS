@@ -43,7 +43,7 @@
         "$mod, M, exit"
         "$mod, Z, exec, wofi --show drun"
         "$mod, X, exec, firefox"
-        "$mod, V, togglefloating"
+        "$mod, Space, togglefloating"
         "$mod, P, pseudo"
         "$mod, J, togglesplit"
 
