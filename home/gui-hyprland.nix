@@ -18,6 +18,7 @@
         "waybar"
         "dunst"
         "swww-daemon"
+        "nm-applet"
       ];
 
       general = {

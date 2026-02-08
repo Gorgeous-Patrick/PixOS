@@ -54,7 +54,9 @@
     description = "PatrickLi";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -102,11 +104,15 @@
     };
   };
 
+  services.blueman.enable = true;
+
   # XDG portal for screen-sharing, file-picker, etc.
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
+
+  hardware.bluetooth.enable = true;
 
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
@@ -118,6 +124,8 @@
     slurp              # Region selector for grim
     wl-clipboard       # Clipboard support
     swww               # Wallpaper daemon
+    overskride
+    networkmanagerapplet
   ];
 
 }
