@@ -41,6 +41,7 @@
     plugins.floaterm = {
       enable = true;
     };
+    plugins.opencode.enable = true;
     plugins.gitblame.enable = true;
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
@@ -191,6 +192,8 @@
       user.email = "baichuanli@yahoo.com";
     };
   };
+
+  programs.opencode.enable = true;
 
   programs.zsh = {
     enable = true;

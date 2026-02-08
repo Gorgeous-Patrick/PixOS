@@ -12,20 +12,21 @@
       "$mod" = "SUPER";
       "$disable_hyprland_logo" = "true";
 
-      monitor = [ ", preferred, auto, 1" ];
+      monitor = [ "DP-3, 3440x1440, 0x0, 1" "eDP-1, 2880x1920, 0x1440, 2" "DP-4, 1920x1080, 3440x0, 1, transform, 1"];
 
       exec-once = [
         "waybar"
         "dunst"
         "swww-daemon"
         "nm-applet"
+        "blueman-applet"
       ];
 
       general = {
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        layout = "dwindle";
+        layout = "master";
       };
 
       decoration = {
@@ -53,6 +54,10 @@
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
+        "$mod, H, movefocus, l"
+        "$mod, L, movefocus, r"
+        "$mod, K, movefocus, u"
+        "$mod, J, movefocus, d"
 
         # Workspaces
         "$mod, 1, workspace, 1"
@@ -67,6 +72,18 @@
         "$mod SHIFT, 3, movetoworkspace, 3"
         "$mod SHIFT, 4, movetoworkspace, 4"
         "$mod SHIFT, 5, movetoworkspace, 5"
+
+        # Move Window
+
+        "$mod SHIFT, H, movewindow, l"
+        "$mod SHIFT, L, movewindow, r"
+        "$mod SHIFT, K, movewindow, u"
+        "$mod SHIFT, J, movewindow, d"
+
+        "$mod SHIFT, left, movewindow, l"
+        "$mod SHIFT, right, movewindow, r"
+        "$mod SHIFT, up, movewindow, u"
+        "$mod SHIFT, down, movewindow, d"
 
         # Screenshot
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
