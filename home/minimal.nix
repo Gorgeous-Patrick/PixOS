@@ -41,7 +41,6 @@
     plugins.floaterm = {
       enable = true;
     };
-    plugins.opencode.enable = true;
     plugins.gitblame.enable = true;
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
@@ -117,6 +116,21 @@
       };
     };
 
+    ####################
+    # Vibe Coding
+    ####################
+    plugins.snacks = {
+      enable = true;
+      settings = {
+        input = {};
+        picker = {};
+        terminal = {};
+      };
+    };
+    plugins.opencode = {
+        enable = true;
+    };
+
     keymaps = [
       {
         mode = [ "i" "v" "s" "o" "t" ];
@@ -181,6 +195,108 @@
           silent = true;
         };
       }
+    {
+      key = "<C-a>";
+      mode = [ "n" "x" ];
+      action = ''
+        function()
+          require("opencode").ask("@this: ", { submit = true })
+        end
+      '';
+      options.desc = "Ask opencode…";
+    }
+
+    {
+      key = "<C-x>";
+      mode = [ "n" "x" ];
+      action = ''
+        function()
+          require("opencode").select()
+        end
+      '';
+      options.desc = "Execute opencode action…";
+    }
+
+    {
+      key = "<C-.>";
+      mode = [ "n" "t" ];
+      action = ''
+        function()
+          require("opencode").toggle()
+        end
+      '';
+      options.desc = "Toggle opencode";
+    }
+
+    {
+      key = "go";
+      mode = [ "n" "x" ];
+      action = ''
+        function()
+          return require("opencode").operator("@this ")
+        end
+      '';
+      options = {
+        desc = "Add range to opencode";
+        expr = true;
+      };
+    }
+
+    {
+      key = "goo";
+      mode = [ "n" ];
+      action = ''
+        function()
+          return require("opencode").operator("@this ") .. "_"
+        end
+      '';
+      options = {
+        desc = "Add line to opencode";
+        expr = true;
+      };
+    }
+
+    {
+      key = "<S-C-u>";
+      mode = [ "n" ];
+      action = ''
+        function()
+          require("opencode").command("session.half.page.up")
+        end
+      '';
+      options.desc = "Scroll opencode up";
+    }
+
+    {
+      key = "<S-C-d>";
+      mode = [ "n" ];
+      action = ''
+        function()
+          require("opencode").command("session.half.page.down")
+        end
+      '';
+      options.desc = "Scroll opencode down";
+    }
+
+    {
+      key = "+";
+      mode = [ "n" ];
+      action = "<C-a>";
+      options = {
+        desc = "Increment under cursor";
+        noremap = true;
+      };
+    }
+
+    {
+      key = "-";
+      mode = [ "n" ];
+      action = "<C-x>";
+      options = {
+        desc = "Decrement under cursor";
+        noremap = true;
+      };
+    }
     ];
 
   };
