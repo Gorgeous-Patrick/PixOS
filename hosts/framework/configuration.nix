@@ -113,6 +113,8 @@
 
   services.blueman.enable = true;
 
+  programs.nix-ld.enable = true;
+
   # XDG portal for screen-sharing, file-picker, etc.
   xdg.portal = {
     enable = true;
