@@ -149,7 +149,10 @@
         };
       }
       {
-        mode = [ "n" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<C-n>";
         action = "<cmd>NvimTreeToggle<CR>";
         options = {
@@ -158,7 +161,10 @@
         };
       }
       {
-        mode = [ "n" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "H";
         action = "^";
         options = {
@@ -167,7 +173,10 @@
         };
       }
       {
-        mode = [ "n" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "L";
         action = "$";
         options = {
