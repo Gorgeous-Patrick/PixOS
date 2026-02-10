@@ -1,14 +1,16 @@
 name: Build ISO
 
 on:
-  release:
-    types: [published]
+  schedule:
+    - cron: "0 7 * * *"   # daily at 07:00 UTC
+  workflow_dispatch: {}   # allow manual runs too
 
 jobs:
   build-iso:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +27,11 @@ jobs:
           nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage
           cp result/iso/*.iso pixos-minimal.iso
 
-      - name: Upload ISO to release
+      - name: Upload ISO to nightly release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: nightly
+          name: Nightly ISO
+          prerelease: true
           files: pixos-minimal.iso
+          fail_on_unmatched_files: true
