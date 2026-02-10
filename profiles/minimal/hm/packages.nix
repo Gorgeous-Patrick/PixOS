@@ -18,4 +18,5 @@ with pkgs; [
   rustc
   nodejs
   gcc15
+  python315
 ]
