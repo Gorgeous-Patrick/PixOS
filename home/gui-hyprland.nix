@@ -10,7 +10,6 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      "$disable_hyprland_logo" = "true";
 
       monitor = [
         "DP-3, 3440x1440, 0x0, 1"
@@ -92,12 +91,20 @@
 
         # Screenshot
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
+
+        # Fullscreen current window with Mod+F
+        "$mod, F, fullscreen"
       ];
 
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
+
+      misc = {
+        "disable_hyprland_logo" = true;
+        "disable_splash_rendering" = true;
+      };
     };
   };
 }
