@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -52,8 +52,11 @@
   users.users.patrickli = {
     isNormalUser = true;
     description = "PatrickLi";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
   programs.zsh.enable = true;
@@ -82,7 +85,10 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -116,14 +122,14 @@
 
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
-    kitty              # GPU-accelerated terminal
-    wofi               # App launcher
-    waybar             # Status bar
-    dunst              # Notification daemon
-    grim               # Screenshot tool
-    slurp              # Region selector for grim
-    wl-clipboard       # Clipboard support
-    swww               # Wallpaper daemon
+    kitty # GPU-accelerated terminal
+    wofi # App launcher
+    waybar # Status bar
+    dunst # Notification daemon
+    grim # Screenshot tool
+    slurp # Region selector for grim
+    wl-clipboard # Clipboard support
+    swww # Wallpaper daemon
     overskride
     networkmanagerapplet
   ];

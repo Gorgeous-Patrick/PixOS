@@ -155,7 +155,8 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "wallpkgs": "wallpkgs"
       }
     },
     "systems": {
@@ -185,6 +186,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "wallpkgs": {
+      "locked": {
+        "lastModified": 1742389992,
+        "narHash": "sha256-qgzpp5/oanA2dbiePVk7C0bK1Gm7hbHCB8R721xU2n0=",
+        "owner": "NotAShelf",
+        "repo": "wallpkgs",
+        "rev": "28c5d1b7d27e067888fe5db6485ef5d0acfb5140",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NotAShelf",
+        "repo": "wallpkgs",
         "type": "github"
       }
     }
