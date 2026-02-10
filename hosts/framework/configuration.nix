@@ -55,6 +55,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
@@ -119,6 +120,10 @@
   };
 
   hardware.bluetooth.enable = true;
+
+  virtualisation.docker = {
+    enable = true;
+  };
 
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
