@@ -110,7 +110,7 @@
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
       user = "greeter";
     };
   };
@@ -134,6 +134,7 @@
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
     kitty # GPU-accelerated terminal
+    alacritty
     wofi # App launcher
     waybar # Status bar
     dunst # Notification daemon
@@ -144,6 +145,7 @@
     overskride
     networkmanagerapplet
     openssl
+    telegram-desktop
   ];
 
 }

@@ -51,7 +51,7 @@
         inherit pkgs;
         modules = [
           ./home/minimal.nix
-          nixvim.homeManagerModules.nixvim
+          nixvim.homeModules.nixvim
         ];
       };
 
