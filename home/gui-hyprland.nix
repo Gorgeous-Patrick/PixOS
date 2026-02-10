@@ -4,6 +4,7 @@
     ./minimal.nix
   ];
   programs.firefox.enable = true;
+  programs.hyprlock.enable = true;
 
   # ── Hyprland (Wayland window manager) ──────────────────────
   wayland.windowManager.hyprland = {
