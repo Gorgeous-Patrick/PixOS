@@ -18,5 +18,15 @@ with pkgs; [
   rustc
   nodejs
   gcc15
-  python315
+  python313
+  libllvm
+  zlib
+  zlib.dev
+  libjpeg
+  libpng
+  freetype
+  lcms2
+  libwebp
+  tcl
+  tk
 ]
