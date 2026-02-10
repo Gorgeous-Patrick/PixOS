@@ -4,8 +4,7 @@
   home.homeDirectory = "/home/patrickli";
   home.stateVersion = "25.11";
 
-  home.packages =
-    import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
+  home.packages = import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
 
   programs.home-manager.enable = true;
   programs.gh.enable = true;
@@ -14,7 +13,9 @@
     enable = true;
     settings = {
       devices = {
-        "vultr" = { id = "UQSOBLO-VSYHIY3-4JVNHYF-UPNIMZ3-ET7G5TB-DCUEWCB-IGTM7DC-DWE7VAM"; };
+        "vultr" = {
+          id = "UQSOBLO-VSYHIY3-4JVNHYF-UPNIMZ3-ET7G5TB-DCUEWCB-IGTM7DC-DWE7VAM";
+        };
       };
     };
   };
@@ -122,18 +123,24 @@
     plugins.snacks = {
       enable = true;
       settings = {
-        input = {};
-        picker = {};
-        terminal = {};
+        input = { };
+        picker = { };
+        terminal = { };
       };
     };
     plugins.opencode = {
-        enable = true;
+      enable = true;
     };
 
     keymaps = [
       {
-        mode = [ "i" "v" "s" "o" "t" ];
+        mode = [
+          "i"
+          "v"
+          "s"
+          "o"
+          "t"
+        ];
         key = "jk";
         action = "<Esc>";
         options = {
@@ -142,7 +149,7 @@
         };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "<C-n>";
         action = "<cmd>NvimTreeToggle<CR>";
         options = {
@@ -151,7 +158,7 @@
         };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "H";
         action = "^";
         options = {
@@ -160,7 +167,7 @@
         };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "L";
         action = "$";
         options = {
@@ -169,7 +176,10 @@
         };
       }
       {
-        mode = ["n" "t"];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<leader>tt";
         action = "<cmd>FloatermToggle<CR>";
         options = {
@@ -178,7 +188,7 @@
         };
       }
       {
-        mode = ["t"];
+        mode = [ "t" ];
         key = "<esc>";
         action = "<C-\\><C-n>";
         options = {
@@ -187,7 +197,10 @@
         };
       }
       {
-        mode = ["n" "t"];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<leader>gg";
         action = "<cmd>LazyGit<CR>";
         options = {
@@ -195,108 +208,120 @@
           silent = true;
         };
       }
-    {
-      key = "<C-a>";
-      mode = [ "n" "x" ];
-      action = ''
-        function()
-          require("opencode").ask("@this: ", { submit = true })
-        end
-      '';
-      options.desc = "Ask opencode…";
-    }
+      {
+        key = "<C-a>";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            require("opencode").ask("@this: ", { submit = true })
+          end
+        '';
+        options.desc = "Ask opencode…";
+      }
 
-    {
-      key = "<C-x>";
-      mode = [ "n" "x" ];
-      action = ''
-        function()
-          require("opencode").select()
-        end
-      '';
-      options.desc = "Execute opencode action…";
-    }
+      {
+        key = "<C-x>";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            require("opencode").select()
+          end
+        '';
+        options.desc = "Execute opencode action…";
+      }
 
-    {
-      key = "<C-.>";
-      mode = [ "n" "t" ];
-      action = ''
-        function()
-          require("opencode").toggle()
-        end
-      '';
-      options.desc = "Toggle opencode";
-    }
+      {
+        key = "<C-.>";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = ''
+          function()
+            require("opencode").toggle()
+          end
+        '';
+        options.desc = "Toggle opencode";
+      }
 
-    {
-      key = "go";
-      mode = [ "n" "x" ];
-      action = ''
-        function()
-          return require("opencode").operator("@this ")
-        end
-      '';
-      options = {
-        desc = "Add range to opencode";
-        expr = true;
-      };
-    }
+      {
+        key = "go";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            return require("opencode").operator("@this ")
+          end
+        '';
+        options = {
+          desc = "Add range to opencode";
+          expr = true;
+        };
+      }
 
-    {
-      key = "goo";
-      mode = [ "n" ];
-      action = ''
-        function()
-          return require("opencode").operator("@this ") .. "_"
-        end
-      '';
-      options = {
-        desc = "Add line to opencode";
-        expr = true;
-      };
-    }
+      {
+        key = "goo";
+        mode = [ "n" ];
+        action = ''
+          function()
+            return require("opencode").operator("@this ") .. "_"
+          end
+        '';
+        options = {
+          desc = "Add line to opencode";
+          expr = true;
+        };
+      }
 
-    {
-      key = "<S-C-u>";
-      mode = [ "n" ];
-      action = ''
-        function()
-          require("opencode").command("session.half.page.up")
-        end
-      '';
-      options.desc = "Scroll opencode up";
-    }
+      {
+        key = "<S-C-u>";
+        mode = [ "n" ];
+        action = ''
+          function()
+            require("opencode").command("session.half.page.up")
+          end
+        '';
+        options.desc = "Scroll opencode up";
+      }
 
-    {
-      key = "<S-C-d>";
-      mode = [ "n" ];
-      action = ''
-        function()
-          require("opencode").command("session.half.page.down")
-        end
-      '';
-      options.desc = "Scroll opencode down";
-    }
+      {
+        key = "<S-C-d>";
+        mode = [ "n" ];
+        action = ''
+          function()
+            require("opencode").command("session.half.page.down")
+          end
+        '';
+        options.desc = "Scroll opencode down";
+      }
 
-    {
-      key = "+";
-      mode = [ "n" ];
-      action = "<C-a>";
-      options = {
-        desc = "Increment under cursor";
-        noremap = true;
-      };
-    }
+      {
+        key = "+";
+        mode = [ "n" ];
+        action = "<C-a>";
+        options = {
+          desc = "Increment under cursor";
+          noremap = true;
+        };
+      }
 
-    {
-      key = "-";
-      mode = [ "n" ];
-      action = "<C-x>";
-      options = {
-        desc = "Decrement under cursor";
-        noremap = true;
-      };
-    }
+      {
+        key = "-";
+        mode = [ "n" ];
+        action = "<C-x>";
+        options = {
+          desc = "Decrement under cursor";
+          noremap = true;
+        };
+      }
     ];
 
   };

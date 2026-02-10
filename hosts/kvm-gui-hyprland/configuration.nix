@@ -24,13 +24,13 @@
 
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
-    kitty              # GPU-accelerated terminal
-    wofi               # App launcher
-    waybar             # Status bar
-    dunst              # Notification daemon
-    grim               # Screenshot tool
-    slurp              # Region selector for grim
-    wl-clipboard       # Clipboard support
-    swww               # Wallpaper daemon
+    kitty # GPU-accelerated terminal
+    wofi # App launcher
+    waybar # Status bar
+    dunst # Notification daemon
+    grim # Screenshot tool
+    slurp # Region selector for grim
+    wl-clipboard # Clipboard support
+    swww # Wallpaper daemon
   ];
 }

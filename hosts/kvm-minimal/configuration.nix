@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -61,9 +61,13 @@
   users.users.patrickli = {
     isNormalUser = true;
     description = "PatrickLi";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+    ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   programs.zsh.enable = true;
@@ -117,5 +121,8 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }
