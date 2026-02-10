@@ -10,3 +10,14 @@ result-*             # In case you have custom named symlinks like result-dev, r
 .nix-defexpr/
 .cache/nix/
 .DS_Store
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

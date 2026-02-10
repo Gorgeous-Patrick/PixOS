@@ -1,6 +1,8 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+[
+  cachix
   ranger
   lazygit
   bat
@@ -29,4 +31,6 @@ with pkgs; [
   libwebp
   tcl
   tk
+  pre-commit
+  devenv
 ]
