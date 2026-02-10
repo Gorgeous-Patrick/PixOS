@@ -12,7 +12,11 @@
       "$mod" = "SUPER";
       "$disable_hyprland_logo" = "true";
 
-      monitor = [ "DP-3, 3440x1440, 0x0, 1" "eDP-1, 2880x1920, 0x1440, 2" "DP-4, 1920x1080, 3440x0, 1, transform, 1"];
+      monitor = [
+        "DP-3, 3440x1440, 0x0, 1"
+        "eDP-1, 2880x1920, 0x1440, 2"
+        "DP-4, 1920x1080, 3440x0, 1, transform, 1"
+      ];
 
       exec-once = [
         "waybar"
@@ -37,6 +41,7 @@
         kb_layout = "us";
         follow_mouse = 1;
         sensitivity = 0;
+        kb_options = "ctrl:nocaps";
       };
 
       bind = [
