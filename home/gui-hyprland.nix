@@ -26,14 +26,14 @@
       ];
 
       general = {
-        gaps_in = 5;
-        gaps_out = 10;
+        gaps_in = 0;
+        gaps_out = 5;
         border_size = 2;
         layout = "master";
       };
 
       decoration = {
-        rounding = 8;
+        rounding = 3;
       };
 
       input = {
