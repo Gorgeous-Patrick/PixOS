@@ -143,6 +143,7 @@
     swww # Wallpaper daemon
     overskride
     networkmanagerapplet
+    openssl
   ];
 
 }
