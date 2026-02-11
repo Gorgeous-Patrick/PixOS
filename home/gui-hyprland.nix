@@ -8,11 +8,23 @@
   programs.hyprshot.enable = true;
   programs.discord.enable = true;
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 24;
+  };
+
   # ── Hyprland (Wayland window manager) ──────────────────────
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
       "$mod" = "SUPER";
+
+      env = [
+        "XCURSOR_SIZE,24"
+        "XCURSOR_THEME,Bibata-Modern-Classic"
+      ];
 
       monitor = [
         "DP-3, 3440x1440, 0x0, 1"
