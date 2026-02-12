@@ -151,6 +151,7 @@
     networkmanagerapplet
     openssl
     telegram-desktop
+    stdenv.cc.cc.lib
   ];
 
 }
