@@ -136,9 +136,6 @@
       {
         mode = [
           "i"
-          "s"
-          "o"
-          "t"
         ];
         key = "jk";
         action = "<Esc>";
