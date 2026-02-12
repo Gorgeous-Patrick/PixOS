@@ -362,6 +362,7 @@
       q = "exit";
       c = "clear";
       g = "lazygit";
+      hiber = "${pkgs.hyprlock}/bin/hyprlock & systemctl hibernate";
     };
     oh-my-zsh = {
       enable = true;
