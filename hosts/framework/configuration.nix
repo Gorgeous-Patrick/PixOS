@@ -124,6 +124,10 @@
 
   programs.nix-ld.enable = true;
 
+  programs.nix-ld.libraries = with pkgs; [
+    zlib
+  ];
+
   # XDG portal for screen-sharing, file-picker, etc.
   xdg.portal = {
     enable = true;
@@ -152,6 +156,10 @@
     openssl
     telegram-desktop
     stdenv.cc.cc.lib
+    nix-index
   ];
 
+  environment.sessionVariables = {
+    LD_LIBRARY_PATH = "\${NIX_LD_LIBRARY_PATH}:\${LD_LIBRARY_PATH}";
+  };
 }
