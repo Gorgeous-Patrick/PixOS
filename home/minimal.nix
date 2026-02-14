@@ -360,6 +360,8 @@
       c = "clear";
       g = "lazygit";
       hiber = "${pkgs.hyprlock}/bin/hyprlock & systemctl hibernate";
+      df = "${pkgs.duf}/bin/duf";
+      du = "${pkgs.dust}/bin/dust";
     };
     oh-my-zsh = {
       enable = true;

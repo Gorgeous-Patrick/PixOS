@@ -33,4 +33,7 @@ with pkgs;
   tk
   pre-commit
   devenv
+  devcontainer
+  duf
+  dust
 ]
