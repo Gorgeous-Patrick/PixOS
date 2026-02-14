@@ -157,6 +157,7 @@
     telegram-desktop
     stdenv.cc.cc.lib
     nix-index
+    direnv
   ];
 
   environment.sessionVariables = {

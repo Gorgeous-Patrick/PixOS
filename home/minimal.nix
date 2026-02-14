@@ -367,4 +367,5 @@
       theme = "robbyrussell";
     };
   };
+  programs.direnv.enable = true;
 }
