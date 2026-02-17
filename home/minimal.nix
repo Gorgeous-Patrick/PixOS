@@ -8,6 +8,7 @@
 
   programs.home-manager.enable = true;
   programs.gh.enable = true;
+  programs.ripgrep.enable = true;
 
   services.syncthing = {
     enable = true;
@@ -204,7 +205,61 @@
       {
         mode = [
           "n"
-          "t"
+        ];
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fgc";
+        action = "<cmd>Telescope git_commits<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fgb";
+        action = "<cmd>Telescope git_branches<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>flg";
+        action = "<cmd>Telescope live_grep<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
         ];
         key = "<leader>gg";
         action = "<cmd>LazyGit<CR>";
