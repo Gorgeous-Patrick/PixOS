@@ -47,6 +47,7 @@
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
     plugins.autoclose.enable = true;
+    plugins.which-key.enable = true;
 
     ####################
     # Treesitter
