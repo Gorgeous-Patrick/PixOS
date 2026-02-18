@@ -36,6 +36,7 @@
       "networkmanager"
       "wheel"
       "audio"
+      "docker"
     ];
     shell = pkgs.zsh;
     packages = with pkgs; [ ];
@@ -65,4 +66,8 @@
     nerd-fonts.jetbrains-mono
   ];
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ zlib ];
+
+  virtualisation.docker.enable = true;
 }

@@ -13,15 +13,9 @@
   networking.hostName = "framework";
 
   # ── Framework-specific ─────────────────────────────────────────
-  users.users.patrickli.extraGroups = [ "docker" ];
 
   services.blueman.enable = true;
   hardware.bluetooth.enable = true;
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [ zlib ];
-
-  virtualisation.docker.enable = true;
 
   nix.extraOptions = ''
     extra-substituters = https://devenv.cachix.org
