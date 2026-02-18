@@ -56,6 +56,7 @@
         follow_mouse = 1;
         sensitivity = 0;
         kb_options = "ctrl:nocaps";
+        touchpad.natural_scroll = true;
       };
 
       bind = [
