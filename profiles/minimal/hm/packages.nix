@@ -11,7 +11,6 @@ with pkgs;
   eza
   htop
   neofetch
-  tmux
   sl
   tg
   cloc
@@ -36,4 +35,5 @@ with pkgs;
   devcontainer
   duf
   dust
+  zellij
 ]
