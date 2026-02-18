@@ -40,7 +40,7 @@
     plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
     plugins.nvim-tree.enable = true;
-    plugins.floaterm = {
+    plugins.toggleterm = {
       enable = true;
     };
     plugins.gitblame.enable = true;
@@ -177,18 +177,6 @@
         ];
         key = "L";
         action = "$";
-        options = {
-          noremap = true;
-          silent = true;
-        };
-      }
-      {
-        mode = [
-          "n"
-          "t"
-        ];
-        key = "<leader>tt";
-        action = "<cmd>FloatermToggle<CR>";
         options = {
           noremap = true;
           silent = true;
@@ -383,6 +371,52 @@
           noremap = true;
         };
       }
+
+      {
+        key = "<leader>tt";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTermToggleAll<CR>";
+        options = {
+          desc = "This command allows you to open all the previously toggled terminal in one go or close all the open terminals at once.";
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>th";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=horizontal<CR>";
+        options = {
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>tv";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=vertical size=100<CR>";
+        options = {
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>tn";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>TermNew<CR>";
+        options = {
+          noremap = true;
+        };
+      }
     ];
 
   };
@@ -404,7 +438,7 @@
       echo Welcome to PixOS! 🚀
     '';
     shellAliases = {
-      ls = "eza";
+      ls = "eza --icons";
       ll = "ls -l";
       lt = "ls --tree";
       la = "ls -a";

@@ -140,6 +140,11 @@
     enable = true;
   };
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+  ];
+
   # Essential Wayland / Hyprland companion packages
   environment.systemPackages = with pkgs; [
     kitty # GPU-accelerated terminal
