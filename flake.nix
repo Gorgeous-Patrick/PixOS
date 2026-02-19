@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     wallpkgs.url = "github:NotAShelf/wallpkgs";
   };
 
@@ -23,21 +28,33 @@
       nixpkgs,
       home-manager,
       nixvim,
+      nix-darwin,
       wallpkgs,
     }:
     let
       system = "x86_64-linux";
+      darwinSystem = "aarch64-darwin";
 
       pkgs = import nixpkgs {
         inherit system;
       };
 
+      darwinPkgs = import nixpkgs {
+        system = darwinSystem;
+      };
+
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
+      pixosMacosRootPkgs = import ./profiles/macos/rootpkgs.nix { pkgs = darwinPkgs; };
     in
     {
       packages.${system} = {
         minimal = pixosMinimalRootPkgs;
         default = pixosMinimalRootPkgs;
+      };
+
+      packages.${darwinSystem} = {
+        macos = pixosMacosRootPkgs;
+        default = pixosMacosRootPkgs;
       };
 
       devShells.${system} = {
@@ -47,12 +64,53 @@
         default = self.devShells.${system}.minimal;
       };
 
+      devShells.${darwinSystem} = {
+        macos = darwinPkgs.mkShell {
+          packages = [ pixosMacosRootPkgs ];
+        };
+        default = self.devShells.${darwinSystem}.macos;
+      };
+
       homeConfigurations."minimal" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           ./home/minimal.nix
           nixvim.homeModules.nixvim
         ];
+      };
+
+      homeConfigurations."macos" = home-manager.lib.homeManagerConfiguration {
+        pkgs = darwinPkgs;
+        modules = [
+          ./home/macos.nix
+          nixvim.homeModules.nixvim
+        ];
+      };
+
+      # macOS (nix-darwin) configurations
+      darwinConfigurations = {
+        macos = nix-darwin.lib.darwinSystem {
+          system = darwinSystem;
+          modules = [
+            ./hosts/macos/configuration.nix
+
+            home-manager.darwinModules.home-manager
+
+            (
+              { ... }:
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+
+                home-manager.users.patrickli = import ./home/macos.nix;
+
+                home-manager.sharedModules = [
+                  nixvim.homeManagerModules.nixvim
+                ];
+              }
+            )
+          ];
+        };
       };
 
       # ✅ NEW: NixOS host configs
