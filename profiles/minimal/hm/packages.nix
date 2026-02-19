@@ -36,5 +36,4 @@ with pkgs;
   duf
   dust
   zellij
-  neovim
 ]
