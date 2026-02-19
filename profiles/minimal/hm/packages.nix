@@ -11,7 +11,6 @@ with pkgs;
   eza
   htop
   neofetch
-  tmux
   sl
   tg
   cloc
@@ -33,4 +32,8 @@ with pkgs;
   tk
   pre-commit
   devenv
+  devcontainer
+  duf
+  dust
+  zellij
 ]

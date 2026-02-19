@@ -8,6 +8,7 @@
 
   programs.home-manager.enable = true;
   programs.gh.enable = true;
+  programs.ripgrep.enable = true;
 
   services.syncthing = {
     enable = true;
@@ -39,13 +40,14 @@
     plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
     plugins.nvim-tree.enable = true;
-    plugins.floaterm = {
+    plugins.toggleterm = {
       enable = true;
     };
     plugins.gitblame.enable = true;
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
     plugins.autoclose.enable = true;
+    plugins.which-key.enable = true;
 
     ####################
     # Treesitter
@@ -181,18 +183,6 @@
         };
       }
       {
-        mode = [
-          "n"
-          "t"
-        ];
-        key = "<leader>tt";
-        action = "<cmd>FloatermToggle<CR>";
-        options = {
-          noremap = true;
-          silent = true;
-        };
-      }
-      {
         mode = [ "t" ];
         key = "<esc>";
         action = "<C-\\><C-n>";
@@ -204,7 +194,61 @@
       {
         mode = [
           "n"
-          "t"
+        ];
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fgc";
+        action = "<cmd>Telescope git_commits<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fgb";
+        action = "<cmd>Telescope git_branches<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>flg";
+        action = "<cmd>Telescope live_grep<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+        ];
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
         ];
         key = "<leader>gg";
         action = "<cmd>LazyGit<CR>";
@@ -327,6 +371,52 @@
           noremap = true;
         };
       }
+
+      {
+        key = "<leader>tt";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTermToggleAll<CR>";
+        options = {
+          desc = "This command allows you to open all the previously toggled terminal in one go or close all the open terminals at once.";
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>th";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=horizontal<CR>";
+        options = {
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>tv";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=vertical size=100<CR>";
+        options = {
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>tn";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>TermNew<CR>";
+        options = {
+          noremap = true;
+        };
+      }
     ];
 
   };
@@ -348,7 +438,7 @@
       echo Welcome to PixOS! 🚀
     '';
     shellAliases = {
-      ls = "eza";
+      ls = "eza --icons";
       ll = "ls -l";
       lt = "ls --tree";
       la = "ls -a";
@@ -360,6 +450,9 @@
       c = "clear";
       g = "lazygit";
       hiber = "${pkgs.hyprlock}/bin/hyprlock & systemctl hibernate";
+      df = "${pkgs.duf}/bin/duf";
+      du = "${pkgs.dust}/bin/dust";
+      open = "xdg-open";
     };
     oh-my-zsh = {
       enable = true;
@@ -367,4 +460,6 @@
       theme = "robbyrussell";
     };
   };
+  programs.direnv.enable = true;
+  programs.zellij.enable = true;
 }
