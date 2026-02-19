@@ -105,7 +105,7 @@
                 home-manager.users.patrickli = import ./home/macos.nix;
 
                 home-manager.sharedModules = [
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
               }
             )
@@ -134,7 +134,7 @@
 
                 # If you want nixvim available in HM on NixOS:
                 home-manager.sharedModules = [
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
               }
             )
@@ -158,7 +158,7 @@
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
 
                 home-manager.sharedModules = [
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
               }
             )
@@ -182,7 +182,7 @@
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
 
                 home-manager.sharedModules = [
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
               }
             )
@@ -206,7 +206,7 @@
                 home-manager.users.patrickli = import ./home/minimal.nix;
 
                 home-manager.sharedModules = [
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
               }
             )

@@ -449,7 +449,7 @@
       q = "exit";
       c = "clear";
       g = "lazygit";
-      hiber = "${pkgs.hyprlock}/bin/hyprlock & systemctl hibernate";
+      hiber = "hyprlock & systemctl hibernate";
       df = "${pkgs.duf}/bin/duf";
       du = "${pkgs.dust}/bin/dust";
       open = "xdg-open";
