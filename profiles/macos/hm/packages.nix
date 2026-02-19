@@ -1,4 +1,7 @@
-{ pkgs }:
+{
+  pkgs,
+  charcoal ? null,
+}:
 
 with pkgs;
 [
@@ -21,3 +24,4 @@ with pkgs;
   pre-commit
   devenv
 ]
+++ (if charcoal != null then [ charcoal ] else [ ])

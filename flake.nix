@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    charcoal = {
+      url = "github:LighghtEeloo/charcoal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     wallpkgs.url = "github:NotAShelf/wallpkgs";
   };
 
@@ -29,6 +34,7 @@
       home-manager,
       nixvim,
       nix-darwin,
+      charcoal,
       wallpkgs,
     }:
     let
@@ -73,6 +79,9 @@
 
       homeConfigurations."minimal" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = {
+          charcoalPkg = charcoal.packages.${system}.default;
+        };
         modules = [
           ./home/minimal.nix
           nixvim.homeModules.nixvim
@@ -81,6 +90,9 @@
 
       homeConfigurations."macos" = home-manager.lib.homeManagerConfiguration {
         pkgs = darwinPkgs;
+        extraSpecialArgs = {
+          charcoalPkg = charcoal.packages.${darwinSystem}.default;
+        };
         modules = [
           ./home/macos.nix
           nixvim.homeModules.nixvim
@@ -101,6 +113,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+
+                home-manager.extraSpecialArgs = {
+                  charcoalPkg = charcoal.packages.${darwinSystem}.default;
+                };
 
                 home-manager.users.patrickli = import ./home/macos.nix;
 
@@ -129,6 +145,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+
+                home-manager.extraSpecialArgs = {
+                  charcoalPkg = charcoal.packages.${system}.default;
+                };
 
                 home-manager.users.patrickli = import ./home/minimal.nix;
 
@@ -202,6 +222,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+
+                home-manager.extraSpecialArgs = {
+                  charcoalPkg = charcoal.packages.${system}.default;
+                };
 
                 home-manager.users.patrickli = import ./home/minimal.nix;
 
