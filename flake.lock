@@ -8,15 +8,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1771483333,
-        "narHash": "sha256-0BXYG9dCzDrJDcg9MD/DbbEbBLTtEPgEvfQmwzkdRog=",
-        "owner": "LighghtEeloo",
+        "lastModified": 1771533028,
+        "narHash": "sha256-c+w2IlmTmKDUZBkc+TWZ9fRX/y1LZnBaRNS48uhzSeM=",
+        "owner": "Gorgeous-Patrick",
         "repo": "charcoal",
-        "rev": "b50b89b814239612849befb3474f4aa97f5c6126",
+        "rev": "d4056c29d8883a887766a1b9bf2590dd7b5f3895",
         "type": "github"
       },
       "original": {
-        "owner": "LighghtEeloo",
+        "owner": "Gorgeous-Patrick",
+        "ref": "fix/add-alsa-lib-linux",
         "repo": "charcoal",
         "type": "github"
       }

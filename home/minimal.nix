@@ -1,10 +1,21 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  charcoalPkg ? null,
+  ...
+}:
 {
   home.username = "patrickli";
   home.homeDirectory = "/home/patrickli";
   home.stateVersion = "25.11";
 
-  home.packages = import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
+  # home.packages = import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
+  home.packages = (
+    import ../profiles/minimal/hm/packages.nix {
+      inherit pkgs;
+      charcoal = charcoalPkg;
+    }
+  );
 
   programs.home-manager.enable = true;
   programs.gh.enable = true;

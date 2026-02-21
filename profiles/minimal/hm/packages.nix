@@ -1,4 +1,7 @@
-{ pkgs }:
+{
+  pkgs,
+  charcoal ? null,
+}:
 
 with pkgs;
 [
@@ -37,3 +40,4 @@ with pkgs;
   dust
   zellij
 ]
+++ (if charcoal != null then [ charcoal ] else [ ])

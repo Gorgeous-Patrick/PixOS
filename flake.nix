@@ -20,7 +20,7 @@
     };
 
     charcoal = {
-      url = "github:LighghtEeloo/charcoal";
+      url = "github:Gorgeous-Patrick/charcoal/fix/add-alsa-lib-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -174,6 +174,9 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = {
+                  charcoalPkg = charcoal.packages.${system}.default;
+                };
 
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
 
@@ -198,6 +201,9 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = {
+                  charcoalPkg = charcoal.packages.${system}.default;
+                };
 
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
 
