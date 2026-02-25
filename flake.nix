@@ -20,7 +20,7 @@
     };
 
     charcoal = {
-      url = "github:Gorgeous-Patrick/charcoal/fix/add-alsa-lib-linux";
+      url = "github:LighghtEeloo/charcoal/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
