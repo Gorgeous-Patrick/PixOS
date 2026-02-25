@@ -39,5 +39,7 @@ with pkgs;
   duf
   dust
   zellij
+  minikube
+  kubectl
 ]
 ++ (if charcoal != null then [ charcoal ] else [ ])
