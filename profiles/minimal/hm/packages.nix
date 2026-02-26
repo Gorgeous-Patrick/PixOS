@@ -41,5 +41,6 @@ with pkgs;
   zellij
   minikube
   kubectl
+  nixpkgs-review
 ]
 ++ (if charcoal != null then [ charcoal ] else [ ])

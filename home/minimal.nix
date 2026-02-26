@@ -438,6 +438,7 @@
       user.name = "Patrick Li";
       user.email = "baichuanli@yahoo.com";
     };
+    lfs.enable = true;
   };
 
   programs.opencode.enable = true;
