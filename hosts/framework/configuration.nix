@@ -36,5 +36,6 @@
     stdenv.cc.cc.lib
     nix-index
     direnv
+    pulsemixer
   ];
 }
