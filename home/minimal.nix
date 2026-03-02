@@ -59,6 +59,7 @@
     plugins.auto-save.enable = true;
     plugins.autoclose.enable = true;
     plugins.which-key.enable = true;
+    plugins.trouble.enable = true;
 
     ####################
     # Treesitter

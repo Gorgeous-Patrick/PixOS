@@ -53,5 +53,6 @@
     slurp
     wl-clipboard
     swww
+    dbeaver-bin
   ];
 }
