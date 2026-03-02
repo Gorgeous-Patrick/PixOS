@@ -429,6 +429,42 @@
           noremap = true;
         };
       }
+      {
+        key = "<leader>xx";
+        mode = [ "n" ];
+        action = "<cmd>Trouble diagnostics toggle<cr>";
+        options.desc = "Diagnostics (Trouble)";
+      }
+      {
+        key = "<leader>xX";
+        mode = [ "n" ];
+        action = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>";
+        options.desc = "Buffer Diagnostics (Trouble)";
+      }
+      {
+        key = "<leader>xs";
+        mode = [ "n" ];
+        action = "<cmd>Trouble symbols toggle focus=false<cr>";
+        options.desc = "Symbols (Trouble)";
+      }
+      {
+        key = "<leader>xl";
+        mode = [ "n" ];
+        action = "<cmd>Trouble lsp toggle focus=false win.position=right<cr>";
+        options.desc = "LSP Definitions / references / ... (Trouble)";
+      }
+      {
+        key = "<leader>xL";
+        mode = [ "n" ];
+        action = "<cmd>Trouble loclist toggle<cr>";
+        options.desc = "Location List (Trouble)";
+      }
+      {
+        key = "<leader>xQ";
+        mode = [ "n" ];
+        action = "<cmd>Trouble qflist toggle<cr>";
+        options.desc = "Quickfix List (Trouble)";
+      }
     ];
 
   };
