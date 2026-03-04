@@ -476,6 +476,9 @@
       user.email = "baichuanli@yahoo.com";
     };
     lfs.enable = true;
+    extraConfig = {
+      pull.rebase = true;
+    };
   };
 
   programs.opencode.enable = true;
