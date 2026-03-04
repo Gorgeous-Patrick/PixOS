@@ -1,8 +1,21 @@
 { pkgs, wallpkgs, ... }:
+let
+  swww-rotate = pkgs.writeShellScriptBin "wallpaper-rotate" "
+  DIR=${wallpkgs}/wallpapers/catppuccin
+  while true; do
+    WALL=$(find \"$DIR\" -type f | shuf -n 1)
+    echo $WALL
+    swww img \"$WALL\" --transition-type wipe
+    sleep 600
+  done
+";
+
+in
 {
   imports = [
     ./minimal.nix
   ];
+
   programs.firefox.enable = true;
   programs.hyprlock.enable = true;
   programs.hyprshot.enable = true;
@@ -38,7 +51,7 @@
         "swww-daemon"
         "nm-applet"
         "blueman-applet"
-        "swww img ${wallpkgs}/wallpapers/catppuccin/catppuccin-math.png"
+        "${swww-rotate}/bin/wallpaper-rotate"
       ];
 
       general = {
