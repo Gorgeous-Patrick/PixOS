@@ -466,6 +466,18 @@
         options.desc = "Quickfix List (Trouble)";
       }
     ];
+    extraConfigLua = ''
+      vim.lsp.config.jac = {
+        cmd = { "jac", "lsp" },
+        filetypes = { "jac" },
+        root_markers = { "jac.toml" },
+      }
+      vim.filetype.add({
+        extension = {
+          jac = "jac",
+        },
+      })
+    '';
 
   };
 
