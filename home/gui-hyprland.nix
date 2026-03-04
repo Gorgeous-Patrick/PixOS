@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, wallpkgs, ... }:
 {
   imports = [
     ./minimal.nix
@@ -38,6 +38,7 @@
         "swww-daemon"
         "nm-applet"
         "blueman-applet"
+        "swww img ${wallpkgs}/wallpapers/catppuccin/catppuccin-math.png"
       ];
 
       general = {

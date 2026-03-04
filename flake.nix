@@ -203,6 +203,7 @@
                 home-manager.useUserPackages = true;
                 home-manager.extraSpecialArgs = {
                   charcoalPkg = charcoal.packages.${system}.default;
+                  wallpkgs = wallpkgs;
                 };
 
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
