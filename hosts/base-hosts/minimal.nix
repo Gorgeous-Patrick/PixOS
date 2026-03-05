@@ -52,6 +52,8 @@
     vim
     wget
     git
+    tg
+    unzip
   ];
 
   nix.settings.experimental-features = [
