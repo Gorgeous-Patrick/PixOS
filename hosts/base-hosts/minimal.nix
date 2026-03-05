@@ -60,6 +60,10 @@
     "nix-command"
     "flakes"
   ];
+  nix.settings.trusted-users = [
+    "root"
+    "patrickli"
+  ];
 
   system.stateVersion = "25.11";
 
