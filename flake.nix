@@ -194,6 +194,8 @@
           modules = [
             ./hosts/framework/configuration.nix
 
+            ./bundles/git.nix
+
             home-manager.nixosModules.home-manager
 
             (

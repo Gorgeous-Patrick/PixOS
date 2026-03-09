@@ -76,4 +76,5 @@
   programs.nix-ld.libraries = with pkgs; [ zlib ];
 
   virtualisation.docker.enable = true;
+  pixos.bundles.git.enable = true;
 }

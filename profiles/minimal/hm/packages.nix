@@ -7,7 +7,6 @@ with pkgs;
 [
   cachix
   ranger
-  lazygit
   bat
   nixfmt-rfc-style
   treefmt
