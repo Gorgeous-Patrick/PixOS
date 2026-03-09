@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  wallpkgs,
+  ...
+}:
 
 {
   imports = [
@@ -11,6 +16,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "framework";
+
+  # ── Hyprland bundle config ────────────────────────────────────
+  pixos.bundles.hyprland.monitors = [
+    "DP-3, 3440x1440, 0x0, 1"
+    "eDP-1, 2880x1920, 0x1440, 2"
+    "DP-4, 1920x1080, 3440x0, 1, transform, 1"
+  ];
+  pixos.bundles.hyprland.wallpaperPath = "${wallpkgs}/wallpapers/catppuccin";
 
   # ── Framework-specific ─────────────────────────────────────────
 

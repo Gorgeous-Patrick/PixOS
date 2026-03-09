@@ -170,6 +170,7 @@
           modules = [
             ./hosts/kvm-gui-hyprland/configuration.nix
 
+            ./bundles/hyprland.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
@@ -197,10 +198,15 @@
         framework = nixpkgs.lib.nixosSystem {
           inherit system;
 
+          specialArgs = {
+            inherit wallpkgs;
+          };
+
           modules = [
             ./hosts/framework/configuration.nix
 
             ./bundles/git.nix
+            ./bundles/hyprland.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
@@ -213,7 +219,6 @@
                 home-manager.useUserPackages = true;
                 home-manager.extraSpecialArgs = {
                   charcoalPkg = charcoal.packages.${system}.default;
-                  wallpkgs = wallpkgs;
                 };
 
                 home-manager.users.patrickli = import ./home/gui-hyprland.nix;
