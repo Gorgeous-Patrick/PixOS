@@ -124,6 +124,12 @@ in
 
         # Fullscreen current window with Mod+F
         "$mod, F, fullscreen"
+
+        # Enter resize mode
+        "$mod, R, submap, resize"
+
+        # Center window
+        "$mod SHIFT, C, centerwindow"
       ];
 
       bindm = [
@@ -131,10 +137,28 @@ in
         "$mod, mouse:273, resizewindow"
       ];
 
+      windowrulev2 = [
+        "float, class:.*"
+      ];
+
       misc = {
         "disable_hyprland_logo" = true;
         "disable_splash_rendering" = true;
       };
     };
+
+    extraConfig = ''
+      submap = resize
+      binde = , H, resizeactive, -20 0
+      binde = , L, resizeactive, 20 0
+      binde = , K, resizeactive, 0 -20
+      binde = , J, resizeactive, 0 20
+      binde = , left, resizeactive, -20 0
+      binde = , right, resizeactive, 20 0
+      binde = , up, resizeactive, 0 -20
+      binde = , down, resizeactive, 0 20
+      bind = , escape, submap, reset
+      submap = reset
+    '';
   };
 }
