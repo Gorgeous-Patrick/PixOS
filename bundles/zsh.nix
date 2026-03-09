@@ -44,7 +44,7 @@ in
         programs.zsh = {
           enable = true;
           enableCompletion = true;
-          initExtraFirst = ''
+          initContent = lib.mkBefore ''
             echo Welcome to PixOS!
           '';
           shellAliases = {

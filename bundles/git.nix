@@ -25,9 +25,9 @@ in
         programs.git = {
           enable = true;
           lfs.enable = true;
-          userName = "Patrick Li";
-          userEmail = "baichuanli@yahoo.com";
-          extraConfig = {
+          settings = {
+            user.name = "Patrick Li";
+            user.email = "baichuanli@yahoo.com";
             pull.rebase = true;
             core.pager = "${pkgs.delta}/bin/delta";
             interactive.diffFilter = "${pkgs.delta}/bin/delta --color-only";
