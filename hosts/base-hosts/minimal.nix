@@ -77,4 +77,5 @@
 
   virtualisation.docker.enable = true;
   pixos.bundles.git.enable = true;
+  pixos.bundles.zsh.enable = true;
 }

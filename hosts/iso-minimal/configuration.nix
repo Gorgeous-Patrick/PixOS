@@ -31,4 +31,6 @@
   };
 
   programs.zsh.enable = true;
+
+  pixos.bundles.zsh.enable = true;
 }

@@ -137,6 +137,9 @@
           modules = [
             ./hosts/kvm-minimal/configuration.nix
 
+            ./bundles/nvim.nix
+            ./bundles/zsh.nix
+
             # Home Manager integrated into NixOS
             home-manager.nixosModules.home-manager
 
@@ -167,6 +170,9 @@
           modules = [
             ./hosts/kvm-gui-hyprland/configuration.nix
 
+            ./bundles/nvim.nix
+            ./bundles/zsh.nix
+
             home-manager.nixosModules.home-manager
 
             (
@@ -195,6 +201,8 @@
             ./hosts/framework/configuration.nix
 
             ./bundles/git.nix
+            ./bundles/nvim.nix
+            ./bundles/zsh.nix
 
             home-manager.nixosModules.home-manager
 
@@ -223,6 +231,9 @@
 
           modules = [
             ./hosts/iso-minimal/configuration.nix
+
+            ./bundles/nvim.nix
+            ./bundles/zsh.nix
 
             home-manager.nixosModules.home-manager
 

@@ -125,4 +125,6 @@
     "nix-command"
     "flakes"
   ];
+
+  pixos.bundles.zsh.enable = true;
 }
