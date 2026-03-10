@@ -209,6 +209,7 @@
             ./bundles/hyprland.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
+            ./bundles/ollama.nix
 
             home-manager.nixosModules.home-manager
 

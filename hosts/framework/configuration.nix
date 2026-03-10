@@ -51,4 +51,5 @@
     direnv
     pulsemixer
   ];
+  pixos.bundles.ollama.enable = true;
 }
