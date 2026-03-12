@@ -207,10 +207,6 @@ in
               "$mod, mouse:273, resizewindow"
             ];
 
-            windowrulev2 = [
-              "float, class:.*"
-            ];
-
             misc = {
               "disable_hyprland_logo" = true;
               "disable_splash_rendering" = true;
