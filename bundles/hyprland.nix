@@ -153,6 +153,7 @@ in
               "$mod, Space, togglefloating"
               "$mod, P, pseudo"
               "$mod, J, togglesplit"
+              "$mod, S, exec, hyprshot -m region --clipboard-only"
 
               # Move focus
               "$mod, left, movefocus, l"
