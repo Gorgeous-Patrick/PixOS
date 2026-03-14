@@ -207,6 +207,7 @@
 
             ./bundles/git.nix
             ./bundles/hyprland.nix
+            ./bundles/gui-misc.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
             ./bundles/ollama.nix

@@ -6,18 +6,14 @@
 }:
 
 let
-  cfg = config.pixos.bundles.git;
+  cfg = config.pixos.bundles.ollama;
 in
 {
   options.pixos.bundles.ollama.enable = lib.mkEnableOption "Ollama bundle";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      ollama
+      localsend
     ];
-    services.ollama = {
-      enable = true;
-    };
-
   };
 }
