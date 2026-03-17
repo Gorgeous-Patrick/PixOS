@@ -78,4 +78,5 @@
   virtualisation.docker.enable = true;
   pixos.bundles.git.enable = true;
   pixos.bundles.zsh.enable = true;
+  pixos.bundles.fprintd.enable = true;
 }
