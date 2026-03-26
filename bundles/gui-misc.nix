@@ -14,6 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       ollama
+      claude-code
     ];
     services.ollama = {
       enable = true;
