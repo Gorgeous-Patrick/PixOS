@@ -7,6 +7,404 @@
 
 let
   cfg = config.pixos.bundles.nvim;
+  isDarwin = pkgs.stdenv.isDarwin;
+
+  nixvimConfig = {
+    enable = true;
+
+    clipboard.register = "unnamedplus";
+
+    opts = {
+      number = true;
+      relativenumber = true;
+      expandtab = true;
+      shiftwidth = 2;
+      tabstop = 2;
+      smartindent = true;
+      termguicolors = true;
+      signcolumn = "yes";
+      updatetime = 300;
+    };
+
+    plugins.telescope.enable = true;
+    plugins.web-devicons.enable = true;
+    plugins.nvim-tree.enable = true;
+    plugins.toggleterm.enable = true;
+    plugins.gitblame.enable = true;
+    plugins.lazygit.enable = true;
+    plugins.auto-save.enable = true;
+    plugins.autoclose.enable = true;
+    plugins.which-key.enable = true;
+    plugins.trouble.enable = true;
+
+    plugins.treesitter = {
+      enable = true;
+      settings = {
+        ensure_installed = [
+          "c"
+          "cpp"
+          "python"
+          "rust"
+          "javascript"
+          "typescript"
+          "tsx"
+          "json"
+          "html"
+          "css"
+          "bash"
+          "nix"
+        ];
+        indent.enable = true;
+      };
+    };
+
+    plugins.lsp = {
+      enable = true;
+      servers = {
+        ts_ls.enable = true;
+        html.enable = true;
+        cssls.enable = true;
+        jsonls.enable = true;
+        pyright.enable = true;
+        rust_analyzer.enable = true;
+        rust_analyzer.installRustc = false;
+        rust_analyzer.installCargo = false;
+        clangd.enable = true;
+      };
+    };
+
+    plugins.cmp = {
+      enable = true;
+      autoEnableSources = true;
+      settings = {
+        mapping = {
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Tab>" = "cmp.mapping.select_next_item()";
+          "<S-Tab>" = "cmp.mapping.select_prev_item()";
+        };
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "buffer"; }
+          { name = "path"; }
+        ];
+      };
+    };
+
+    plugins.snacks = {
+      enable = true;
+      settings = {
+        input = { };
+        picker = { };
+        terminal = { };
+      };
+    };
+    plugins.opencode.enable = true;
+
+    keymaps = [
+      {
+        mode = [ "i" ];
+        key = "jk";
+        action = "<Esc>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<C-n>";
+        action = "<cmd>NvimTreeToggle<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "H";
+        action = "^";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "L";
+        action = "$";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "t" ];
+        key = "<esc>";
+        action = "<C-\\><C-n>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>fgc";
+        action = "<cmd>Telescope git_commits<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>fgb";
+        action = "<cmd>Telescope git_branches<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>flg";
+        action = "<cmd>Telescope live_grep<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>gg";
+        action = "<cmd>LazyGit<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        key = "<C-a>";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            require("opencode").ask("@this: ", { submit = true })
+          end
+        '';
+        options.desc = "Ask opencode...";
+      }
+      {
+        key = "<C-x>";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            require("opencode").select()
+          end
+        '';
+        options.desc = "Execute opencode action...";
+      }
+      {
+        key = "<C-.>";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = ''
+          function()
+            require("opencode").toggle()
+          end
+        '';
+        options.desc = "Toggle opencode";
+      }
+      {
+        key = "go";
+        mode = [
+          "n"
+          "x"
+        ];
+        action = ''
+          function()
+            return require("opencode").operator("@this ")
+          end
+        '';
+        options = {
+          desc = "Add range to opencode";
+          expr = true;
+        };
+      }
+      {
+        key = "goo";
+        mode = [ "n" ];
+        action = ''
+          function()
+            return require("opencode").operator("@this ") .. "_"
+          end
+        '';
+        options = {
+          desc = "Add line to opencode";
+          expr = true;
+        };
+      }
+      {
+        key = "<S-C-u>";
+        mode = [ "n" ];
+        action = ''
+          function()
+            require("opencode").command("session.half.page.up")
+          end
+        '';
+        options.desc = "Scroll opencode up";
+      }
+      {
+        key = "<S-C-d>";
+        mode = [ "n" ];
+        action = ''
+          function()
+            require("opencode").command("session.half.page.down")
+          end
+        '';
+        options.desc = "Scroll opencode down";
+      }
+      {
+        key = "+";
+        mode = [ "n" ];
+        action = "<C-a>";
+        options = {
+          desc = "Increment under cursor";
+          noremap = true;
+        };
+      }
+      {
+        key = "-";
+        mode = [ "n" ];
+        action = "<C-x>";
+        options = {
+          desc = "Decrement under cursor";
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>tt";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTermToggleAll<CR>";
+        options = {
+          desc = "Toggle all terminals";
+          noremap = true;
+        };
+      }
+      {
+        key = "<leader>th";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=horizontal<CR>";
+        options.noremap = true;
+      }
+      {
+        key = "<leader>tv";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>ToggleTerm direction=vertical size=100<CR>";
+        options.noremap = true;
+      }
+      {
+        key = "<leader>tn";
+        mode = [
+          "n"
+          "t"
+        ];
+        action = "<cmd>TermNew<CR>";
+        options.noremap = true;
+      }
+      {
+        key = "<leader>xx";
+        mode = [ "n" ];
+        action = "<cmd>Trouble diagnostics toggle<cr>";
+        options.desc = "Diagnostics (Trouble)";
+      }
+      {
+        key = "<leader>xX";
+        mode = [ "n" ];
+        action = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>";
+        options.desc = "Buffer Diagnostics (Trouble)";
+      }
+      {
+        key = "<leader>xs";
+        mode = [ "n" ];
+        action = "<cmd>Trouble symbols toggle focus=false<cr>";
+        options.desc = "Symbols (Trouble)";
+      }
+      {
+        key = "<leader>xl";
+        mode = [ "n" ];
+        action = "<cmd>Trouble lsp toggle focus=false win.position=right<cr>";
+        options.desc = "LSP Definitions / references / ... (Trouble)";
+      }
+      {
+        key = "<leader>xL";
+        mode = [ "n" ];
+        action = "<cmd>Trouble loclist toggle<cr>";
+        options.desc = "Location List (Trouble)";
+      }
+      {
+        key = "<leader>xQ";
+        mode = [ "n" ];
+        action = "<cmd>Trouble qflist toggle<cr>";
+        options.desc = "Quickfix List (Trouble)";
+      }
+    ];
+
+    extraConfigLua = ''
+      vim.lsp.config.jac = {
+        cmd = { "jac", "lsp" },
+        filetypes = { "jac" },
+        root_markers = { "jac.toml" },
+      }
+      vim.filetype.add({
+        extension = {
+          jac = "jac",
+        },
+      })
+    '';
+  };
 in
 {
   options.pixos.bundles.nvim = {
@@ -14,435 +412,21 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # System packages that nvim plugins depend on
     environment.systemPackages = with pkgs; [
-      ripgrep # telescope live_grep
-      fd # telescope find_files
-      lazygit # lazygit plugin
+      ripgrep
+      fd
+      lazygit
     ];
 
+    # On Darwin, use system-level nixvim (from nixDarwinModules)
+    programs.nixvim = lib.mkIf isDarwin nixvimConfig;
+
+    # Home-manager config
     home-manager.users.patrickli =
       { pkgs, ... }:
       {
-        programs.nixvim = {
-          enable = true;
-
-          clipboard.register = "unnamedplus";
-
-          opts = {
-            number = true;
-            relativenumber = true;
-            expandtab = true;
-            shiftwidth = 2;
-            tabstop = 2;
-            smartindent = true;
-            termguicolors = true;
-            signcolumn = "yes";
-            updatetime = 300;
-          };
-
-          plugins.telescope.enable = true;
-          plugins.web-devicons.enable = true;
-          plugins.nvim-tree.enable = true;
-          plugins.toggleterm.enable = true;
-          plugins.gitblame.enable = true;
-          plugins.lazygit.enable = true;
-          plugins.auto-save.enable = true;
-          plugins.autoclose.enable = true;
-          plugins.which-key.enable = true;
-          plugins.trouble.enable = true;
-
-          ####################
-          # Treesitter
-          ####################
-          plugins.treesitter = {
-            enable = true;
-            settings = {
-              ensure_installed = [
-                "c"
-                "cpp"
-                "python"
-                "rust"
-                "javascript"
-                "typescript"
-                "tsx"
-                "json"
-                "html"
-                "css"
-                "bash"
-                "nix"
-              ];
-              indent.enable = true;
-            };
-          };
-
-          ####################
-          # LSP
-          ####################
-          plugins.lsp = {
-            enable = true;
-
-            servers = {
-              # Frontend
-              ts_ls.enable = true;
-              html.enable = true;
-              cssls.enable = true;
-              jsonls.enable = true;
-
-              # Python
-              pyright.enable = true;
-
-              # Rust
-              rust_analyzer.enable = true;
-              rust_analyzer.installRustc = false;
-              rust_analyzer.installCargo = false;
-
-              # C / C++
-              clangd.enable = true;
-            };
-          };
-
-          ####################
-          # Completion
-          ####################
-          plugins.cmp = {
-            enable = true;
-            autoEnableSources = true;
-
-            settings = {
-              mapping = {
-                "<CR>" = "cmp.mapping.confirm({ select = true })";
-                "<Tab>" = "cmp.mapping.select_next_item()";
-                "<S-Tab>" = "cmp.mapping.select_prev_item()";
-              };
-
-              sources = [
-                { name = "nvim_lsp"; }
-                { name = "buffer"; }
-                { name = "path"; }
-              ];
-            };
-          };
-
-          ####################
-          # Vibe Coding
-          ####################
-          plugins.snacks = {
-            enable = true;
-            settings = {
-              input = { };
-              picker = { };
-              terminal = { };
-            };
-          };
-          plugins.opencode.enable = true;
-
-          keymaps = [
-            {
-              mode = [ "i" ];
-              key = "jk";
-              action = "<Esc>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [
-                "n"
-                "v"
-              ];
-              key = "<C-n>";
-              action = "<cmd>NvimTreeToggle<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [
-                "n"
-                "v"
-              ];
-              key = "H";
-              action = "^";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [
-                "n"
-                "v"
-              ];
-              key = "L";
-              action = "$";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "t" ];
-              key = "<esc>";
-              action = "<C-\\><C-n>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>ff";
-              action = "<cmd>Telescope find_files<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>fgc";
-              action = "<cmd>Telescope git_commits<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>fgb";
-              action = "<cmd>Telescope git_branches<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>flg";
-              action = "<cmd>Telescope live_grep<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>fb";
-              action = "<cmd>Telescope buffers<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              mode = [ "n" ];
-              key = "<leader>gg";
-              action = "<cmd>LazyGit<CR>";
-              options = {
-                noremap = true;
-                silent = true;
-              };
-            }
-            {
-              key = "<C-a>";
-              mode = [
-                "n"
-                "x"
-              ];
-              action = ''
-                function()
-                  require("opencode").ask("@this: ", { submit = true })
-                end
-              '';
-              options.desc = "Ask opencode...";
-            }
-            {
-              key = "<C-x>";
-              mode = [
-                "n"
-                "x"
-              ];
-              action = ''
-                function()
-                  require("opencode").select()
-                end
-              '';
-              options.desc = "Execute opencode action...";
-            }
-            {
-              key = "<C-.>";
-              mode = [
-                "n"
-                "t"
-              ];
-              action = ''
-                function()
-                  require("opencode").toggle()
-                end
-              '';
-              options.desc = "Toggle opencode";
-            }
-            {
-              key = "go";
-              mode = [
-                "n"
-                "x"
-              ];
-              action = ''
-                function()
-                  return require("opencode").operator("@this ")
-                end
-              '';
-              options = {
-                desc = "Add range to opencode";
-                expr = true;
-              };
-            }
-            {
-              key = "goo";
-              mode = [ "n" ];
-              action = ''
-                function()
-                  return require("opencode").operator("@this ") .. "_"
-                end
-              '';
-              options = {
-                desc = "Add line to opencode";
-                expr = true;
-              };
-            }
-            {
-              key = "<S-C-u>";
-              mode = [ "n" ];
-              action = ''
-                function()
-                  require("opencode").command("session.half.page.up")
-                end
-              '';
-              options.desc = "Scroll opencode up";
-            }
-            {
-              key = "<S-C-d>";
-              mode = [ "n" ];
-              action = ''
-                function()
-                  require("opencode").command("session.half.page.down")
-                end
-              '';
-              options.desc = "Scroll opencode down";
-            }
-            {
-              key = "+";
-              mode = [ "n" ];
-              action = "<C-a>";
-              options = {
-                desc = "Increment under cursor";
-                noremap = true;
-              };
-            }
-            {
-              key = "-";
-              mode = [ "n" ];
-              action = "<C-x>";
-              options = {
-                desc = "Decrement under cursor";
-                noremap = true;
-              };
-            }
-            {
-              key = "<leader>tt";
-              mode = [
-                "n"
-                "t"
-              ];
-              action = "<cmd>ToggleTermToggleAll<CR>";
-              options = {
-                desc = "Toggle all terminals";
-                noremap = true;
-              };
-            }
-            {
-              key = "<leader>th";
-              mode = [
-                "n"
-                "t"
-              ];
-              action = "<cmd>ToggleTerm direction=horizontal<CR>";
-              options.noremap = true;
-            }
-            {
-              key = "<leader>tv";
-              mode = [
-                "n"
-                "t"
-              ];
-              action = "<cmd>ToggleTerm direction=vertical size=100<CR>";
-              options.noremap = true;
-            }
-            {
-              key = "<leader>tn";
-              mode = [
-                "n"
-                "t"
-              ];
-              action = "<cmd>TermNew<CR>";
-              options.noremap = true;
-            }
-            {
-              key = "<leader>xx";
-              mode = [ "n" ];
-              action = "<cmd>Trouble diagnostics toggle<cr>";
-              options.desc = "Diagnostics (Trouble)";
-            }
-            {
-              key = "<leader>xX";
-              mode = [ "n" ];
-              action = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>";
-              options.desc = "Buffer Diagnostics (Trouble)";
-            }
-            {
-              key = "<leader>xs";
-              mode = [ "n" ];
-              action = "<cmd>Trouble symbols toggle focus=false<cr>";
-              options.desc = "Symbols (Trouble)";
-            }
-            {
-              key = "<leader>xl";
-              mode = [ "n" ];
-              action = "<cmd>Trouble lsp toggle focus=false win.position=right<cr>";
-              options.desc = "LSP Definitions / references / ... (Trouble)";
-            }
-            {
-              key = "<leader>xL";
-              mode = [ "n" ];
-              action = "<cmd>Trouble loclist toggle<cr>";
-              options.desc = "Location List (Trouble)";
-            }
-            {
-              key = "<leader>xQ";
-              mode = [ "n" ];
-              action = "<cmd>Trouble qflist toggle<cr>";
-              options.desc = "Quickfix List (Trouble)";
-            }
-          ];
-
-          extraConfigLua = ''
-            vim.lsp.config.jac = {
-              cmd = { "jac", "lsp" },
-              filetypes = { "jac" },
-              root_markers = { "jac.toml" },
-            }
-            vim.filetype.add({
-              extension = {
-                jac = "jac",
-              },
-            })
-          '';
-        };
-
+        # On NixOS, use home-manager nixvim
+        programs.nixvim = lib.mkIf (!isDarwin) nixvimConfig;
         programs.opencode.enable = true;
       };
   };

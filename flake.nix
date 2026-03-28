@@ -110,6 +110,7 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
+            nixvim.nixDarwinModules.nixvim
             home-manager.darwinModules.home-manager
 
             (
