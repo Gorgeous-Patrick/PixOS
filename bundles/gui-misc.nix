@@ -16,8 +16,8 @@ in
       ollama
       claude-code
     ];
-    services.ollama = {
-      enable = true;
-    };
+    # services.ollama = {
+    #   enable = true;
+    # };
   };
 }

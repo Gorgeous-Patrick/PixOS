@@ -3,11 +3,18 @@
 {
   # Primary user for nix-darwin
   system.primaryUser = "patrickli";
+  nixpkgs.config.allowUnfree = true;
 
   # Nix configuration
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "patrickli" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "patrickli"
+    ];
   };
 
   # System packages
@@ -65,4 +72,8 @@
 
   # Used for backwards compatibility
   system.stateVersion = 5;
+  pixos.bundles.gui-misc.enable = true;
+  pixos.bundles.git.enable = true;
+  pixos.bundles.nvim.enable = true;
+  pixos.bundles.zsh.enable = true;
 }

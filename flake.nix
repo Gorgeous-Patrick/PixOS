@@ -105,6 +105,10 @@
           system = darwinSystem;
           modules = [
             ./hosts/macos/configuration.nix
+            ./bundles/git.nix
+            ./bundles/gui-misc.nix
+            ./bundles/nvim.nix
+            ./bundles/zsh.nix
 
             home-manager.darwinModules.home-manager
 
