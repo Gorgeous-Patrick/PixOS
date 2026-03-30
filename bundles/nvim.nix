@@ -419,7 +419,7 @@ in
     ];
 
     # On Darwin, use system-level nixvim (from nixDarwinModules)
-    programs.nixvim = lib.mkIf isDarwin nixvimConfig;
+    # programs.nixvim = lib.mkIf isDarwin nixvimConfig;
 
     # Home-manager config
     home-manager.users.patrickli =

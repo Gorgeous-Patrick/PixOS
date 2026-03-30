@@ -79,4 +79,5 @@
   pixos.bundles.git.enable = true;
   pixos.bundles.zsh.enable = true;
   pixos.bundles.fprintd.enable = true;
+  pixos.bundles.web-dev.enable = true;
 }

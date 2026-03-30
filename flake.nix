@@ -217,6 +217,7 @@
             ./bundles/zsh.nix
             ./bundles/ollama.nix
             ./bundles/fprintd.nix
+            ./bundles/web-dev.nix
 
             home-manager.nixosModules.home-manager
 

@@ -9,11 +9,12 @@ let
   cfg = config.pixos.bundles.git;
 in
 {
-  options.pixos.bundles.gui-misc.enable = lib.mkEnableOption "GUI misc tools bundle";
+  options.pixos.bundles.web-dev.enable = lib.mkEnableOption "Web dev bundle";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      localsend
+      httpie
+      jq
     ];
   };
 }
