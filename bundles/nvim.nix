@@ -36,6 +36,16 @@ let
     plugins.autoclose.enable = true;
     plugins.which-key.enable = true;
     plugins.trouble.enable = true;
+    plugins.codesnap.enable = true;
+    plugins.codesnap.settings = {
+      breadcrumbs_separator = "/";
+      has_breadcrumbs = false;
+      has_line_number = false;
+      mac_window_bar = true;
+      save_path = "~/Pictures/Screenshots/";
+      title = "CodeSnap.nvim";
+      watermark = "";
+    };
 
     plugins.treesitter = {
       enable = true;
