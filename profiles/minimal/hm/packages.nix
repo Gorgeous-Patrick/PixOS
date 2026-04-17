@@ -19,6 +19,7 @@ with pkgs;
   cryfs
   cargo
   rustc
+  rustfmt
   nodejs
   gcc15
   python313
