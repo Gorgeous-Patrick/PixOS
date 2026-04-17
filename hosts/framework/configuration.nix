@@ -42,6 +42,7 @@
 
   environment.systemPackages = with pkgs; [
     alacritty
+    warp-terminal
     overskride
     networkmanagerapplet
     openssl
