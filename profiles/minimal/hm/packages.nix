@@ -18,6 +18,7 @@ with pkgs;
   cloc
   cryfs
   cargo
+  clippy
   rustc
   rustfmt
   nodejs
