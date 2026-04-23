@@ -5,6 +5,7 @@
 
 with pkgs;
 [
+  act
   cachix
   ranger
   bat
