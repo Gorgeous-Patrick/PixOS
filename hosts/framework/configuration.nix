@@ -17,6 +17,18 @@
 
   networking.hostName = "framework";
 
+  networking.firewall.allowedTCPPorts = [
+    3000 # generic web dev
+    3001
+    3002
+    4000 # Phoenix / misc
+    5173 # Vite
+    8000 # Trunk
+    8080 # API servers
+    8888 # Jupyter
+    9000 # misc
+  ];
+
   # ── Hyprland bundle config ────────────────────────────────────
   pixos.bundles.hyprland.monitors = [
     "DP-3, 3440x1440, 0x0, 1"
