@@ -15,6 +15,8 @@ in
     environment.systemPackages = with pkgs; [
       localsend
       zotero
+      shotcut
+      obs-studio
     ];
   };
 }
