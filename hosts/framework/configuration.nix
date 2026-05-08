@@ -66,4 +66,6 @@
   ];
   pixos.bundles.ollama.enable = true;
   pixos.bundles.niri.enable = true;
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 }

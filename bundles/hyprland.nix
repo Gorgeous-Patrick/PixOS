@@ -112,6 +112,7 @@ in
             env = [
               "XCURSOR_SIZE,24"
               "XCURSOR_THEME,Bibata-Modern-Classic"
+              "GDK_SCALE,2"
             ];
 
             monitor = cfg.monitors;
@@ -221,6 +222,10 @@ in
             misc = {
               "disable_hyprland_logo" = true;
               "disable_splash_rendering" = true;
+            };
+
+            xwayland = {
+              force_zero_scaling = true;
             };
           };
 
