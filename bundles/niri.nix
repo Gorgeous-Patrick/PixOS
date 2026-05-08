@@ -15,5 +15,27 @@ in
     environment.systemPackages = with pkgs; [
       niri
     ];
+
+    # Audio
+    services.pipewire = {
+      enable = true;
+      audio.enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+
+    # Fonts
+    fonts.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+    ];
   };
 }
