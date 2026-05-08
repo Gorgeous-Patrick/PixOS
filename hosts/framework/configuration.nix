@@ -65,4 +65,5 @@
     pulsemixer
   ];
   pixos.bundles.ollama.enable = true;
+  pixos.bundles.niri.enable = true;
 }

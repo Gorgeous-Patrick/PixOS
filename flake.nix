@@ -218,6 +218,7 @@
             ./bundles/ollama.nix
             ./bundles/fprintd.nix
             ./bundles/web-dev.nix
+            ./bundles/niri.nix
 
             home-manager.nixosModules.home-manager
 
