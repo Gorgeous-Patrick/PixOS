@@ -36,6 +36,8 @@ in
       ranger # file manager
       duf # df replacement
       dust # du replacement
+      unbill-cli
+      unbill-tui
     ];
 
     home-manager.users.patrickli =

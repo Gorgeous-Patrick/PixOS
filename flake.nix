@@ -25,6 +25,11 @@
     };
 
     wallpkgs.url = "github:NotAShelf/wallpkgs";
+
+    unbill = {
+      url = "github:unbill-project/unbill";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -36,6 +41,7 @@
       nix-darwin,
       charcoal,
       wallpkgs,
+      unbill,
     }:
     let
       system = "x86_64-linux";
@@ -47,6 +53,10 @@
 
       darwinPkgs = import nixpkgs {
         system = darwinSystem;
+      };
+
+      unbillOverlay = _: _: {
+        inherit (unbill.packages.${system}) unbill-cli unbill-tui;
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
@@ -145,6 +155,8 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
+            { nixpkgs.overlays = [ unbillOverlay ]; }
+
             # Home Manager integrated into NixOS
             home-manager.nixosModules.home-manager
 
@@ -178,6 +190,8 @@
             ./bundles/hyprland.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
+
+            { nixpkgs.overlays = [ unbillOverlay ]; }
 
             home-manager.nixosModules.home-manager
 
@@ -220,6 +234,8 @@
             ./bundles/web-dev.nix
             ./bundles/niri.nix
 
+            { nixpkgs.overlays = [ unbillOverlay ]; }
+
             home-manager.nixosModules.home-manager
 
             (
@@ -249,6 +265,8 @@
 
             ./bundles/nvim.nix
             ./bundles/zsh.nix
+
+            { nixpkgs.overlays = [ unbillOverlay ]; }
 
             home-manager.nixosModules.home-manager
 
