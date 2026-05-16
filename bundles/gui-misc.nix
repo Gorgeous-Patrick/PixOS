@@ -18,6 +18,7 @@ in
       zotero
       shotcut
       obs-studio
+      logseq
     ];
   };
 }
