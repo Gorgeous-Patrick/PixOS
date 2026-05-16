@@ -56,7 +56,7 @@
       };
 
       unbillOverlay = _: _: {
-        inherit (unbill.packages.${system}) unbill-cli unbill-tui;
+        inherit (unbill.packages.${system}) unbill-daemon unbill-tui;
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };

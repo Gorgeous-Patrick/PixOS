@@ -69,22 +69,14 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  systemd.services.unbill-sync = {
-    description = "Unbill sync";
-    script = ''
-      ${pkgs.unbill-cli}/bin/unbill-cli sync once f0f49fb6804a67ce54030d3afd5b987a1067b9ec560cf8323d97d35ec98fc396
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "patrickli";
-    };
-  };
-
-  systemd.timers.unbill-sync = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*:0/30";
-      Persistent = true;
+  home-manager.users.patrickli = {
+    systemd.user.services.unbill-daemon = {
+      Unit.Description = "Unbill daemon";
+      Service = {
+        ExecStart = "${pkgs.unbill-daemon}/bin/unbill-daemon";
+        Restart = "always";
+      };
+      Install.WantedBy = [ "default.target" ];
     };
   };
 }
