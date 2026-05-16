@@ -13,6 +13,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
+      google-chrome
       localsend
       zotero
       shotcut
