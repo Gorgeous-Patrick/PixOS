@@ -27,7 +27,7 @@
     wallpkgs.url = "github:NotAShelf/wallpkgs";
 
     unbill = {
-      url = "github:unbill-project/unbill";
+      url = "github:unbill-project/unbill/dev/flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -56,7 +56,7 @@
       };
 
       unbillOverlay = _: _: {
-        inherit (unbill.packages.${system}) unbill-daemon unbill-tui;
+        inherit (unbill.packages.${system}) unbill-daemon unbill-tui unbill-tauri;
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };

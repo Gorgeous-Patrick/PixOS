@@ -19,6 +19,7 @@ in
       shotcut
       obs-studio
       obsidian
+      unbill-tauri
     ];
   };
 }

@@ -256,6 +256,27 @@
         "wallpkgs": "wallpkgs"
       }
     },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "unbill",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778901358,
+        "narHash": "sha256-n35a8GOPs8zi35GXPe4uBz0Y8xseTkQpNgcrq81gPg0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "61ec6a4fc56fe0c2b863f7b3eaba07b6664697d9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
     "systems": {
       "locked": {
         "lastModified": 1681028828,
@@ -322,18 +343,20 @@
         "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1778967027,
-        "narHash": "sha256-l/ghbqxJPXfGtTK0WWx+pJASCbU+0blCgLrKU1X+zF8=",
+        "lastModified": 1778984045,
+        "narHash": "sha256-1hriwRdzM7SAdnd+81V0kMjlBFSbhu3uGGqfY+7WC54=",
         "owner": "unbill-project",
         "repo": "unbill",
-        "rev": "e10327e49d8cb6f774810519204126acf8bd43bf",
+        "rev": "0abf80bf1e512ad7aea42a49b50a4a08d1b14422",
         "type": "github"
       },
       "original": {
         "owner": "unbill-project",
+        "ref": "dev/flake",
         "repo": "unbill",
         "type": "github"
       }
