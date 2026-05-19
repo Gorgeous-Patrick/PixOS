@@ -26,10 +26,7 @@
 
     wallpkgs.url = "github:NotAShelf/wallpkgs";
 
-    unbill = {
-      url = "github:unbill-project/unbill/dev/flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    unbill.url = "github:unbill-project/unbill/main";
   };
 
   outputs =
