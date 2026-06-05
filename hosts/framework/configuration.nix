@@ -75,6 +75,7 @@
       Service = {
         ExecStart = "${pkgs.unbill-daemon}/bin/unbill-daemon";
         Restart = "always";
+        Environment = [ "UNBILL_SYNC_INTERVAL_SECS=3600" ];
       };
       Install.WantedBy = [ "default.target" ];
     };
