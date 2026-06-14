@@ -13,7 +13,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      ollama
+      # ollama
       claude-code
       codex
     ];

@@ -116,6 +116,7 @@
             ./bundles/gui-misc.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
+            ./bundles/ollama.nix
 
             { nixpkgs.overlays = [ unbillOverlay ]; }
 

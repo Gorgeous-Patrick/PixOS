@@ -10,8 +10,10 @@
   home.homeDirectory = "/home/patrickli";
   home.stateVersion = "25.11";
 
-  # home.packages = import ../profiles/minimal/hm/packages.nix { inherit pkgs; };
-  home.packages = (
+  # Linux-oriented base package set. Skipped on Darwin, where home/macos.nix
+  # provides the macOS list instead (this lets bundle packages merge in rather
+  # than being clobbered by a mkForce override).
+  home.packages = lib.optionals (!pkgs.stdenv.isDarwin) (
     import ../profiles/minimal/hm/packages.nix {
       inherit pkgs;
       charcoal = charcoalPkg;

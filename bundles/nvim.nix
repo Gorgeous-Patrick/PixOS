@@ -7,7 +7,6 @@
 
 let
   cfg = config.pixos.bundles.nvim;
-  isDarwin = pkgs.stdenv.isDarwin;
 
   nixvimConfig = {
     enable = true;
@@ -428,15 +427,12 @@ in
       lazygit
     ];
 
-    # On Darwin, use system-level nixvim (from nixDarwinModules)
-    # programs.nixvim = lib.mkIf isDarwin nixvimConfig;
-
-    # Home-manager config
+    # Home-manager config (nixvim home module is available on both NixOS and
+    # Darwin via home-manager.sharedModules)
     home-manager.users.patrickli =
       { pkgs, ... }:
       {
-        # On NixOS, use home-manager nixvim
-        programs.nixvim = lib.mkIf (!isDarwin) nixvimConfig;
+        programs.nixvim = nixvimConfig;
         programs.opencode.enable = true;
       };
   };

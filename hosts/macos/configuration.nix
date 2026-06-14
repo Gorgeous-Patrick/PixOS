@@ -6,6 +6,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Nix configuration
+  nix.enable = false;
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -76,4 +77,5 @@
   pixos.bundles.git.enable = true;
   pixos.bundles.nvim.enable = true;
   pixos.bundles.zsh.enable = true;
+  pixos.bundles.ollama.enable = true;
 }
