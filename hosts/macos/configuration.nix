@@ -40,11 +40,14 @@
       # Add CLI tools from Homebrew here if needed
     ];
     casks = [
-      # Add GUI apps here, e.g.:
-      # "firefox"
-      # "visual-studio-code"
-      # "iterm2"
+      "iterm2"
     ];
+  };
+
+  # Remap Caps Lock to Control
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
   };
 
   # macOS system preferences
