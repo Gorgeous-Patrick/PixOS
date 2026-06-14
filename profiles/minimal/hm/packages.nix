@@ -8,6 +8,7 @@ with pkgs;
   act
   cachix
   ranger
+  yazi
   bat
   nixfmt-rfc-style
   treefmt
