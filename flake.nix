@@ -52,8 +52,8 @@
         system = darwinSystem;
       };
 
-      unbillOverlay = _: _: {
-        inherit (unbill.packages.${system}) unbill-daemon unbill-tui unbill-tauri;
+      unbillOverlay = final: _: {
+        inherit (unbill.packages.${final.stdenv.hostPlatform.system}) unbill-daemon unbill-tui unbill-tauri;
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
@@ -116,6 +116,8 @@
             ./bundles/gui-misc.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
+
+            { nixpkgs.overlays = [ unbillOverlay ]; }
 
             nixvim.nixDarwinModules.nixvim
             home-manager.darwinModules.home-manager
