@@ -18,13 +18,13 @@ in
         localsend
         zotero
         audacity
-        unbill-tauri
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         google-chrome
         shotcut
         obs-studio
         obsidian
+        unbill-tauri
       ];
   };
 }
