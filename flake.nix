@@ -230,6 +230,7 @@
             ./bundles/fprintd.nix
             ./bundles/web-dev.nix
             ./bundles/niri.nix
+            ./bundles/fcitx5.nix
 
             { nixpkgs.overlays = [ unbillOverlay ]; }
 

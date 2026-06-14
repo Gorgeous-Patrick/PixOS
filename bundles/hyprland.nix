@@ -123,6 +123,7 @@ in
               "swww-daemon"
               "nm-applet"
               "blueman-applet"
+              "fcitx5 -d --replace"
             ]
             ++ (lib.optional (cfg.wallpaperPath != null) "${swww-rotate}/bin/wallpaper-rotate");
 
