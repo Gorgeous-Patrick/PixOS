@@ -16,6 +16,8 @@
       "root"
       "patrickli"
     ];
+    substituters = [ "https://pixos.cachix.org" ];
+    trusted-public-keys = [ "pixos.cachix.org-1:gQmieax+bfq9busdRmxIcvvPcDMl6bQe+n+HRICr1To=" ];
   };
 
   # System packages
@@ -81,4 +83,9 @@
   pixos.bundles.nvim.enable = true;
   pixos.bundles.zsh.enable = true;
   pixos.bundles.ollama.enable = true;
+
+  nix.extraOptions = ''
+    extra-substituters = https://devenv.cachix.org https://unbill.cachix.org
+    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= unbill.cachix.org-1:157H1n8eC+rAITRruhXXuS5CUWvSgUIhkzRIbp+AKng=
+  '';
 }
