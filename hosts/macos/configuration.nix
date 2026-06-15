@@ -6,6 +6,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Nix configuration
+  nix.enable = false;
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -15,6 +16,8 @@
       "root"
       "patrickli"
     ];
+    substituters = [ "https://pixos.cachix.org" ];
+    trusted-public-keys = [ "pixos.cachix.org-1:gQmieax+bfq9busdRmxIcvvPcDMl6bQe+n+HRICr1To=" ];
   };
 
   # System packages
@@ -39,11 +42,14 @@
       # Add CLI tools from Homebrew here if needed
     ];
     casks = [
-      # Add GUI apps here, e.g.:
-      # "firefox"
-      # "visual-studio-code"
-      # "iterm2"
+      "iterm2"
     ];
+  };
+
+  # Remap Caps Lock to Control
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
   };
 
   # macOS system preferences
@@ -76,4 +82,10 @@
   pixos.bundles.git.enable = true;
   pixos.bundles.nvim.enable = true;
   pixos.bundles.zsh.enable = true;
+  pixos.bundles.ollama.enable = true;
+
+  nix.extraOptions = ''
+    extra-substituters = https://devenv.cachix.org https://unbill.cachix.org
+    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= unbill.cachix.org-1:157H1n8eC+rAITRruhXXuS5CUWvSgUIhkzRIbp+AKng=
+  '';
 }

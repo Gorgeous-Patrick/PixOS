@@ -18,13 +18,15 @@ in
         localsend
         zotero
         audacity
+        qutebrowser
+        telegram-desktop
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
+        unbill-tauri
         google-chrome
         shotcut
         obs-studio
         obsidian
-        unbill-tauri
       ];
   };
 }
