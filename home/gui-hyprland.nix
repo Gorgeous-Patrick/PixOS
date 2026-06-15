@@ -3,6 +3,7 @@
 {
   imports = [
     ./minimal.nix
+    ./qutebrowser.nix
   ];
 
   # Hyprland home-manager config is handled by the bundle

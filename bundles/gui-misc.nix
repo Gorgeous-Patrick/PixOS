@@ -18,7 +18,6 @@ in
         localsend
         zotero
         audacity
-        qutebrowser
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         unbill-tauri
