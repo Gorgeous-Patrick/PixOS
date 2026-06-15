@@ -30,6 +30,12 @@ in
             schema_list:
               - schema: double_pinyin_flypy
         '';
+
+        # Use simplified Chinese by default
+        home.file.".local/share/fcitx5/rime/double_pinyin_flypy.custom.yaml".text = ''
+          patch:
+            "switches/@2/reset": 1
+        '';
       };
   };
 }
