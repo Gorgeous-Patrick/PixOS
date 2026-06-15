@@ -19,7 +19,6 @@ in
         zotero
         audacity
         qutebrowser
-        telegram-desktop
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         unbill-tauri

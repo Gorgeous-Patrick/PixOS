@@ -43,6 +43,7 @@
     ];
     casks = [
       "iterm2"
+      "telegram"
     ];
   };
 
