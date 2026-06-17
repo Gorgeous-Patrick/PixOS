@@ -13,10 +13,12 @@ let
     if firefoxAddons == null then
       [ ]
     else
-      with firefoxAddons; [
+      with firefoxAddons;
+      [
         ublock-origin
         bitwarden
         darkreader
+        vimium
       ];
 
   # Moderate hardening: kill telemetry / sponsored content / studies / Pocket,
@@ -120,7 +122,10 @@ let
           force = true;
           default = "ddg";
           privateDefault = "ddg";
-          order = [ "ddg" "google" ];
+          order = [
+            "ddg"
+            "google"
+          ];
         };
       };
     };
