@@ -94,7 +94,6 @@ in
         '';
       in
       {
-        programs.firefox.enable = true;
         programs.hyprlock.enable = true;
         programs.hyprshot.enable = true;
 
