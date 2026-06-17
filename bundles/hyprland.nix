@@ -76,6 +76,7 @@ in
       slurp # region selector
       wl-clipboard
       swww # wallpaper daemon
+      brightnessctl
     ];
 
     # ── Home Manager config ──────────────────────────────────────
@@ -153,9 +154,12 @@ in
               "$mod, Z, exec, wofi --show drun"
               "$mod, X, exec, firefox"
               "$mod, Space, togglefloating"
-              "$mod, P, pseudo"
-              "$mod, J, togglesplit"
+              "$mod, P, layoutmsg, pseudo"
+              "$mod, J, layoutmsg, togglesplit"
               "$mod, S, exec, hyprshot -m region --clipboard-only"
+
+              ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
+              ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
 
               # Move focus
               "$mod, left, movefocus, l"

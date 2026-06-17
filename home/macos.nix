@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = [ ./minimal.nix ./qutebrowser.nix ];
+  imports = [ ./minimal.nix ];
 
   home.homeDirectory = lib.mkForce "/Users/patrickli";
   # Normal (mergeable) assignment so bundle-provided packages (e.g. the nixvim

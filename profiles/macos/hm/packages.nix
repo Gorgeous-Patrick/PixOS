@@ -14,7 +14,7 @@ with pkgs;
   treefmt
   eza
   htop
-  neofetch
+  fastfetch
   tmux
   cloc
   cargo
