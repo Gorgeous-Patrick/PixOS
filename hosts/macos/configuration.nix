@@ -42,6 +42,7 @@
       # Add CLI tools from Homebrew here if needed
     ];
     casks = [
+      "bitwarden"
       "iterm2"
       "telegram"
     ];
