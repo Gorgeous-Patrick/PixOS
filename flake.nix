@@ -27,6 +27,11 @@
     wallpkgs.url = "github:NotAShelf/wallpkgs";
 
     unbill.url = "github:unbill-project/unbill/main";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,6 +44,7 @@
       charcoal,
       wallpkgs,
       unbill,
+      firefox-addons,
     }:
     let
       system = "x86_64-linux";
@@ -110,6 +116,9 @@
       darwinConfigurations = {
         macos = nix-darwin.lib.darwinSystem {
           system = darwinSystem;
+          specialArgs = {
+            firefoxAddons = firefox-addons.packages.${darwinSystem};
+          };
           modules = [
             ./hosts/macos/configuration.nix
             ./bundles/git.nix
@@ -117,6 +126,19 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
             ./bundles/ollama.nix
+            ./bundles/firefox.nix
+
+            # Darwin-only: Firefox.app comes from Homebrew since nixpkgs has
+            # no working macOS Firefox bundle. Lives here (not in the bundle)
+            # because `homebrew.*` is a nix-darwin-only option.
+            (
+              { config, lib, ... }:
+              {
+                config = lib.mkIf config.pixos.bundles.firefox.enable {
+                  homebrew.casks = [ "firefox" ];
+                };
+              }
+            )
 
             { nixpkgs.overlays = [ unbillOverlay ]; }
 
@@ -184,10 +206,15 @@
         kvm-gui-hyprland = nixpkgs.lib.nixosSystem {
           inherit system;
 
+          specialArgs = {
+            firefoxAddons = firefox-addons.packages.${system};
+          };
+
           modules = [
             ./hosts/kvm-gui-hyprland/configuration.nix
 
             ./bundles/hyprland.nix
+            ./bundles/firefox.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
@@ -219,6 +246,7 @@
 
           specialArgs = {
             inherit wallpkgs;
+            firefoxAddons = firefox-addons.packages.${system};
           };
 
           modules = [
@@ -226,6 +254,7 @@
 
             ./bundles/git.nix
             ./bundles/hyprland.nix
+            ./bundles/firefox.nix
             ./bundles/gui-misc.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix

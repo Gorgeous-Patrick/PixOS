@@ -6,4 +6,5 @@
 
   # Enable Hyprland bundle (handles: programs.hyprland, greetd, xdg.portal, packages)
   pixos.bundles.hyprland.enable = true;
+  pixos.bundles.firefox.enable = true;
 }
