@@ -103,6 +103,10 @@ let
     "browser.tabs.warnOnClose" = false;
     "browser.toolbars.bookmarks.visibility" = "newtab";
     "browser.uidensity" = 1; # compact
+
+    # Dark theme
+    "ui.systemUsesDarkTheme" = 1;
+    "layout.css.prefers-color-scheme.content-override" = 0;
   };
 
   mkHmFirefox = isDarwin: {
