@@ -27,13 +27,16 @@ in
 
   config = lib.mkIf cfg.enable {
     # ── System-level Hyprland config ──────────────────────────────
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
 
     # Greeter (starts Hyprland on login)
     services.greetd = {
       enable = true;
       settings.default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd start-hyprland";
         user = "greeter";
       };
     };
