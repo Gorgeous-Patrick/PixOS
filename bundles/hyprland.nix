@@ -134,12 +134,7 @@ in
               gaps_in = 0;
               gaps_out = 5;
               border_size = 2;
-              layout = "scrolling";
-            };
-
-            scrolling = {
-              fullscreen_on_one_column = true;
-              column_width = 0.6667;
+              layout = "master";
             };
 
             decoration = {
@@ -161,17 +156,9 @@ in
               "$mod, Z, exec, wofi --show drun"
               "$mod, X, exec, firefox"
               "$mod, Space, togglefloating"
+              "$mod, P, layoutmsg, pseudo"
+              "$mod, J, layoutmsg, togglesplit"
               "$mod, S, exec, hyprshot -m region --clipboard-only"
-
-              # Scrolling layout
-              "$mod, comma, layoutmsg, move -col"
-              "$mod, period, layoutmsg, move +col"
-              "$mod SHIFT, comma, layoutmsg, swapcol l"
-              "$mod SHIFT, period, layoutmsg, swapcol r"
-              "$mod, bracketleft, layoutmsg, colresize -100"
-              "$mod, bracketright, layoutmsg, colresize +100"
-              "$mod, equal, layoutmsg, fit active"
-              "$mod SHIFT, equal, layoutmsg, fit visible"
 
               ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
               ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
