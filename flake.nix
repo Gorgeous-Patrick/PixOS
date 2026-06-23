@@ -33,6 +33,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    jac-nvim = {
+      url = "github:chess10kp/jac.nvim";
+      flake = false;
+    };
+
     tree-sitter-jac = {
       url = "github:jaseci-labs/tree-sitter-jac";
       flake = false;
@@ -50,6 +55,7 @@
       wallpkgs,
       unbill,
       firefox-addons,
+      jac-nvim,
       tree-sitter-jac,
     }:
     let
@@ -68,12 +74,20 @@
         inherit (unbill.packages.${final.stdenv.hostPlatform.system}) unbill-daemon unbill-tui unbill-tauri;
       };
 
-      treeSitterJacOverlay = final: _: {
-        tree-sitter-jac-grammar = final.tree-sitter.buildGrammar {
-          language = "jac";
-          version = tree-sitter-jac.shortRev or "unstable";
-          src = tree-sitter-jac;
+      jacNvimOverlay = final: _: {
+        jac-nvim = final.vimUtils.buildVimPlugin {
+          pname = "jac.nvim";
+          version = jac-nvim.shortRev or "unstable";
+          src = jac-nvim;
         };
+
+        tree-sitter-jac-plugin = final.neovimUtils.grammarToPlugin (
+          final.tree-sitter.buildGrammar {
+            language = "jac";
+            version = tree-sitter-jac.shortRev or "unstable";
+            src = tree-sitter-jac;
+          }
+        );
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
@@ -157,7 +171,7 @@
             {
               nixpkgs.overlays = [
                 unbillOverlay
-                treeSitterJacOverlay
+                jacNvimOverlay
               ];
             }
 
@@ -199,7 +213,7 @@
             {
               nixpkgs.overlays = [
                 unbillOverlay
-                treeSitterJacOverlay
+                jacNvimOverlay
               ];
             }
 
@@ -245,7 +259,7 @@
             {
               nixpkgs.overlays = [
                 unbillOverlay
-                treeSitterJacOverlay
+                jacNvimOverlay
               ];
             }
 
@@ -296,7 +310,7 @@
             {
               nixpkgs.overlays = [
                 unbillOverlay
-                treeSitterJacOverlay
+                jacNvimOverlay
               ];
             }
 
@@ -333,7 +347,7 @@
             {
               nixpkgs.overlays = [
                 unbillOverlay
-                treeSitterJacOverlay
+                jacNvimOverlay
               ];
             }
 

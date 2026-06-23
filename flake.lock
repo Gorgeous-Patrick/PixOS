@@ -137,6 +137,22 @@
         "type": "github"
       }
     },
+    "jac-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782171868,
+        "narHash": "sha256-dsZ7tysfAcNVv9qPPyItR6S+F/w/74dBgVAkMuSWNo4=",
+        "owner": "chess10kp",
+        "repo": "jac.nvim",
+        "rev": "5b5fd84c2c3bd07e1fd50660d9ba76d4c66cf44f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chess10kp",
+        "repo": "jac.nvim",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -218,6 +234,7 @@
         "charcoal": "charcoal",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
+        "jac-nvim": "jac-nvim",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",

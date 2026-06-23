@@ -48,10 +48,6 @@ let
 
     plugins.treesitter = {
       enable = true;
-      grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
-        pkgs.tree-sitter-jac-grammar
-      ];
-      languageRegister.jac = "jac";
       settings = {
         ensure_installed = [
           "c"
@@ -67,9 +63,15 @@ let
           "bash"
           "nix"
         ];
+        highlight.enable = true;
         indent.enable = true;
       };
     };
+
+    extraPlugins = [
+      pkgs.jac-nvim
+      pkgs.tree-sitter-jac-plugin
+    ];
 
     plugins.lsp = {
       enable = true;
@@ -406,15 +408,10 @@ let
     ];
 
     extraConfigLua = ''
-      vim.lsp.config.jac = {
-        cmd = { "jac", "lsp" },
-        filetypes = { "jac" },
-        root_markers = { "jac.toml" },
-      }
-      vim.filetype.add({
-        extension = {
-          jac = "jac",
-        },
+      require("jac").setup({
+        auto_start = true,
+        cmp = true,
+        treesitter = true,
       })
     '';
   };
