@@ -48,6 +48,10 @@ let
 
     plugins.treesitter = {
       enable = true;
+      grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
+        pkgs.tree-sitter-jac-grammar
+      ];
+      languageRegister.jac = "jac";
       settings = {
         ensure_installed = [
           "c"

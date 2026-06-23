@@ -221,6 +221,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
+        "tree-sitter-jac": "tree-sitter-jac",
         "unbill": "unbill",
         "wallpkgs": "wallpkgs"
       }
@@ -288,6 +289,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-jac": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781962204,
+        "narHash": "sha256-R/LcuNqeVJXdMeMBO6yLB6hs7efpe2H0j8ooez4549Y=",
+        "owner": "jaseci-labs",
+        "repo": "tree-sitter-jac",
+        "rev": "825e595d3cd7cb752616175db1c1aa7bb47e5e50",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jaseci-labs",
+        "repo": "tree-sitter-jac",
         "type": "github"
       }
     },

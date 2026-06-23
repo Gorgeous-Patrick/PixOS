@@ -32,6 +32,11 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tree-sitter-jac = {
+      url = "github:jaseci-labs/tree-sitter-jac";
+      flake = false;
+    };
   };
 
   outputs =
@@ -45,6 +50,7 @@
       wallpkgs,
       unbill,
       firefox-addons,
+      tree-sitter-jac,
     }:
     let
       system = "x86_64-linux";
@@ -60,6 +66,14 @@
 
       unbillOverlay = final: _: {
         inherit (unbill.packages.${final.stdenv.hostPlatform.system}) unbill-daemon unbill-tui unbill-tauri;
+      };
+
+      treeSitterJacOverlay = final: _: {
+        tree-sitter-jac-grammar = final.tree-sitter.buildGrammar {
+          language = "jac";
+          version = tree-sitter-jac.shortRev or "unstable";
+          src = tree-sitter-jac;
+        };
       };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
@@ -140,7 +154,12 @@
               }
             )
 
-            { nixpkgs.overlays = [ unbillOverlay ]; }
+            {
+              nixpkgs.overlays = [
+                unbillOverlay
+                treeSitterJacOverlay
+              ];
+            }
 
             nixvim.nixDarwinModules.nixvim
             home-manager.darwinModules.home-manager
@@ -177,7 +196,12 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
-            { nixpkgs.overlays = [ unbillOverlay ]; }
+            {
+              nixpkgs.overlays = [
+                unbillOverlay
+                treeSitterJacOverlay
+              ];
+            }
 
             # Home Manager integrated into NixOS
             home-manager.nixosModules.home-manager
@@ -218,7 +242,12 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
-            { nixpkgs.overlays = [ unbillOverlay ]; }
+            {
+              nixpkgs.overlays = [
+                unbillOverlay
+                treeSitterJacOverlay
+              ];
+            }
 
             home-manager.nixosModules.home-manager
 
@@ -264,7 +293,12 @@
             ./bundles/niri.nix
             ./bundles/fcitx5.nix
 
-            { nixpkgs.overlays = [ unbillOverlay ]; }
+            {
+              nixpkgs.overlays = [
+                unbillOverlay
+                treeSitterJacOverlay
+              ];
+            }
 
             home-manager.nixosModules.home-manager
 
@@ -296,7 +330,12 @@
             ./bundles/nvim.nix
             ./bundles/zsh.nix
 
-            { nixpkgs.overlays = [ unbillOverlay ]; }
+            {
+              nixpkgs.overlays = [
+                unbillOverlay
+                treeSitterJacOverlay
+              ];
+            }
 
             home-manager.nixosModules.home-manager
 
