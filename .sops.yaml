@@ -1,0 +1,7 @@
+keys:
+  - &framework age1k2aszklhhnmgmqezheke4pq8tu24rnc7gx76hgymjmjvq6rmrquslhtq7a
+creation_rules:
+  - path_regex: secrets/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *framework

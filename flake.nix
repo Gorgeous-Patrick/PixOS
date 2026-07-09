@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +55,7 @@
       nixpkgs,
       home-manager,
       nixvim,
+      sops-nix,
       nix-darwin,
       charcoal,
       wallpkgs,
@@ -295,6 +301,8 @@
           modules = [
             ./hosts/framework/configuration.nix
 
+            sops-nix.nixosModules.sops
+
             ./bundles/git.nix
             ./bundles/hyprland.nix
             ./bundles/firefox.nix
@@ -306,6 +314,7 @@
             ./bundles/web-dev.nix
             ./bundles/niri.nix
             ./bundles/fcitx5.nix
+            ./bundles/sops.nix
 
             {
               nixpkgs.overlays = [
