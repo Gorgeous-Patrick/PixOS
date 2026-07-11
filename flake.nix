@@ -165,12 +165,17 @@
           };
           modules = [
             ./hosts/macos/configuration.nix
+
+            sops-nix.darwinModules.sops
+
             ./bundles/git.nix
             ./bundles/gui-misc.nix
             ./bundles/nvim.nix
             ./bundles/zsh.nix
             ./bundles/ollama.nix
             ./bundles/firefox.nix
+            ./bundles/sops.nix
+            ./bundles/concord.nix
 
             # Darwin-only: Firefox.app comes from Homebrew since nixpkgs has
             # no working macOS Firefox bundle. Lives here (not in the bundle)
@@ -188,6 +193,7 @@
               nixpkgs.overlays = [
                 unbillOverlay
                 jacNvimOverlay
+                concordOverlay
               ];
             }
 

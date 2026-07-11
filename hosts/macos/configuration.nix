@@ -87,6 +87,8 @@
   pixos.bundles.zsh.enable = true;
   pixos.bundles.ollama.enable = true;
   pixos.bundles.firefox.enable = true;
+  pixos.bundles.sops.enable = true;
+  pixos.bundles.concord.enable = true;
 
   nix.extraOptions = ''
     extra-substituters = https://devenv.cachix.org https://unbill.cachix.org

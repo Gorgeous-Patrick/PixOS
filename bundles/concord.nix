@@ -7,6 +7,8 @@
 
 let
   cfg = config.pixos.bundles.concord;
+  homeDir = if pkgs.stdenv.isDarwin then "/Users/patrickli" else "/home/patrickli";
+  userGroup = if pkgs.stdenv.isDarwin then "staff" else "users";
 in
 {
   options.pixos.bundles.concord.enable =
@@ -15,13 +17,15 @@ in
   config = lib.mkIf cfg.enable {
     sops.secrets.discord_token = {
       owner = "patrickli";
+      group = userGroup;
       mode = "0400";
     };
 
     sops.templates."concord-credentials.toml" = {
       owner = "patrickli";
+      group = userGroup;
       mode = "0600";
-      path = "/home/patrickli/.local/state/concord/credentials.toml";
+      path = "${homeDir}/.local/state/concord/credentials.toml";
       content = ''
         selected_account = "default"
 
