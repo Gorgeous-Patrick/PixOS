@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    concord = {
+      url = "github:chojs23/concord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,6 +61,7 @@
       home-manager,
       nixvim,
       sops-nix,
+      concord,
       nix-darwin,
       charcoal,
       wallpkgs,
@@ -78,6 +84,10 @@
 
       unbillOverlay = final: _: {
         inherit (unbill.packages.${final.stdenv.hostPlatform.system}) unbill-daemon unbill-tui unbill-tauri;
+      };
+
+      concordOverlay = final: _: {
+        concord-tui = concord.packages.${final.stdenv.hostPlatform.system}.default;
       };
 
       jacNvimOverlay = final: _: {
@@ -315,11 +325,13 @@
             ./bundles/niri.nix
             ./bundles/fcitx5.nix
             ./bundles/sops.nix
+            ./bundles/concord.nix
 
             {
               nixpkgs.overlays = [
                 unbillOverlay
                 jacNvimOverlay
+                concordOverlay
               ];
             }
 

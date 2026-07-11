@@ -113,6 +113,8 @@
     owner = "patrickli";
     mode = "0400";
   };
+
+  pixos.bundles.concord.enable = true;
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
