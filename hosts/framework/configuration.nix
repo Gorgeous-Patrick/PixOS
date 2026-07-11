@@ -108,6 +108,11 @@
   pixos.bundles.ollama.enable = true;
   pixos.bundles.niri.enable = true;
   pixos.bundles.sops.enable = true;
+
+  sops.secrets.anthropic_api_key = {
+    owner = "patrickli";
+    mode = "0400";
+  };
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
