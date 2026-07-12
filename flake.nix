@@ -74,23 +74,26 @@
       system = "x86_64-linux";
       darwinSystem = "aarch64-darwin";
 
-      pkgs = import nixpkgs {
-        inherit system;
-      };
+      # ── One overlay to carry every external input ──────────────────────────
+      # Each flake input that provides a package (or, for wallpkgs, a source
+      # tree) is exposed here as a `pkgs.*` attribute. This is the single place
+      # inputs enter the package set — modules then reach them via `pkgs.foo`
+      # with no per-host specialArgs threading. Applied to every host below and
+      # to the standalone pkgs sets, so the mechanism is uniform everywhere.
+      pixosOverlay = final: _: {
+        inherit (unbill.packages.${final.stdenv.hostPlatform.system})
+          unbill-daemon
+          unbill-tui
+          unbill-tauri
+          ;
 
-      darwinPkgs = import nixpkgs {
-        system = darwinSystem;
-      };
-
-      unbillOverlay = final: _: {
-        inherit (unbill.packages.${final.stdenv.hostPlatform.system}) unbill-daemon unbill-tui unbill-tauri;
-      };
-
-      concordOverlay = final: _: {
         concord-tui = concord.packages.${final.stdenv.hostPlatform.system}.default;
-      };
+        charcoal = charcoal.packages.${final.stdenv.hostPlatform.system}.default;
+        firefox-addons = firefox-addons.packages.${final.stdenv.hostPlatform.system};
 
-      jacNvimOverlay = final: _: {
+        # Not a package — the wallpaper source tree, consumed as a path.
+        inherit wallpkgs;
+
         jac-nvim = final.vimUtils.buildVimPlugin {
           pname = "jac.nvim";
           version = jac-nvim.shortRev or "unstable";
@@ -105,6 +108,79 @@
           }
         );
       };
+
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ pixosOverlay ];
+      };
+
+      darwinPkgs = import nixpkgs {
+        system = darwinSystem;
+        overlays = [ pixosOverlay ];
+      };
+
+      # ── Host builders ──────────────────────────────────────────────────────
+      # bundles/<name>.nix, referenced by short name in host definitions.
+      bundle = name: ./bundles + "/${name}.nix";
+
+      # Home-manager wiring shared by every host (NixOS and Darwin). Only the
+      # user's home module differs per host; the rest is identical boilerplate
+      # that used to be copy-pasted into each configuration.
+      hmWiring = homeModule: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.patrickli = import homeModule;
+        home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+      };
+
+      # All four Linux hosts share this shape. They differ only in host module,
+      # home module, bundle set, and whether sops-nix is included.
+      mkNixosHost =
+        {
+          hostModule,
+          homeModule,
+          bundles ? [ ],
+          sops ? false,
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            hostModule
+          ]
+          ++ nixpkgs.lib.optional sops sops-nix.nixosModules.sops
+          ++ map bundle bundles
+          ++ [
+            { nixpkgs.overlays = [ pixosOverlay ]; }
+            home-manager.nixosModules.home-manager
+            (hmWiring homeModule)
+          ];
+        };
+
+      # The sole Darwin host. Separate from mkNixosHost because the builder,
+      # system, and home-manager / sops / nixvim module paths are all
+      # darwin-specific. bundles/firefox-darwin.nix (the Homebrew Firefox cask)
+      # is darwin-only and so is imported only here.
+      mkDarwinHost =
+        {
+          hostModule,
+          homeModule,
+          bundles ? [ ],
+        }:
+        nix-darwin.lib.darwinSystem {
+          system = darwinSystem;
+          modules = [
+            hostModule
+            sops-nix.darwinModules.sops
+          ]
+          ++ map bundle bundles
+          ++ [
+            (bundle "firefox-darwin")
+            { nixpkgs.overlays = [ pixosOverlay ]; }
+            nixvim.nixDarwinModules.nixvim
+            home-manager.darwinModules.home-manager
+            (hmWiring homeModule)
+          ];
+        };
 
       pixosMinimalRootPkgs = import ./profiles/minimal/rootpkgs.nix { inherit pkgs; };
       pixosMacosRootPkgs = import ./profiles/macos/rootpkgs.nix { pkgs = darwinPkgs; };
@@ -134,11 +210,10 @@
         default = self.devShells.${darwinSystem}.macos;
       };
 
+      # Standalone home-manager configs. charcoal now comes from the overlaid
+      # pkgs (pkgs.charcoal), so no extraSpecialArgs are needed.
       homeConfigurations."minimal" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          charcoalPkg = charcoal.packages.${system}.default;
-        };
         modules = [
           ./home/minimal.nix
           nixvim.homeModules.nixvim
@@ -147,256 +222,77 @@
 
       homeConfigurations."macos" = home-manager.lib.homeManagerConfiguration {
         pkgs = darwinPkgs;
-        extraSpecialArgs = {
-          charcoalPkg = charcoal.packages.${darwinSystem}.default;
-        };
         modules = [
           ./home/macos.nix
           nixvim.homeModules.nixvim
         ];
       };
 
-      # macOS (nix-darwin) configurations
-      darwinConfigurations = {
-        macos = nix-darwin.lib.darwinSystem {
-          system = darwinSystem;
-          specialArgs = {
-            firefoxAddons = firefox-addons.packages.${darwinSystem};
-          };
-          modules = [
-            ./hosts/macos/configuration.nix
-
-            sops-nix.darwinModules.sops
-
-            ./bundles/git.nix
-            ./bundles/gui-misc.nix
-            ./bundles/nvim.nix
-            ./bundles/zsh.nix
-            ./bundles/ollama.nix
-            ./bundles/firefox.nix
-            ./bundles/sops.nix
-            ./bundles/concord.nix
-
-            # Darwin-only: Firefox.app comes from Homebrew since nixpkgs has
-            # no working macOS Firefox bundle. Lives here (not in the bundle)
-            # because `homebrew.*` is a nix-darwin-only option.
-            (
-              { config, lib, ... }:
-              {
-                config = lib.mkIf config.pixos.bundles.firefox.enable {
-                  homebrew.casks = [ "firefox" ];
-                };
-              }
-            )
-
-            {
-              nixpkgs.overlays = [
-                unbillOverlay
-                jacNvimOverlay
-                concordOverlay
-              ];
-            }
-
-            nixvim.nixDarwinModules.nixvim
-            home-manager.darwinModules.home-manager
-
-            (
-              { ... }:
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = {
-                  charcoalPkg = charcoal.packages.${darwinSystem}.default;
-                };
-
-                home-manager.users.patrickli = import ./home/macos.nix;
-
-                home-manager.sharedModules = [
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            )
-          ];
-        };
+      # macOS (nix-darwin)
+      darwinConfigurations.macos = mkDarwinHost {
+        hostModule = ./hosts/macos/configuration.nix;
+        homeModule = ./home/macos.nix;
+        bundles = [
+          "git"
+          "gui-misc"
+          "nvim"
+          "zsh"
+          "ollama"
+          "firefox"
+          "sops"
+          "concord"
+        ];
       };
 
-      # ✅ NEW: NixOS host configs
+      # NixOS hosts
       nixosConfigurations = {
-        kvm-minimal = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          modules = [
-            ./hosts/kvm-minimal/configuration.nix
-
-            ./bundles/nvim.nix
-            ./bundles/zsh.nix
-
-            {
-              nixpkgs.overlays = [
-                unbillOverlay
-                jacNvimOverlay
-              ];
-            }
-
-            # Home Manager integrated into NixOS
-            home-manager.nixosModules.home-manager
-
-            (
-              { ... }:
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = {
-                  charcoalPkg = charcoal.packages.${system}.default;
-                };
-
-                home-manager.users.patrickli = import ./home/minimal.nix;
-
-                # If you want nixvim available in HM on NixOS:
-                home-manager.sharedModules = [
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            )
+        kvm-minimal = mkNixosHost {
+          hostModule = ./hosts/kvm-minimal/configuration.nix;
+          homeModule = ./home/minimal.nix;
+          bundles = [
+            "nvim"
+            "zsh"
           ];
         };
 
-        kvm-gui-hyprland = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            firefoxAddons = firefox-addons.packages.${system};
-          };
-
-          modules = [
-            ./hosts/kvm-gui-hyprland/configuration.nix
-
-            ./bundles/hyprland.nix
-            ./bundles/firefox.nix
-            ./bundles/nvim.nix
-            ./bundles/zsh.nix
-
-            {
-              nixpkgs.overlays = [
-                unbillOverlay
-                jacNvimOverlay
-              ];
-            }
-
-            home-manager.nixosModules.home-manager
-
-            (
-              { ... }:
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = {
-                  charcoalPkg = charcoal.packages.${system}.default;
-                };
-
-                home-manager.users.patrickli = import ./home/gui-hyprland.nix;
-
-                home-manager.sharedModules = [
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            )
+        kvm-gui-hyprland = mkNixosHost {
+          hostModule = ./hosts/kvm-gui-hyprland/configuration.nix;
+          homeModule = ./home/gui-hyprland.nix;
+          bundles = [
+            "hyprland"
+            "firefox"
+            "nvim"
+            "zsh"
           ];
         };
 
-        framework = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            inherit wallpkgs;
-            firefoxAddons = firefox-addons.packages.${system};
-          };
-
-          modules = [
-            ./hosts/framework/configuration.nix
-
-            sops-nix.nixosModules.sops
-
-            ./bundles/git.nix
-            ./bundles/hyprland.nix
-            ./bundles/firefox.nix
-            ./bundles/gui-misc.nix
-            ./bundles/nvim.nix
-            ./bundles/zsh.nix
-            ./bundles/ollama.nix
-            ./bundles/fprintd.nix
-            ./bundles/web-dev.nix
-            ./bundles/niri.nix
-            ./bundles/fcitx5.nix
-            ./bundles/sops.nix
-            ./bundles/concord.nix
-
-            {
-              nixpkgs.overlays = [
-                unbillOverlay
-                jacNvimOverlay
-                concordOverlay
-              ];
-            }
-
-            home-manager.nixosModules.home-manager
-
-            (
-              { ... }:
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = {
-                  charcoalPkg = charcoal.packages.${system}.default;
-                };
-
-                home-manager.users.patrickli = import ./home/gui-hyprland.nix;
-
-                home-manager.sharedModules = [
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            )
+        framework = mkNixosHost {
+          hostModule = ./hosts/framework/configuration.nix;
+          homeModule = ./home/gui-hyprland.nix;
+          sops = true;
+          bundles = [
+            "git"
+            "hyprland"
+            "firefox"
+            "gui-misc"
+            "nvim"
+            "zsh"
+            "ollama"
+            "fprintd"
+            "web-dev"
+            "niri"
+            "fcitx5"
+            "sops"
+            "concord"
           ];
         };
 
-        iso-minimal = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          modules = [
-            ./hosts/iso-minimal/configuration.nix
-
-            ./bundles/nvim.nix
-            ./bundles/zsh.nix
-
-            {
-              nixpkgs.overlays = [
-                unbillOverlay
-                jacNvimOverlay
-              ];
-            }
-
-            home-manager.nixosModules.home-manager
-
-            (
-              { ... }:
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = {
-                  charcoalPkg = charcoal.packages.${system}.default;
-                };
-
-                home-manager.users.patrickli = import ./home/minimal.nix;
-
-                home-manager.sharedModules = [
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            )
+        iso-minimal = mkNixosHost {
+          hostModule = ./hosts/iso-minimal/configuration.nix;
+          homeModule = ./home/minimal.nix;
+          bundles = [
+            "nvim"
+            "zsh"
           ];
         };
       };

@@ -1,8 +1,6 @@
 {
   pkgs,
   lib,
-  wallpkgs,
-  charcoalPkg ? null,
   ...
 }:
 {
@@ -16,7 +14,7 @@
   home.packages = lib.optionals (!pkgs.stdenv.isDarwin) (
     import ../profiles/minimal/hm/packages.nix {
       inherit pkgs;
-      charcoal = charcoalPkg;
+      inherit (pkgs) charcoal;
     }
   );
 

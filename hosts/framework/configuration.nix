@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  wallpkgs,
   ...
 }:
 
@@ -35,7 +34,7 @@
     "eDP-1, 2880x1920, 0x1440, 2"
     "DP-4, 1920x1080, 3440x0, 1, transform, 1"
   ];
-  pixos.bundles.hyprland.wallpaperPath = "${wallpkgs}/wallpapers/catppuccin";
+  pixos.bundles.hyprland.wallpaperPath = "${pkgs.wallpkgs}/wallpapers/catppuccin";
 
   # ── Framework-specific ─────────────────────────────────────────
 

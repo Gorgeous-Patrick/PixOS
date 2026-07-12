@@ -2,24 +2,18 @@
   config,
   lib,
   pkgs,
-  firefoxAddons ? null,
   ...
 }:
 
 let
   cfg = config.pixos.bundles.firefox;
 
-  addons =
-    if firefoxAddons == null then
-      [ ]
-    else
-      with firefoxAddons;
-      [
-        ublock-origin
-        bitwarden
-        darkreader
-        vimium
-      ];
+  addons = with pkgs.firefox-addons; [
+    ublock-origin
+    bitwarden
+    darkreader
+    vimium
+  ];
 
   # Moderate hardening: kill telemetry / sponsored content / studies / Pocket,
   # leave DRM, Sync, and modern web features intact.
@@ -139,9 +133,9 @@ in
   options.pixos.bundles.firefox.enable = lib.mkEnableOption "Firefox bundle";
 
   # NOTE: the Firefox.app bundle on macOS is installed via Homebrew. That
-  # piece lives in a small darwin-only module in flake.nix, because the
-  # `homebrew.*` option is declared only by nix-darwin and conditioning on
-  # `pkgs.stdenv.isDarwin` here would create a config <-> pkgs cycle.
+  # piece lives in bundles/firefox-darwin.nix (imported only by mkDarwinHost),
+  # because the `homebrew.*` option is declared only by nix-darwin and a module
+  # setting it cannot be evaluated on NixOS.
   config = lib.mkIf cfg.enable {
     home-manager.users.patrickli = mkHmFirefox pkgs.stdenv.isDarwin;
   };

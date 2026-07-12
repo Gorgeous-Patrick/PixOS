@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  charcoalPkg ? null,
   ...
 }:
 {
@@ -13,6 +12,6 @@
   # contributes a package list on Darwin, so no mkForce is needed here.
   home.packages = import ../profiles/macos/hm/packages.nix {
     inherit pkgs;
-    charcoal = charcoalPkg;
+    inherit (pkgs) charcoal;
   };
 }
