@@ -291,6 +291,7 @@
           hostModule = ./hosts/iso-minimal/configuration.nix;
           homeModule = ./home/minimal.nix;
           bundles = [
+            "git"
             "nvim"
             "zsh"
           ];
