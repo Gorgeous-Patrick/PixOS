@@ -23,6 +23,12 @@ let
       termguicolors = true;
       signcolumn = "yes";
       updatetime = 300;
+
+      # Soft line wrapping: break at word boundaries (not mid-word) and keep
+      # wrapped continuation lines visually indented.
+      wrap = true;
+      linebreak = true;
+      breakindent = true;
     };
 
     plugins.telescope.enable = true;
@@ -62,9 +68,24 @@ let
           "css"
           "bash"
           "nix"
+          "latex"
+          "bibtex"
         ];
         highlight.enable = true;
         indent.enable = true;
+      };
+    };
+
+    # LaTeX editing. vimtex handles compilation / PDF sync / folding; the actual
+    # TeX Live toolchain (latexmk, biber, packages) comes from the `latex`
+    # bundle. On Linux we drive zathura; on Darwin vimtex falls back to `open`.
+    plugins.vimtex = {
+      enable = true;
+      settings = {
+        compiler_method = "latexmk";
+      }
+      // lib.optionalAttrs pkgs.stdenv.isLinux {
+        view_method = "zathura";
       };
     };
 
@@ -85,6 +106,7 @@ let
         rust_analyzer.installRustc = false;
         rust_analyzer.installCargo = false;
         clangd.enable = true;
+        texlab.enable = true;
       };
     };
 
@@ -159,6 +181,34 @@ let
         options = {
           noremap = true;
           silent = true;
+        };
+      }
+      # Move by visual line over wrapped text, but keep counts line-wise
+      # (e.g. 5j still jumps 5 real lines, so relativenumber jumps work).
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "j";
+        action = "v:count == 0 ? 'gj' : 'j'";
+        options = {
+          noremap = true;
+          silent = true;
+          expr = true;
+        };
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "k";
+        action = "v:count == 0 ? 'gk' : 'k'";
+        options = {
+          noremap = true;
+          silent = true;
+          expr = true;
         };
       }
       {
@@ -404,6 +454,18 @@ let
         mode = [ "n" ];
         action = "<cmd>Trouble qflist toggle<cr>";
         options.desc = "Quickfix List (Trouble)";
+      }
+    ];
+
+    autoCmd = [
+      {
+        event = [ "FileType" ];
+        pattern = [
+          "tex"
+          "latex"
+          "plaintex"
+        ];
+        command = "setlocal conceallevel=2 spell spelllang=en_us";
       }
     ];
 

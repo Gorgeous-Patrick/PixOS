@@ -127,4 +127,5 @@
   ];
 
   pixos.bundles.zsh.enable = true;
+  pixos.bundles.latex.enable = true;
 }

@@ -236,6 +236,7 @@
           "git"
           "gui-misc"
           "nvim"
+          "latex"
           "zsh"
           "ollama"
           "firefox"
@@ -251,6 +252,7 @@
           homeModule = ./home/minimal.nix;
           bundles = [
             "nvim"
+            "latex"
             "zsh"
           ];
         };
@@ -262,6 +264,7 @@
             "hyprland"
             "firefox"
             "nvim"
+            "latex"
             "zsh"
           ];
         };
@@ -276,6 +279,7 @@
             "firefox"
             "gui-misc"
             "nvim"
+            "latex"
             "zsh"
             "ollama"
             "fprintd"
@@ -293,6 +297,7 @@
           bundles = [
             "git"
             "nvim"
+            "latex"
             "zsh"
           ];
         };

@@ -84,6 +84,7 @@
   pixos.bundles.gui-misc.enable = true;
   pixos.bundles.git.enable = true;
   pixos.bundles.nvim.enable = true;
+  pixos.bundles.latex.enable = true;
   pixos.bundles.zsh.enable = true;
   pixos.bundles.ollama.enable = true;
   pixos.bundles.firefox.enable = true;
