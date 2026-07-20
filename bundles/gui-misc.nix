@@ -18,9 +18,9 @@ in
         localsend
         zotero
         audacity
+        unbill-tauri
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
-        unbill-tauri
         google-chrome
         shotcut
         obs-studio
