@@ -63,6 +63,7 @@ in
             hiber = "hyprlock & systemctl hibernate";
             df = "${pkgs.duf}/bin/duf";
             du = "${pkgs.dust}/bin/dust";
+            y = "${pkgs.yazi}/bin/yazi";
             open = "xdg-open";
           };
           oh-my-zsh = {
