@@ -78,7 +78,7 @@ in
       grim # screenshot
       slurp # region selector
       wl-clipboard
-      swww # wallpaper daemon
+      awww # wallpaper daemon (swww was renamed to awww)
       brightnessctl
     ];
 
@@ -86,12 +86,12 @@ in
     home-manager.users.patrickli =
       { pkgs, ... }:
       let
-        swww-rotate = pkgs.writeShellScriptBin "wallpaper-rotate" ''
+        awww-rotate = pkgs.writeShellScriptBin "wallpaper-rotate" ''
           DIR=${if cfg.wallpaperPath != null then cfg.wallpaperPath else "/tmp"}
           while true; do
             WALL=$(find "$DIR" -type f | shuf -n 1)
             echo $WALL
-            swww img "$WALL" --transition-type wipe
+            awww img "$WALL" --transition-type wipe
             sleep 600
           done
         '';
@@ -109,6 +109,9 @@ in
 
         wayland.windowManager.hyprland = {
           enable = true;
+          # Keep the hyprlang config format (settings below are hyprlang attrs);
+          # the HM default flips to "lua" once home.stateVersion >= "26.05".
+          configType = "hyprlang";
           settings = {
             "$mod" = "SUPER";
 
@@ -123,12 +126,12 @@ in
             exec-once = [
               "waybar"
               "dunst"
-              "swww-daemon"
+              "awww-daemon"
               "nm-applet"
               "blueman-applet"
               "fcitx5 -d --replace"
             ]
-            ++ (lib.optional (cfg.wallpaperPath != null) "${swww-rotate}/bin/wallpaper-rotate");
+            ++ (lib.optional (cfg.wallpaperPath != null) "${awww-rotate}/bin/wallpaper-rotate");
 
             general = {
               gaps_in = 0;

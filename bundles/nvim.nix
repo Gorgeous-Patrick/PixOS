@@ -11,6 +11,11 @@ let
   nixvimConfig = {
     enable = true;
 
+    # Pin nixvim's internal nixpkgs to the one we already build against. Without
+    # this, nixvim warns that our `inputs.nixvim.inputs.nixpkgs.follows` makes
+    # its pinned-rev default mismatch the actual nixpkgs.
+    nixpkgs.source = pkgs.path;
+
     clipboard.register = "unnamedplus";
 
     opts = {

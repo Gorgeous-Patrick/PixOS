@@ -10,7 +10,7 @@ with pkgs;
   ranger
   yazi
   bat
-  nixfmt-rfc-style
+  nixfmt
   treefmt
   eza
   htop

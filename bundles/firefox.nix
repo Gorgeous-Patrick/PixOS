@@ -106,6 +106,9 @@ let
   mkHmFirefox = isDarwin: {
     programs.firefox = {
       enable = true;
+      # Keep the legacy profile location; the HM default moves to
+      # $XDG_CONFIG_HOME/mozilla/firefox once home.stateVersion >= "26.05".
+      configPath = ".mozilla/firefox";
       # nixpkgs has no working Firefox.app on Darwin — install via Homebrew
       # below and let home-manager only manage the profile directory.
       package = if isDarwin then null else pkgs.firefox;

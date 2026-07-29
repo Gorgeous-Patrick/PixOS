@@ -10,7 +10,7 @@ with pkgs;
   yazi
   lazygit
   bat
-  nixfmt-rfc-style
+  nixfmt
   treefmt
   eza
   htop
