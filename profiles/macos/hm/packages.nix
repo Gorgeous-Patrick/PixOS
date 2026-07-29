@@ -24,5 +24,6 @@ with pkgs;
   python313
   pre-commit
   devenv
+  codex
 ]
 ++ (if charcoal != null then [ charcoal ] else [ ])

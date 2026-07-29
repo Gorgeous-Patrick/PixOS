@@ -52,6 +52,11 @@
       url = "github:jaseci-labs/tree-sitter-jac";
       flake = false;
     };
+
+    codex-nix = {
+      url = "github:SecBear/codex-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -69,6 +74,7 @@
       firefox-addons,
       jac-nvim,
       tree-sitter-jac,
+      codex-nix,
     }:
     let
       system = "x86_64-linux";
@@ -89,6 +95,7 @@
 
         concord-tui = concord.packages.${final.stdenv.hostPlatform.system}.default;
         charcoal = charcoal.packages.${final.stdenv.hostPlatform.system}.default;
+        codex = codex-nix.packages.${final.stdenv.hostPlatform.system}.default;
         firefox-addons = firefox-addons.packages.${final.stdenv.hostPlatform.system};
 
         # Not a package — the wallpaper source tree, consumed as a path.

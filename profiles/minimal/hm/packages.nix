@@ -45,5 +45,7 @@ with pkgs;
   minikube
   kubectl
   nixpkgs-review
+  codex
+  bubblewrap # provides `bwrap`, used by codex for its Linux sandbox
 ]
 ++ (if charcoal != null then [ charcoal ] else [ ])
