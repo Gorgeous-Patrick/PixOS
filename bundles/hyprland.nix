@@ -88,9 +88,13 @@ in
       let
         awww-rotate = pkgs.writeShellScriptBin "wallpaper-rotate" ''
           DIR=${if cfg.wallpaperPath != null then cfg.wallpaperPath else "/tmp"}
+          # Wait for awww-daemon's socket before the first set. Both this script
+          # and `awww-daemon` are launched from exec-once with no ordering, so
+          # without this the initial `awww img` races the daemon on boot, fails,
+          # and the wallpaper stays black until the next loop iteration (600s).
+          until awww query >/dev/null 2>&1; do sleep 0.2; done
           while true; do
             WALL=$(find "$DIR" -type f | shuf -n 1)
-            echo $WALL
             awww img "$WALL" --transition-type wipe
             sleep 600
           done
