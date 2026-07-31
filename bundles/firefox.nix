@@ -101,6 +101,12 @@ let
     # Dark theme
     "ui.systemUsesDarkTheme" = 1;
     "layout.css.prefers-color-scheme.content-override" = 0;
+
+    # UI/content zoom. Firefox runs under XWayland (see MOZ_ENABLE_WAYLAND in the
+    # hyprland bundle) with no GDK_SCALE, so it renders at native pixels on every
+    # monitor. 1.3 is a mixed-DPI compromise: comfortable on the scale-1
+    # externals, a bit small on the HiDPI laptop panel. Tune to taste.
+    "layout.css.devPixelsPerPx" = "1.3";
   };
 
   mkHmFirefox = isDarwin: {

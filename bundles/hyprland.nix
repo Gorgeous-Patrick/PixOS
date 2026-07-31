@@ -122,7 +122,11 @@ in
             env = [
               "XCURSOR_SIZE,24"
               "XCURSOR_THEME,Bibata-Modern-Classic"
-              "GDK_SCALE,2"
+              # No global GDK_SCALE: it's a single integer and can't match the
+              # mixed-DPI monitors (eDP scale 2, externals scale 1). Wayland-
+              # native apps scale per-monitor from the compositor; XWayland apps
+              # render at native pixels (xwayland.force_zero_scaling). Firefox's
+              # size is handled by layout.css.devPixelsPerPx in the firefox bundle.
               # Firefox's native-Wayland WebRender renders all text invisible on
               # this AMD iGPU/Mesa (chrome + page text blank; verified that
               # XWayland renders both perfectly). Force Mozilla apps onto
