@@ -123,6 +123,11 @@ in
               "XCURSOR_SIZE,24"
               "XCURSOR_THEME,Bibata-Modern-Classic"
               "GDK_SCALE,2"
+              # Firefox's native-Wayland WebRender renders all text invisible on
+              # this AMD iGPU/Mesa (chrome + page text blank; verified that
+              # XWayland renders both perfectly). Force Mozilla apps onto
+              # XWayland until the Wayland path is fixed upstream.
+              "MOZ_ENABLE_WAYLAND,0"
             ];
 
             monitor = cfg.monitors;
