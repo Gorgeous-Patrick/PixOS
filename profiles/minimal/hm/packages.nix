@@ -25,7 +25,7 @@ with pkgs;
   rustfmt
   nodejs
   gcc15
-  python313
+  python313FreeThreading
   libllvm
   zlib
   zlib.dev

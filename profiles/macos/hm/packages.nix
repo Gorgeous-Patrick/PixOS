@@ -21,7 +21,7 @@ with pkgs;
   rustc
   nodejs
   gcc
-  python313
+  python314FreeThreading
   pre-commit
   devenv
   codex
