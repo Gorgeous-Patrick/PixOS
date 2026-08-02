@@ -294,6 +294,7 @@
             "niri"
             "fcitx5"
             "sops"
+            "ssh-keys"
             "concord"
           ];
         };
