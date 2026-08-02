@@ -55,5 +55,21 @@ in
       // {
         ssh_config = mkSecret "/home/${cfg.user}/.ssh/config" "0600";
       };
+
+    # sops-install-secrets writes the key/config symlinks into ~/.ssh and, in
+    # doing so, resets that directory to root ownership. That stops the user
+    # from creating ~/.ssh/known_hosts ("failed to add the host to the list of
+    # known hosts"). Re-assert ownership of the directory itself after secrets
+    # are set up — only the dir; the per-key symlinks resolve into /run/secrets
+    # regardless and stay untouched.
+    system.activationScripts.fixSshDirOwner = {
+      deps = [ "setupSecrets" ];
+      text = ''
+        if [ -d /home/${cfg.user}/.ssh ]; then
+          chown ${cfg.user} /home/${cfg.user}/.ssh
+          chmod 700 /home/${cfg.user}/.ssh
+        fi
+      '';
+    };
   };
 }
