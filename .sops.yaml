@@ -1,7 +1,11 @@
 keys:
   - &framework age1k2aszklhhnmgmqezheke4pq8tu24rnc7gx76hgymjmjvq6rmrquslhtq7a
+  # Offline backup key (kept on a flash disk). Any secret can be recovered with
+  # either this or the framework host key.
+  - &backup age12fyepn0zu8m0qlklzhrxsqluef8l930aw02fz9mler3w24s69y5s6hvxmw
 creation_rules:
   - path_regex: secrets/.*\.ya?ml$
     key_groups:
       - age:
           - *framework
+          - *backup
