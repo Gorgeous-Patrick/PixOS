@@ -1,5 +1,6 @@
 keys:
   - &framework age1k2aszklhhnmgmqezheke4pq8tu24rnc7gx76hgymjmjvq6rmrquslhtq7a
+  - &macos age1k8x85x0mqd45k8ke3rf9d6tzwyxrsux0km0t5arplnzulaef4sps0kcpfx
   # Offline backup key (kept on a flash disk). Any secret can be recovered with
   # either this or the framework host key.
   - &backup age12fyepn0zu8m0qlklzhrxsqluef8l930aw02fz9mler3w24s69y5s6hvxmw
@@ -8,4 +9,5 @@ creation_rules:
     key_groups:
       - age:
           - *framework
+          - *macos
           - *backup
