@@ -248,6 +248,7 @@
           "ollama"
           "firefox"
           "sops"
+          "ssh-keys"
           "concord"
         ];
       };

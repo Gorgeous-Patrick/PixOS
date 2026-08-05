@@ -101,6 +101,29 @@
   pixos.bundles.ollama.enable = false;
   pixos.bundles.firefox.enable = true;
   pixos.bundles.sops.enable = true;
+  pixos.bundles.ssh-keys.enable = true;
+  pixos.bundles.ssh-keys.keys = [
+    "ag281"
+    "ag281-new"
+    "aliyun"
+    "aur"
+    "baixing"
+    "bane"
+    "clarity"
+    "eecs587"
+    "github"
+    "gitlab_eecs"
+    "hosico"
+    "hosteons"
+    "id_ecdsa"
+    "id_rsa"
+    "patrickli.one"
+    "patrickliserver"
+    "sfocs"
+    "sfocs-git"
+    "unbill-aur"
+    "wt_blade"
+  ];
   pixos.bundles.concord.enable = true;
 
   nix.extraOptions = ''
