@@ -98,7 +98,6 @@
   pixos.bundles.nvim.enable = true;
   pixos.bundles.latex.enable = true;
   pixos.bundles.zsh.enable = true;
-  pixos.bundles.ollama.enable = false;
   pixos.bundles.firefox.enable = true;
   pixos.bundles.sops.enable = true;
   pixos.bundles.ssh-keys.enable = true;

@@ -25,5 +25,6 @@ with pkgs;
   pre-commit
   devenv
   codex
+  claude-code
 ]
 ++ (if charcoal != null then [ charcoal ] else [ ])

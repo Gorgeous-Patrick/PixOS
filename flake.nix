@@ -123,6 +123,7 @@
 
       darwinPkgs = import nixpkgs {
         system = darwinSystem;
+        config.allowUnfree = true;
         overlays = [ pixosOverlay ];
       };
 
@@ -245,7 +246,6 @@
           "nvim"
           "latex"
           "zsh"
-          "ollama"
           "firefox"
           "sops"
           "ssh-keys"
