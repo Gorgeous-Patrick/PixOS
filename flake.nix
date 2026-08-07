@@ -286,6 +286,8 @@
             "hyprland"
             "firefox"
             "gui-misc"
+            "davinci-resolve"
+            "google-drive"
             "nvim"
             "latex"
             "zsh"
