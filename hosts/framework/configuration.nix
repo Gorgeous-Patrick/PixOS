@@ -94,6 +94,7 @@
     networkmanagerapplet
     openssl
     telegram-desktop
+    kdePackages.kdenlive
     stdenv.cc.cc.lib
     nix-index
     direnv
