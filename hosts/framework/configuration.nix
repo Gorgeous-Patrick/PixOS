@@ -94,7 +94,19 @@
     networkmanagerapplet
     openssl
     telegram-desktop
-    kdePackages.kdenlive
+    (symlinkJoin {
+      name = "kdenlive-with-rnnoise";
+      paths = [ kdePackages.kdenlive ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        rm $out/bin/kdenlive $out/bin/kdenlive_render
+        makeWrapper ${kdePackages.kdenlive}/bin/kdenlive $out/bin/kdenlive \
+          --set LADSPA_PATH "${rnnoise-plugin.ladspa}/lib/ladspa"
+        makeWrapper ${kdePackages.kdenlive}/bin/kdenlive_render $out/bin/kdenlive_render \
+          --set LADSPA_PATH "${rnnoise-plugin.ladspa}/lib/ladspa"
+      '';
+    })
+    rnnoise-plugin.ladspa
     stdenv.cc.cc.lib
     nix-index
     direnv
@@ -104,6 +116,11 @@
       exec ${pkgs.altserver-linux}/bin/alt-server "$@"
     '')
   ];
+
+  environment.sessionVariables = {
+    LADSPA_PATH = "/run/current-system/sw/lib/ladspa";
+  };
+
   pixos.bundles.fcitx5.enable = true;
   pixos.bundles.davinci-resolve.enable = true;
   pixos.bundles.google-drive.enable = true;
