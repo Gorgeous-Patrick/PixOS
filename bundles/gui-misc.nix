@@ -27,6 +27,7 @@ in
             shotcut
             obs-studio
             obsidian
+            nextcloud-client
             udiskie
           ];
       }
@@ -37,6 +38,11 @@ in
         home-manager.users.patrickli.services.udiskie = {
           enable = true;
           tray = "never";
+        };
+
+        home-manager.users.patrickli.services.nextcloud-client = {
+          enable = true;
+          startInBackground = true;
         };
       })
     ]
