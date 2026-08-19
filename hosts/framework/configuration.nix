@@ -4,6 +4,62 @@
   ...
 }:
 
+let
+  kdenliveSpeechPython = pkgs.python3.withPackages (
+    pythonPackages: with pythonPackages; [
+      openai-whisper
+      pip
+      requests
+      srt
+    ]
+  );
+
+  kdenliveWhisperBaseModel = pkgs.fetchurl {
+    url = "https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt";
+    hash = "sha256-7ToLaxwO34ea2bEbGvWg5qtduSBfiR9mj4sObGMm404=";
+  };
+
+  kdenliveWithSpeech = pkgs.symlinkJoin {
+    name = "kdenlive-with-rnnoise-and-whisper";
+    paths = [ pkgs.kdePackages.kdenlive ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      rm $out/bin/kdenlive $out/bin/kdenlive_render
+      makeWrapper ${pkgs.kdePackages.kdenlive}/bin/kdenlive $out/bin/kdenlive \
+        --set LADSPA_PATH "${pkgs.rnnoise-plugin.ladspa}/lib/ladspa" \
+        --prefix PATH : "${pkgs.lib.makeBinPath [ kdenliveSpeechPython ]}"
+      makeWrapper ${pkgs.kdePackages.kdenlive}/bin/kdenlive_render $out/bin/kdenlive_render \
+        --set LADSPA_PATH "${pkgs.rnnoise-plugin.ladspa}/lib/ladspa" \
+        --prefix PATH : "${pkgs.lib.makeBinPath [ kdenliveSpeechPython ]}"
+    '';
+  };
+
+  kdenliveDownloadWhisperModel = pkgs.writeShellScriptBin "kdenlive-download-whisper-model" ''
+    set -euo pipefail
+
+    model="''${1:-base}"
+    cache_root="''${XDG_CACHE_HOME:-$HOME/.cache}"
+    export XDG_CACHE_HOME="$cache_root"
+
+    exec ${kdenliveSpeechPython}/bin/python3 -c '
+    import os
+    import sys
+    import whisper
+
+    model = sys.argv[1]
+    if model not in whisper._MODELS:
+        available = ", ".join(whisper.available_models())
+        raise SystemExit(f"Unknown Whisper model: {model}\nAvailable models: {available}")
+
+    root = os.path.join(os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache")), "whisper")
+    os.makedirs(root, exist_ok=True)
+    url = whisper._MODELS[model]
+    target = os.path.join(root, os.path.basename(url))
+    print(f"Downloading Whisper model {model} to {target}")
+    whisper._download(url, root, False)
+    ' "$model"
+  '';
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -94,18 +150,9 @@
     networkmanagerapplet
     openssl
     telegram-desktop
-    (symlinkJoin {
-      name = "kdenlive-with-rnnoise";
-      paths = [ kdePackages.kdenlive ];
-      nativeBuildInputs = [ makeWrapper ];
-      postBuild = ''
-        rm $out/bin/kdenlive $out/bin/kdenlive_render
-        makeWrapper ${kdePackages.kdenlive}/bin/kdenlive $out/bin/kdenlive \
-          --set LADSPA_PATH "${rnnoise-plugin.ladspa}/lib/ladspa"
-        makeWrapper ${kdePackages.kdenlive}/bin/kdenlive_render $out/bin/kdenlive_render \
-          --set LADSPA_PATH "${rnnoise-plugin.ladspa}/lib/ladspa"
-      '';
-    })
+    kdenliveWithSpeech
+    kdenliveSpeechPython
+    kdenliveDownloadWhisperModel
     rnnoise-plugin.ladspa
     stdenv.cc.cc.lib
     nix-index
@@ -164,15 +211,28 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  home-manager.users.patrickli = {
-    systemd.user.services.unbill-daemon = {
-      Unit.Description = "Unbill daemon";
-      Service = {
-        ExecStart = "${pkgs.unbill-daemon}/bin/unbill-daemon";
-        Restart = "always";
-        Environment = [ "UNBILL_SYNC_INTERVAL_SECS=3600" ];
+  home-manager.users.patrickli =
+    { config, lib, ... }:
+    {
+      home.file.".cache/whisper/base.pt".source = kdenliveWhisperBaseModel;
+
+      home.activation.configureKdenliveSpeech = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${pkgs.coreutils}/bin/mkdir -p "${config.xdg.configHome}"
+        run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key speech_system_python true
+        run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key speech_system_python_path "${kdenliveSpeechPython}/bin/python3"
+        run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key speechEngine whisper
+        run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key whisperModel base
+        run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key whisperModelFolder "${config.home.homeDirectory}/.cache/whisper"
+      '';
+
+      systemd.user.services.unbill-daemon = {
+        Unit.Description = "Unbill daemon";
+        Service = {
+          ExecStart = "${pkgs.unbill-daemon}/bin/unbill-daemon";
+          Restart = "always";
+          Environment = [ "UNBILL_SYNC_INTERVAL_SECS=3600" ];
+        };
+        Install.WantedBy = [ "default.target" ];
       };
-      Install.WantedBy = [ "default.target" ];
     };
-  };
 }
