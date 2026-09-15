@@ -30,7 +30,7 @@
     };
 
     charcoal = {
-      url = "github:LighghtEeloo/charcoal/main";
+      url = "github:LighghtEeloo/charcoal/v0.3.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
