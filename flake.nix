@@ -154,6 +154,7 @@
           inherit system;
           modules = [
             hostModule
+            { _module.args.pixosIsDarwin = false; }
           ]
           ++ nixpkgs.lib.optional sops sops-nix.nixosModules.sops
           ++ map bundle bundles
@@ -179,6 +180,7 @@
           modules = [
             hostModule
             sops-nix.darwinModules.sops
+            { _module.args.pixosIsDarwin = true; }
           ]
           ++ map bundle bundles
           ++ [

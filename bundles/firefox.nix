@@ -1,12 +1,14 @@
 {
   config,
   lib,
+  pixosIsDarwin ? pkgs.stdenv.hostPlatform.isDarwin,
   pkgs,
   ...
 }:
 
 let
   cfg = config.pixos.bundles.firefox;
+  isDarwin = pixosIsDarwin;
 
   addons = with pkgs.firefox-addons; [
     ublock-origin
@@ -17,7 +19,7 @@ let
 
   # Moderate hardening: kill telemetry / sponsored content / studies / Pocket,
   # leave DRM, Sync, and modern web features intact.
-  ffSettings = {
+  sharedSettings = {
     # Telemetry & data reporting
     "datareporting.policy.dataSubmissionEnabled" = false;
     "datareporting.healthreport.uploadEnabled" = false;
@@ -102,6 +104,9 @@ let
     "ui.systemUsesDarkTheme" = 1;
     "layout.css.prefers-color-scheme.content-override" = 0;
 
+  };
+
+  linuxSettings = {
     # UI/content zoom. Firefox runs under XWayland (see MOZ_ENABLE_WAYLAND in the
     # hyprland bundle) with no GDK_SCALE, so it renders at native pixels on every
     # monitor. 1.3 is a mixed-DPI compromise: comfortable on the scale-1
@@ -109,12 +114,19 @@ let
     "layout.css.devPixelsPerPx" = "1.3";
   };
 
-  mkHmFirefox = isDarwin: {
+  ffSettings = sharedSettings // lib.optionalAttrs (!isDarwin) linuxSettings;
+
+  # Keep one Firefox profile definition for Linux and Darwin, but write it where
+  # the platform's browser actually reads it. Firefox.app on macOS uses
+  # ~/Library/Application Support/Firefox, not ~/.mozilla/firefox.
+  profileConfigPath = if isDarwin then "Library/Application Support/Firefox" else ".mozilla/firefox";
+
+  mkHmFirefox = {
     programs.firefox = {
       enable = true;
-      # Keep the legacy profile location; the HM default moves to
+      # On Linux, keep the legacy profile location; the HM default moves to
       # $XDG_CONFIG_HOME/mozilla/firefox once home.stateVersion >= "26.05".
-      configPath = ".mozilla/firefox";
+      configPath = profileConfigPath;
       # nixpkgs has no working Firefox.app on Darwin — install via Homebrew
       # below and let home-manager only manage the profile directory.
       package = if isDarwin then null else pkgs.firefox;
@@ -146,6 +158,6 @@ in
   # because the `homebrew.*` option is declared only by nix-darwin and a module
   # setting it cannot be evaluated on NixOS.
   config = lib.mkIf cfg.enable {
-    home-manager.users.patrickli = mkHmFirefox pkgs.stdenv.isDarwin;
+    home-manager.users.patrickli = mkHmFirefox;
   };
 }

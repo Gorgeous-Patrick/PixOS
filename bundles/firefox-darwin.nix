@@ -9,5 +9,12 @@
 {
   config = lib.mkIf config.pixos.bundles.firefox.enable {
     homebrew.casks = [ "firefox" ];
+
+    home-manager.users.patrickli.programs.firefox = {
+      # Homebrew provides Firefox.app on Darwin; Home Manager manages only the
+      # profile that Firefox.app reads.
+      package = lib.mkForce null;
+      configPath = lib.mkForce "Library/Application Support/Firefox";
+    };
   };
 }
