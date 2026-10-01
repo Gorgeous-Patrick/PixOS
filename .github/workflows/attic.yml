@@ -1,0 +1,45 @@
+name: Build and cache
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Attic cache
+        # PR builds run without the private cache or its write token.
+        if: github.event_name == 'push'
+        uses: ryanccn/attic-action@5635a15ef0c5462194ffbd05d1daeddc74625c3a # v0.5.0
+        with:
+          endpoint: https://cache.patrickli.one
+          cache: pixos
+          token: ${{ secrets.ATTIC_TOKEN }}
+          inputs-from: .
+      - run: nix build .#nixosConfigurations.framework.config.system.build.toplevel
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - name: Set up Attic cache
+        if: github.event_name == 'push'
+        uses: ryanccn/attic-action@5635a15ef0c5462194ffbd05d1daeddc74625c3a # v0.5.0
+        with:
+          endpoint: https://cache.patrickli.one
+          cache: pixos
+          token: ${{ secrets.ATTIC_TOKEN }}
+          inputs-from: .
+      - run: nix build .#darwinConfigurations.macos.system
