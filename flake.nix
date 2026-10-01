@@ -154,7 +154,13 @@
           inherit system;
           modules = [
             hostModule
-            { _module.args.pixosIsDarwin = false; }
+            {
+              _module.args.pixosIsDarwin = false;
+              nix.settings = {
+                substituters = [ "https://pixos.cachix.org" ];
+                trusted-public-keys = [ "pixos.cachix.org-1:gQmieax+bfq9busdRmxIcvvPcDMl6bQe+n+HRICr1To=" ];
+              };
+            }
           ]
           ++ nixpkgs.lib.optional sops sops-nix.nixosModules.sops
           ++ map bundle bundles
