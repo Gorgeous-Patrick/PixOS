@@ -154,12 +154,9 @@
           inherit system;
           modules = [
             hostModule
+            ./hosts/base-hosts/cache.nix
             {
               _module.args.pixosIsDarwin = false;
-              nix.settings = {
-                substituters = [ "https://pixos.cachix.org" ];
-                trusted-public-keys = [ "pixos.cachix.org-1:gQmieax+bfq9busdRmxIcvvPcDMl6bQe+n+HRICr1To=" ];
-              };
             }
           ]
           ++ nixpkgs.lib.optional sops sops-nix.nixosModules.sops
@@ -185,6 +182,7 @@
           system = darwinSystem;
           modules = [
             hostModule
+            ./hosts/base-hosts/cache.nix
             sops-nix.darwinModules.sops
             { _module.args.pixosIsDarwin = true; }
           ]
@@ -207,6 +205,7 @@
       nixosModules.server = {
         imports = [
           ./hosts/base-hosts/server.nix
+          ./hosts/base-hosts/cache.nix
           home-manager.nixosModules.home-manager
           (hmWiring ./home/server.nix)
         ]
