@@ -37,11 +37,12 @@ in
       type = lib.types.listOf lib.types.str;
       default = [ ];
       description = ''
-        SSH key names. Everything is decrypted from secrets/ssh.yaml at
+        SSH key names. Keys are decrypted from secrets/ssh.yaml at
         activation into ~/.ssh, owned by `user`:
           - ssh/<name>  → ~/.ssh/<name>      (private, mode 0600)
           - pub/<name>  → ~/.ssh/<name>.pub  (public,  mode 0644)
-        and ssh_config  → ~/.ssh/config      (mode 0600).
+        SSH config comes from secrets/ssh-config.yaml:
+          ssh_config  → ~/.ssh/config      (mode 0600).
       '';
     };
   };
@@ -64,7 +65,9 @@ in
             ]) cfg.keys
           )
           // {
-            ssh_config = mkSecret "${homeDir}/.ssh/config" "0600";
+            ssh_config = (mkSecret "${homeDir}/.ssh/config" "0600") // {
+              sopsFile = ../secrets/ssh-config.yaml;
+            };
           };
       }
 

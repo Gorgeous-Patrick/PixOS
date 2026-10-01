@@ -202,9 +202,27 @@
       pixosMacosRootPkgs = import ./profiles/macos/rootpkgs.nix { pkgs = darwinPkgs; };
     in
     {
+      # Import into a machine's NixOS configuration alongside its own hardware,
+      # bootloader, stateVersion, and SSH authorized keys.
+      nixosModules.server = {
+        imports = [
+          ./hosts/base-hosts/server.nix
+          home-manager.nixosModules.home-manager
+          (hmWiring ./home/server.nix)
+        ]
+        ++ map bundle [
+          "git"
+          "zsh"
+          "nvim"
+        ];
+        _module.args.pixosIsDarwin = false;
+        nixpkgs.overlays = [ pixosOverlay ];
+      };
+
       packages.${system} = {
         minimal = pixosMinimalRootPkgs;
         default = pixosMinimalRootPkgs;
+        server-iso = self.nixosConfigurations.iso-server.config.system.build.isoImage;
       };
 
       packages.${darwinSystem} = {
@@ -263,6 +281,14 @@
 
       # NixOS hosts
       nixosConfigurations = {
+        iso-server = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            self.nixosModules.server
+            ./hosts/iso-server/configuration.nix
+          ];
+        };
+
         kvm-minimal = mkNixosHost {
           hostModule = ./hosts/kvm-minimal/configuration.nix;
           homeModule = ./home/minimal.nix;
