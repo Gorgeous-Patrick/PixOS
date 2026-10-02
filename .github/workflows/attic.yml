@@ -16,11 +16,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27
         with:
+          # Attic's store snapshot parser requires Nix's JSON format 2.
+          install_url: https://releases.nixos.org/nix/nix-2.35.1/install
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Install Attic client
         if: github.event_name == 'push'
         run: |
+          nix --version
           nix build --inputs-from . nixpkgs#attic-client --out-link "$RUNNER_TEMP/attic-client"
           echo "$RUNNER_TEMP/attic-client/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/attic-client/bin/attic" --version
@@ -39,10 +42,15 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: cachix/install-nix-action@v27
+        with:
+          install_url: https://releases.nixos.org/nix/nix-2.35.1/install
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Install Attic client
         if: github.event_name == 'push'
         run: |
+          nix --version
           nix build --inputs-from . nixpkgs#attic-client --out-link "$RUNNER_TEMP/attic-client"
           echo "$RUNNER_TEMP/attic-client/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/attic-client/bin/attic" --version
