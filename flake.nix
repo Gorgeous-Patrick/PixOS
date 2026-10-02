@@ -170,8 +170,7 @@
 
       # The sole Darwin host. Separate from mkNixosHost because the builder,
       # system, and home-manager / sops / nixvim module paths are all
-      # darwin-specific. bundles/firefox-darwin.nix (the Homebrew Firefox cask)
-      # is darwin-only and so is imported only here.
+      # darwin-specific. The Homebrew companion bundles are imported only here.
       mkDarwinHost =
         {
           hostModule,
@@ -189,6 +188,7 @@
           ++ map bundle bundles
           ++ [
             (bundle "firefox-darwin")
+            (bundle "gui-misc-darwin")
             { nixpkgs.overlays = [ pixosOverlay ]; }
             nixvim.nixDarwinModules.nixvim
             home-manager.darwinModules.home-manager
