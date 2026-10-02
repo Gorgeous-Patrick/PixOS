@@ -38,6 +38,8 @@
 
     unbill.url = "github:unbill-project/unbill/main";
 
+    herdr.url = "github:herdrdev/herdr/v0.9.3";
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -71,6 +73,7 @@
       charcoal,
       wallpkgs,
       unbill,
+      herdr,
       firefox-addons,
       jac-nvim,
       tree-sitter-jac,
@@ -96,6 +99,7 @@
         concord-tui = concord.packages.${final.stdenv.hostPlatform.system}.default;
         charcoal = charcoal.packages.${final.stdenv.hostPlatform.system}.default;
         codex = codex-nix.packages.${final.stdenv.hostPlatform.system}.default;
+        herdr = herdr.packages.${final.stdenv.hostPlatform.system}.default;
         firefox-addons = firefox-addons.packages.${final.stdenv.hostPlatform.system};
 
         # Not a package — the wallpaper source tree, consumed as a path.

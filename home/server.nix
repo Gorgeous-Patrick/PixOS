@@ -8,7 +8,10 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
-  home.packages = [ pkgs.yazi ];
+  home.packages = [
+    pkgs.yazi
+    pkgs.herdr
+  ];
 
   programs.home-manager.enable = true;
   programs.zellij.enable = true;

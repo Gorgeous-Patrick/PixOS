@@ -14,6 +14,7 @@ with pkgs;
   treefmt
   eza
   htop
+  herdr
   fastfetch
   sl
   tg
