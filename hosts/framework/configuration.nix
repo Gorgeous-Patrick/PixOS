@@ -72,6 +72,12 @@ in
 
   networking.hostName = "framework";
 
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings.PermitRootLogin = "no";
+  };
+
   networking.firewall.allowedTCPPorts = [
     3000 # generic web dev
     3001

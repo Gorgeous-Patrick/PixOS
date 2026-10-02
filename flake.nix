@@ -40,6 +40,11 @@
 
     herdr.url = "github:herdrdev/herdr/v0.9.3";
 
+    herdr-nvim = {
+      url = "github:ChmaraX/herdr-nvim/v1.1.0";
+      flake = false;
+    };
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -74,6 +79,7 @@
       wallpkgs,
       unbill,
       herdr,
+      herdr-nvim,
       firefox-addons,
       jac-nvim,
       tree-sitter-jac,
@@ -100,6 +106,75 @@
         charcoal = charcoal.packages.${final.stdenv.hostPlatform.system}.default;
         codex = codex-nix.packages.${final.stdenv.hostPlatform.system}.default;
         herdr = herdr.packages.${final.stdenv.hostPlatform.system}.default;
+        herdr-nvim = final.rustPlatform.buildRustPackage {
+          pname = "herdr-nvim";
+          version = (builtins.fromTOML (builtins.readFile "${herdr-nvim}/Cargo.toml")).package.version;
+          src = herdr-nvim;
+          cargoLock.lockFile = "${herdr-nvim}/Cargo.lock";
+
+          nativeBuildInputs = [
+            final.pkg-config
+            final.makeWrapper
+          ];
+          buildInputs = [ final.zlib ];
+          nativeCheckInputs = [
+            final.gitMinimal
+            final.neovim-unwrapped
+            final.which
+          ]
+          ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [
+            final.procps
+            final.util-linux
+          ];
+
+          preCheck = ''
+            # The picker test uses git ls-files; flake source archives omit .git.
+            git init -q
+            git add .
+          '';
+
+          postCheck = ''
+            nvim --headless --noplugin -u NONE -l tests/run.lua
+          '';
+
+          postInstall = ''
+            # The daemon finds its Lua runtime by walking up from bin/herdr-nvim.
+            cp -r lua plugin doc "$out/"
+            # Nix builds the binary; herdr must not download or rebuild it.
+            sed '/^\[\[build\]\]/,$d' herdr-plugin.toml > "$out/herdr-plugin.toml"
+            wrapProgram "$out/bin/herdr-nvim" \
+              --prefix PATH : "${
+                final.lib.makeBinPath (
+                  [
+                    final.gitMinimal
+                    final.herdr
+                  ]
+                  ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.procps ]
+                )
+              }"
+          '';
+
+          meta = {
+            description = "Neovim sidebar and file picker for herdr";
+            homepage = "https://github.com/ChmaraX/herdr-nvim";
+            license = final.lib.licenses.mit;
+            mainProgram = "herdr-nvim";
+            platforms = final.lib.platforms.unix;
+          };
+        };
+
+        herdr-nvim-plugin = final.vimUtils.buildVimPlugin {
+          pname = "herdr-nvim";
+          inherit (final.herdr-nvim) version;
+          src = herdr-nvim;
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out"
+            cp -r lua plugin doc "$out/"
+            runHook postInstall
+          '';
+        };
+
         firefox-addons = firefox-addons.packages.${final.stdenv.hostPlatform.system};
 
         # Not a package — the wallpaper source tree, consumed as a path.

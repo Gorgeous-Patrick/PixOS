@@ -95,6 +95,7 @@ let
     };
 
     extraPlugins = [
+      pkgs.herdr-nvim-plugin
       pkgs.jac-nvim
       pkgs.tree-sitter-jac-plugin
     ];
@@ -475,6 +476,7 @@ let
     ];
 
     extraConfigLua = ''
+      require("herdr-nvim").setup({})
       require("jac").setup({
         auto_start = true,
         cmp = true,
@@ -498,10 +500,49 @@ in
     # Home-manager config (nixvim home module is available on both NixOS and
     # Darwin via home-manager.sharedModules)
     home-manager.users.patrickli =
-      { pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         programs.nixvim = nixvimConfig;
         programs.opencode.enable = true;
+
+        home.packages = [ pkgs.herdr-nvim ];
+
+        xdg.configFile."herdr/config.toml".text = ''
+          onboarding = false
+
+          [keys]
+          # Keep the built-in actions available with Shift.
+          edit_scrollback = "prefix+shift+e"
+          open_notification_target = "prefix+shift+o"
+
+          [[keys.command]]
+          key = "prefix+e"
+          type = "plugin_action"
+          command = "chmarax.herdr-nvim.toggle"
+          description = "nvim sidebar"
+
+          [[keys.command]]
+          key = "prefix+o"
+          type = "plugin_action"
+          command = "chmarax.herdr-nvim.pick-file"
+          description = "open file from agent output"
+        '';
+
+        xdg.configFile."herdr-nvim/config.toml".text = ''
+          [sidebar]
+          nvim_bin = "${config.programs.nixvim.build.package}/bin/nvim"
+        '';
+
+        # Linking works with a running herdr server and when it is offline.
+        # Only this plugin's registry entry is updated on each activation.
+        home.activation.linkHerdrNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          run ${lib.getExe pkgs.herdr} plugin link ${pkgs.herdr-nvim} --enabled
+        '';
       };
   };
 }
