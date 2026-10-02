@@ -502,11 +502,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1790265267,
-        "narHash": "sha256-pTDlbFNGJ1ysrJenDsPO2ZYxeomfYWTokGzjfdyRkWI=",
+        "lastModified": 1790891227,
+        "narHash": "sha256-5B/Z+f5I4GhrjmP1S3ClNMzZZcaPE/aygRuPi3Cj/ss=",
         "owner": "unbill-project",
         "repo": "unbill",
-        "rev": "bdee047dcd57d32018b8fc88d72d406cb0acaf8c",
+        "rev": "57759c2fd9ff4a1504343fa8f66f9eb64da5398f",
         "type": "github"
       },
       "original": {
