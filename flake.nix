@@ -121,10 +121,17 @@
             final.gitMinimal
             final.neovim-unwrapped
             final.which
+            # Process inventory and daemon cleanup use ps on both platforms.
+            final.procps
           ]
           ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [
-            final.procps
             final.util-linux
+          ];
+
+          # Nix's Darwin ps cannot read RSS without Apple's entitlement, and
+          # the build sandbox blocks /bin/ps. Keep this integration test on Linux.
+          checkFlags = final.lib.optionals final.stdenv.hostPlatform.isDarwin [
+            "--skip=daemon::inventory::tests::lists_and_stops_real_daemons_by_hand"
           ];
 
           preCheck = ''
@@ -151,7 +158,7 @@
                   ]
                   ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.procps ]
                 )
-              }"
+              }" ${final.lib.optionalString final.stdenv.hostPlatform.isDarwin "--prefix PATH : /bin"}
           '';
 
           meta = {
