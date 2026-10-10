@@ -1,6 +1,18 @@
 # hosts/macos/configuration.nix
 { pkgs, ... }:
 {
+  home-manager.users.patrickli = {
+    launchd.agents.unbill-daemon = {
+      enable = true;
+      config = {
+        ProgramArguments = [ "${pkgs.unbill-daemon}/bin/unbill-daemon" ];
+        KeepAlive = true;
+        RunAtLoad = true;
+        EnvironmentVariables.UNBILL_SYNC_INTERVAL_SECS = "3600";
+      };
+    };
+  };
+
   # Primary user for nix-darwin
   system.primaryUser = "patrickli";
   nixpkgs.config.allowUnfree = true;

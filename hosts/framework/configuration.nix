@@ -230,5 +230,15 @@ in
         run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key whisperModel base
         run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file "${config.xdg.configHome}/kdenliverc" --group speech --key whisperModelFolder "${config.home.homeDirectory}/.cache/whisper"
       '';
+
+      systemd.user.services.unbill-daemon = {
+        Unit.Description = "Unbill daemon";
+        Service = {
+          ExecStart = "${pkgs.unbill-daemon}/bin/unbill-daemon";
+          Restart = "always";
+          Environment = [ "UNBILL_SYNC_INTERVAL_SECS=3600" ];
+        };
+        Install.WantedBy = [ "default.target" ];
+      };
     };
 }
