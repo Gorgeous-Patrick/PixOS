@@ -17,9 +17,11 @@ in
       [
         localsend
         audacity
-        unbill-tauri
       ]
-      # On macOS, Homebrew supplies Zotero to avoid compiling its Firefox runtime.
-      ++ lib.optional (!pkgs.stdenv.hostPlatform.isDarwin) zotero;
+      # On macOS, Homebrew supplies Zotero and the Unbill desktop app.
+      ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
+        zotero
+        unbill-tauri
+      ];
   };
 }

@@ -44,6 +44,12 @@
   # Homebrew integration (optional, for GUI apps)
   homebrew = {
     enable = true;
+    taps = [
+      {
+        name = "unbill-project/tap";
+        trusted = true;
+      }
+    ];
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
@@ -55,6 +61,7 @@
       "bitwarden"
       "iterm2"
       "telegram"
+      "unbill-project/tap/unbill"
     ];
   };
 
