@@ -8,6 +8,8 @@
         ProgramArguments = [ "${pkgs.unbill-daemon}/bin/unbill-daemon" ];
         KeepAlive = true;
         RunAtLoad = true;
+        StandardOutPath = "/Users/patrickli/Library/Logs/unbill-daemon.stdout.log";
+        StandardErrorPath = "/Users/patrickli/Library/Logs/unbill-daemon.stderr.log";
         EnvironmentVariables.UNBILL_SYNC_INTERVAL_SECS = "3600";
       };
     };
