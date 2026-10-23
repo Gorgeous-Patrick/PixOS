@@ -578,11 +578,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1792123780,
-        "narHash": "sha256-lC1fc3OOqwCnfyVLj6/pJu97ggBfSLdbpj5usX2dvq4=",
+        "lastModified": 1792769713,
+        "narHash": "sha256-PA8CSmxhfQIdJeGGRuijT2IRGUMqcfKkfGYe2S+sl+M=",
         "owner": "unbill-project",
         "repo": "unbill",
-        "rev": "e741c9629bdae39a4f68e91a292028885d903f1d",
+        "rev": "2bfb63bcd6f25337264424938f182e8462c87cbf",
         "type": "github"
       },
       "original": {
