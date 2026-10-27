@@ -36,6 +36,7 @@ in
       ranger # file manager
       duf # df replacement
       dust # du replacement
+      fd # find replacement
       unbill-tui
     ];
 
@@ -65,6 +66,7 @@ in
             du = "${pkgs.dust}/bin/dust";
             y = "${pkgs.yazi}/bin/yazi";
             open = "xdg-open";
+            find = "fd";
           };
           oh-my-zsh = {
             enable = true;
