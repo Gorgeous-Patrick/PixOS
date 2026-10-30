@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792738947,
-        "narHash": "sha256-U9ISVjielMdkRKmRKA50f5xlSmMa/g6mr+GSYy6a9lQ=",
+        "lastModified": 1793309634,
+        "narHash": "sha256-+KZ3eyUxeVTgC563JxLOckjvSk1q79p/cWsOVbgF9ps=",
         "owner": "SecBear",
         "repo": "codex-nix",
-        "rev": "ae0c370894e3b3642eb9ef59f37cf355985a3dd2",
+        "rev": "769418de19cbe0b6ab788f54355a61f3cbba50c9",
         "type": "github"
       },
       "original": {
@@ -53,11 +53,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1792770801,
-        "narHash": "sha256-PhMXTfxI+dQYb2BOHZO7THAahM6dKHB0JTF11iI8GgQ=",
+        "lastModified": 1793269915,
+        "narHash": "sha256-4xQkRhPIZRxnHM/76vrE1T/hdt475ygqCV4dQBAvtnA=",
         "owner": "chojs23",
         "repo": "concord",
-        "rev": "b312f1899cd6fb96847e9973d080e2e415d05aff",
+        "rev": "7550a89e6df5c4b07f2bc2e2e5a6bfc83568d903",
         "type": "github"
       },
       "original": {
@@ -104,11 +104,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1792987353,
-        "narHash": "sha256-j2fQBuAS17z5k4TkOktU8be7DCNuzzjbKps0CJkltIY=",
+        "lastModified": 1793246567,
+        "narHash": "sha256-ywLMKXURakXhU4yf1PUJubyi05ezGCRImicR71BaaIE=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "058d0adf37456c70e50e52b34640d1d555ff9653",
+        "rev": "1c6b0fda2940b5bbfda0bf110590c06a97cacc4f",
         "type": "gitlab"
       },
       "original": {
@@ -339,11 +339,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1792898606,
-        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
+        "lastModified": 1793183032,
+        "narHash": "sha256-56mFMf8heLNfYhcgbrh4GpN5x+G9JOfTFXZC3n6w0qM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
+        "rev": "08d3a97586f6b6343b3b5e799980773629432610",
         "type": "github"
       },
       "original": {
@@ -481,11 +481,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792809984,
-        "narHash": "sha256-KV+CaZX7QS0hcdKxwGKehDb1jmUgx6lbkTPpaoIW5Nw=",
+        "lastModified": 1793052255,
+        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "442449fa7b1fe6c692d0103ac9fc8f9e82931cf3",
+        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
         "type": "github"
       },
       "original": {
@@ -578,11 +578,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1792879095,
-        "narHash": "sha256-4lWMD42AxgxE9dyWfIeCpIaX9wu5O5NpnTd0FjNnPXQ=",
+        "lastModified": 1793320609,
+        "narHash": "sha256-Q9dPj6TvMdpFUZBmuAsO27EQtgZ66tYjMquRFn1bNz0=",
         "owner": "unbill-project",
         "repo": "unbill",
-        "rev": "4815542921db1b8f6a06ec378cf65dd13359820e",
+        "rev": "5b0955fd7a10ee36edfaa099ea70fcb31de52abf",
         "type": "github"
       },
       "original": {
