@@ -46,6 +46,7 @@
   # Homebrew integration (optional, for GUI apps)
   homebrew = {
     enable = true;
+    enableZshIntegration = true;
     taps = [
       {
         name = "unbill-project/tap";
