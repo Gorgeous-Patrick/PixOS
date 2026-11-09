@@ -20,7 +20,7 @@
     };
 
     concord = {
-      url = "github:chojs23/concord";
+      url = "github:LordHerdier/concord/62f94ce310391783f0864ecd2876156a2a55fe1a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
