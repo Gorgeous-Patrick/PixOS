@@ -43,6 +43,8 @@ in
     home-manager.users.patrickli =
       { pkgs, ... }:
       {
+        imports = [ ../home/yazi.nix ];
+
         programs.zsh = {
           enable = true;
           enableCompletion = true;
@@ -64,7 +66,6 @@ in
             hiber = "hyprlock & systemctl hibernate";
             df = "${pkgs.duf}/bin/duf";
             du = "${pkgs.dust}/bin/dust";
-            y = "${pkgs.yazi}/bin/yazi";
             open = "xdg-open";
             find = "fd";
           };
