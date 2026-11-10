@@ -97,6 +97,7 @@ in
     "DP-4, 1920x1080, 3440x0, 1, transform, 1"
   ];
   pixos.bundles.hyprland.wallpaperPath = "${pkgs.wallpkgs}/wallpapers/catppuccin";
+  pixos.bundles.zsh.terminal = "kitty";
 
   # ── Framework-specific ─────────────────────────────────────────
 
@@ -220,6 +221,9 @@ in
   home-manager.users.patrickli =
     { config, lib, ... }:
     {
+      # Let Hyprland tile new windows instead of restoring Kitty's maximized state.
+      programs.kitty.settings.remember_window_size = false;
+
       home.file.".cache/whisper/base.pt".source = kdenliveWhisperBaseModel;
 
       home.activation.configureKdenliveSpeech = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
