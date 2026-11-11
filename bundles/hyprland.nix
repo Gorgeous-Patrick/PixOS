@@ -41,6 +41,15 @@ in
       };
     };
 
+    # Persist application credentials and unlock the login keyring on password login.
+    services.gnome.gnome-keyring.enable = true;
+    security.pam.services.greetd = {
+      enableGnomeKeyring = true;
+      # Fingerprint authentication does not provide a password to unlock the keyring.
+      fprintAuth = false;
+    };
+    programs.seahorse.enable = true;
+
     # Audio
     services.pipewire = {
       enable = true;
