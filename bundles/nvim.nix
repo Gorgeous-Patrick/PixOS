@@ -7,6 +7,11 @@
 
 let
   cfg = config.pixos.bundles.nvim;
+  nixClang = "${pkgs.llvmPackages.clang}/bin/clang++";
+  clangdUserConfig = ''
+    CompileFlags:
+      Compiler: ${nixClang}
+  '';
 
   nixvimConfig = {
     enable = true;
@@ -111,7 +116,13 @@ let
         rust_analyzer.enable = true;
         rust_analyzer.installRustc = false;
         rust_analyzer.installCargo = false;
-        clangd.enable = true;
+        clangd = {
+          enable = true;
+          cmd = [
+            "${pkgs.clang-tools}/bin/clangd"
+            "--query-driver=${nixClang}"
+          ];
+        };
         texlab.enable = true;
       };
     };
@@ -467,6 +478,14 @@ let
       {
         event = [ "FileType" ];
         pattern = [
+          "c"
+          "cpp"
+        ];
+        command = "setlocal shiftwidth=4 tabstop=4 softtabstop=4 indentexpr= cindent";
+      }
+      {
+        event = [ "FileType" ];
+        pattern = [
           "tex"
           "latex"
           "plaintex"
@@ -512,31 +531,41 @@ in
 
         home.packages = [ pkgs.herdr-nvim ];
 
-        xdg.configFile."herdr/config.toml".text = ''
-          onboarding = false
+        # clangd's user config lives in a different directory on Darwin.
+        home.file = lib.optionalAttrs pkgs.stdenv.isDarwin {
+          "Library/Preferences/clangd/config.yaml".text = clangdUserConfig;
+        };
 
-          [keys]
-          # Keep the built-in actions available with Shift.
-          edit_scrollback = "prefix+shift+e"
-          open_notification_target = "prefix+shift+o"
+        xdg.configFile = {
+          "herdr/config.toml".text = ''
+            onboarding = false
 
-          [[keys.command]]
-          key = "prefix+e"
-          type = "plugin_action"
-          command = "chmarax.herdr-nvim.toggle"
-          description = "nvim sidebar"
+            [keys]
+            # Keep the built-in actions available with Shift.
+            edit_scrollback = "prefix+shift+e"
+            open_notification_target = "prefix+shift+o"
 
-          [[keys.command]]
-          key = "prefix+o"
-          type = "plugin_action"
-          command = "chmarax.herdr-nvim.pick-file"
-          description = "open file from agent output"
-        '';
+            [[keys.command]]
+            key = "prefix+e"
+            type = "plugin_action"
+            command = "chmarax.herdr-nvim.toggle"
+            description = "nvim sidebar"
 
-        xdg.configFile."herdr-nvim/config.toml".text = ''
-          [sidebar]
-          nvim_bin = "${config.programs.nixvim.build.package}/bin/nvim"
-        '';
+            [[keys.command]]
+            key = "prefix+o"
+            type = "plugin_action"
+            command = "chmarax.herdr-nvim.pick-file"
+            description = "open file from agent output"
+          '';
+
+          "herdr-nvim/config.toml".text = ''
+            [sidebar]
+            nvim_bin = "${config.programs.nixvim.build.package}/bin/nvim"
+          '';
+        }
+        // lib.optionalAttrs pkgs.stdenv.isLinux {
+          "clangd/config.yaml".text = clangdUserConfig;
+        };
 
         # Linking works with a running herdr server and when it is offline.
         # Only this plugin's registry entry is updated on each activation.

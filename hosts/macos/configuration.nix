@@ -20,7 +20,8 @@
   nixpkgs.config.allowUnfree = true;
 
   # Nix configuration
-  nix.enable = false;
+  nix.enable = true;
+  nix.package = pkgs.nixVersions.latest;
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -30,7 +31,14 @@
       "root"
       "patrickli"
     ];
+    # Keep the private cache credentials outside the Nix store.
+    netrc-file = "/Users/patrickli/.config/nix/netrc";
   };
+
+  # Allow nix-darwin to take over the existing installer-generated nix.conf.
+  environment.etc."nix/nix.conf".knownSha256Hashes = [
+    "b2601d629f9e00839fe9e4aa99baf3493d9f2fbbd11a10ad82b45f022d3df280"
+  ];
 
   # System packages
   environment.systemPackages = with pkgs; [
