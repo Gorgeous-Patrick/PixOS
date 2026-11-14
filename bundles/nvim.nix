@@ -44,6 +44,8 @@ let
     plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
     plugins.nvim-tree.enable = true;
+    plugins.nvim-surround.enable = true;
+    plugins.treesitter-textobjects.enable = true;
     plugins.toggleterm.enable = true;
     plugins.gitblame.enable = true;
     plugins.lazygit.enable = true;
@@ -83,19 +85,6 @@ let
         ];
         highlight.enable = true;
         indent.enable = true;
-      };
-    };
-
-    # LaTeX editing. vimtex handles compilation / PDF sync / folding; the actual
-    # TeX Live toolchain (latexmk, biber, packages) comes from the `latex`
-    # bundle. On Linux we drive zathura; on Darwin vimtex falls back to `open`.
-    plugins.vimtex = {
-      enable = true;
-      settings = {
-        compiler_method = "latexmk";
-      }
-      // lib.optionalAttrs pkgs.stdenv.isLinux {
-        view_method = "zathura";
       };
     };
 
@@ -152,7 +141,6 @@ let
         terminal = { };
       };
     };
-    plugins.opencode.enable = true;
 
     keymaps = [
       {
