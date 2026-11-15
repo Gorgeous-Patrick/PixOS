@@ -51,6 +51,7 @@ let
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
     plugins.autoclose.enable = true;
+    plugins.leap.enable = true;
     plugins.which-key.enable = true;
     plugins.trouble.enable = true;
     plugins.codesnap.enable = true;
@@ -143,6 +144,12 @@ let
     };
 
     keymaps = [
+      {
+        mode = [ "n" ];
+        key = "<Space>";
+        action = "<Plug>(leap)";
+        options.silent = true;
+      }
       {
         mode = [ "i" ];
         key = "jk";

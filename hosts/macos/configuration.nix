@@ -72,6 +72,7 @@
       "bitwarden"
       "iterm2"
       "telegram"
+      "herdr-app"
       "unbill-project/tap/unbill"
     ];
   };
