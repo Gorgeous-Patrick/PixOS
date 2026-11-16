@@ -17,6 +17,8 @@ in
       [
         localsend
         audacity
+        herdr-desktop
+        herdr-core
       ]
       # On macOS, Homebrew supplies Zotero and the Unbill desktop app.
       ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [

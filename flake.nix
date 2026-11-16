@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -38,7 +39,7 @@
 
     unbill.url = "github:unbill-project/unbill/main";
 
-    herdr.url = "github:herdrdev/herdr/v0.9.3";
+    herdr.url = "github:herdrdev/herdr-nix";
 
     herdr-nvim = {
       url = "github:ChmaraX/herdr-nvim/v1.1.0";
@@ -70,6 +71,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       nixvim,
       sops-nix,
@@ -106,6 +108,38 @@
         charcoal = charcoal.packages.${final.stdenv.hostPlatform.system}.default;
         codex = codex-nix.packages.${final.stdenv.hostPlatform.system}.default;
         herdr = herdr.packages.${final.stdenv.hostPlatform.system}.default;
+
+        # Opt in only these packages to unstable; PixOS otherwise uses the release.
+        inherit (nixpkgs-unstable.legacyPackages.${final.stdenv.hostPlatform.system})
+          herdr-core
+          ;
+        # TEMPORARY (2026-11-12): backport fixes from the upstream 0.1.13 package.
+        # The version guard disables them once the locked unstable input provides
+        # herdr-desktop 0.1.13 or newer. After updating the lock and verifying the
+        # Linux build and macOS configuration, remove this conditional/override
+        # and inherit herdr-desktop alongside herdr-core above.
+        herdr-desktop =
+          let
+            unstable = nixpkgs-unstable.legacyPackages.${final.stdenv.hostPlatform.system};
+          in
+          if final.lib.versionAtLeast unstable.herdr-desktop.version "0.1.13" then
+            unstable.herdr-desktop
+          else
+            unstable.herdr-desktop.overrideAttrs (old: {
+              # The pinned 0.1.10 package lacks pkg-config on Darwin and zstd
+              # on both platforms; zstd-sys needs these to build.
+              nativeBuildInputs =
+                old.nativeBuildInputs
+                ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [ unstable.pkg-config ];
+              buildInputs = old.buildInputs ++ [ unstable.zstd ];
+              # Linux render tests need fonts available in the build sandbox.
+              preCheck =
+                old.preCheck
+                + final.lib.optionalString final.stdenv.hostPlatform.isLinux ''
+                  export FONTCONFIG_FILE=${unstable.makeFontsConf { fontDirectories = [ unstable.dejavu_fonts ]; }}
+                '';
+            });
+
         herdr-nvim = final.rustPlatform.buildRustPackage {
           pname = "herdr-nvim";
           version = (builtins.fromTOML (builtins.readFile "${herdr-nvim}/Cargo.toml")).package.version;
