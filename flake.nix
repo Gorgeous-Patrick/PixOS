@@ -444,6 +444,7 @@
             "nvim"
             "latex"
             "zsh"
+            "claude-code"
             "ollama"
             "fprintd"
             "web-dev"

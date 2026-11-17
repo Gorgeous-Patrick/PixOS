@@ -178,6 +178,7 @@ in
   pixos.bundles.fcitx5.enable = true;
   pixos.bundles.davinci-resolve.enable = true;
   pixos.bundles.google-drive.enable = true;
+  pixos.bundles.claude-code.enable = true;
   pixos.bundles.ollama.enable = false;
   pixos.bundles.niri.enable = true;
   pixos.bundles.sops.enable = true;
