@@ -51,7 +51,7 @@ let
     plugins.lazygit.enable = true;
     plugins.auto-save.enable = true;
     plugins.autoclose.enable = true;
-    plugins.leap.enable = true;
+    plugins.hop.enable = true;
     plugins.which-key.enable = true;
     plugins.trouble.enable = true;
     plugins.codesnap.enable = true;
@@ -147,8 +147,12 @@ let
       {
         mode = [ "n" ];
         key = "<Space>";
-        action = "<Plug>(leap)";
-        options.silent = true;
+        action = "<cmd>HopChar2<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Hop to two characters";
+        };
       }
       {
         mode = [ "i" ];
