@@ -342,6 +342,7 @@
         minimal = pixosMinimalRootPkgs;
         default = pixosMinimalRootPkgs;
         server-iso = self.nixosConfigurations.iso-server.config.system.build.isoImage;
+        home-vpn-image = self.nixosConfigurations.home-vpn.config.system.build.images.qcow;
       };
 
       packages.${darwinSystem} = {
