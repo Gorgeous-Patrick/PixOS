@@ -1,37 +1,45 @@
-{ ... }:
+{ config, ... }:
 
 {
-  # Minimal, headless home LAN gateway. Hardware-specific boot/filesystem
-  # settings belong in hardware-configuration.nix (replace the stub after
-  # running nixos-generate-config on the actual machine).
+  # Replace the hardware stub with nixos-generate-config output before deploying.
   imports = [
     ./hardware-configuration.nix
     ../base-hosts/server.nix
   ];
 
   networking.hostName = "home-vpn";
-  system.stateVersion = "26.05"; # Set to the NixOS version first installed.
+  system.stateVersion = "26.05"; # Match the initial installation release.
 
-  # Prefer a DHCP reservation on your home router for this host.
-  # Replace the interface and subnet with your home's actual configuration.
+  # The home-vpn host receives a dedicated age identity. Its public
+  # recipient must NOT be included in any other secrets' recipient sets.
+  sops = {
+    defaultSopsFile = ../../secrets/home-vpn.yaml;
+    defaultSopsFormat = "yaml";
+    age = {
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = false;
+      sshKeyPaths = [ ];
+    };
+    secrets.wireguard_private_key = {
+      owner = "root";
+      mode = "0400";
+      restartUnits = [ "wg-quick-wg0.service" ];
+    };
+  };
+
   networking.wg-quick.interfaces.wg0 = {
     address = [ "10.77.0.1/24" ];
     listenPort = 51820;
-    privateKeyFile = "/var/lib/wireguard/privatekey";
+    privateKeyFile = config.sops.secrets.wireguard_private_key.path;
 
-    # Add one peer per client after generating its public key:
-    # peers = [{
-    #   publicKey = "<client public key>";
-    #   allowedIPs = [ "10.77.0.2/32" ];
-    # }];
+    # Add each client with its public key and unique /32 tunnel address.
     peers = [ ];
   };
 
-  # VPN clients can reach the LAN; LAN devices see the VPN gateway's LAN IP.
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   networking.nat = {
     enable = true;
-    externalInterface = "enp1s0"; # Replace with the LAN interface.
+    externalInterface = "enp1s0"; # Replace with actual LAN interface.
     internalInterfaces = [ "wg0" ];
   };
 
@@ -40,7 +48,4 @@
     allowedUDPPorts = [ 51820 ];
     trustedInterfaces = [ "wg0" ];
   };
-
-  # The VPN private key remains local and never enters the Nix store/Git.
-  systemd.tmpfiles.rules = [ "d /var/lib/wireguard 0700 root root -" ];
 }
