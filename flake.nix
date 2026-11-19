@@ -400,13 +400,12 @@
 
       # NixOS hosts
       nixosConfigurations = {
-        # Headless WireGuard subnet router, no Home Manager or GUI.
+        # Headless Tailscale subnet router, no Home Manager or GUI.
         home-vpn = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./hosts/home-vpn/configuration.nix
             ./hosts/base-hosts/cache.nix
-            sops-nix.nixosModules.sops
           ];
         };
 
