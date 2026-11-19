@@ -1,81 +1,102 @@
-# home-vpn: minimal Tailscale subnet router
+# home-vpn: NixOS QCOW2 appliance for Proxmox VE
 
-This host makes an entire home LAN reachable through Tailscale, without
-installing Tailscale on every device. It is a **subnet router**, not an
-exit node: ordinary internet browsing continues through each client's
-normal connection.
+A minimal headless NixOS VM running a Tailscale **subnet router**, not an
+exit node. It advertises the home LAN so external Tailscale clients can
+reach LAN devices without installing Tailscale on each LAN device.
 
-The NixOS host is deliberately minimal: no GUI, Docker, Home Manager,
-manual WireGuard keys, SOPS secrets, or router port forwarding.
+- **First provisioning:** boot a prebuilt QCOW2 image in Proxmox.
+- **Later upgrades:** use `nixos-rebuild switch --flake .#home-vpn`;
+  do not reimport a new image for each release.
+- No manual WireGuard keys, SOPS credentials, Docker or GUI.
+- Uses NixOS's generic QEMU guest profile, an ext4 root by label, and
+  **legacy BIOS/SeaBIOS** GRUB installed for a VirtIO block disk.
+- This is a self-contained installation image, not a live ISO.
 
-## Prepare the machine
+## Build
 
-1. Install NixOS and replace `hardware-configuration.nix` with the
-   machine's actual `nixos-generate-config` output. Configure a working
-   bootloader; this repository's stub is **not bootable**.
-2. Give the host a stable IP on your home LAN, preferably through the
-   router's DHCP reservation.
-3. Ensure a local console or working SSH authorized public key. The
-   shared server profile disables password-based SSH.
-4. Set `system.stateVersion` to the initial NixOS installation version
-   (the provided value is `26.05`).
-5. Apply the host configuration from the PixOS checkout:
-   ```sh
-   sudo nixos-rebuild switch --flake .#home-vpn
-   ```
+From an x86_64-linux Nix build host with virtualization support:
 
-## Join the tailnet
+```sh
+nix build .#home-vpn-image
+ls -lh result/
+```
 
-Run once on the host (interactive device authentication, so no auth
-key or SOPS secret is needed):
+This exposes the standard NixOS `qcow` image variant as
+`packages.x86_64-linux.home-vpn-image`, so it can also be built with:
+
+```sh
+nixos-rebuild build-image --flake .#home-vpn --image-variant qcow
+```
+
+**Before distributing an image**, configure an SSH authorized *public*
+key for the `patrickli` user in the host or shared server profile.
+The base server module disables SSH passwords and root SSH login. If
+you skip this step, you may not be able to access the VM after boot.
+Do not bake SSH private keys, Tailscale state, or device identities
+into the image.
+
+## Import to PVE
+
+PVE Web UI support for directly importing a QCOW2 depends on your
+PVE version and storage settings. If available, use its **Import**
+workflow. Otherwise import on the PVE host with `qm disk import`
+(or `qm importdisk`); merely uploading a QCOW2 as an ISO is not
+sufficient.
+
+Recommended VM hardware:
+
+- **Firmware:** SeaBIOS (this image is BIOS/GRUB, not OVMF/UEFI).
+- **CPU/RAM:** 1 vCPU / 1024 MiB.
+- **Disk:** import as a **VirtIO Block** drive (`virtio0`) so the guest
+  disk is `/dev/vda`, then boot from that disk. Avoid attaching it
+  as SCSI unless changing the GRUB disk configuration.
+- **Network:** VirtIO NIC bridged to the home LAN (for example,
+  `vmbr0`), with DHCP enabled.
+- **Start at boot:** enable.
+
+Give the VM a stable LAN address using the router's DHCP reservation
+if desired. The virtual disk persists /var/lib/tailscale across
+normal NixOS upgrades and reboots. The image has no pre-enrolled
+Tailscale node identity.
+
+## Enroll the subnet router
+
+Access the VM through a locally permitted console/SSH path. After
+boot:
 
 ```sh
 sudo tailscale up
-```
-
-Open the displayed authentication URL and authorize this machine.
-The authenticated state is persisted by tailscaled across reboots.
-
-Then advertise **your actual** home LAN subnet (the following is only
-an example):
-
-```sh
 sudo tailscale set --advertise-routes=192.168.1.0/24
+tailscale status
 ```
 
-In [Tailscale Machines](https://login.tailscale.com/admin/machines),
-find `home-vpn`, open its route settings, and approve the advertised
-subnet. Tailnet access-control policies must allow intended clients
-to reach the LAN. Consider disabling key expiry for this trusted
-always-on subnet router through the Tailscale admin console, after
-reviewing the associated security trade-off.
-
-## Clients
-
-Install Tailscale on each external laptop or phone, sign in to the
-same tailnet, and enable the VPN connection. Approved subnet routes
-are normally accepted automatically on iOS, macOS, and Windows.
-
-On **Linux** clients, explicitly accept routes:
+Replace `192.168.1.0/24` with your **actual** LAN CIDR. Open
+https://login.tailscale.com/admin/machines and approve the advertised
+route. Set tailnet policy to permit the clients that should reach it.
+On Linux clients, enable route acceptance using:
 
 ```sh
 sudo tailscale set --accept-routes=true
 ```
 
-Try accessing the home router or another LAN machine by its LAN IP.
-Use `tailscale status` and `tailscale ping home-vpn` for diagnostics.
+Tailscale's default subnet-route masquerading makes LAN devices
+see this gateway's LAN address, so return routes are typically
+unnecessary. It does not forward link-layer discovery such as
+broadcast/mDNS. No router UDP port forwarding is needed.
 
-## Scope and limitations
+## Update and recover
 
-- Tailscale defaults to SNAT/masquerading for subnet-router traffic:
-  home devices usually see the gateway's LAN IP and need no static
-  return route.
-- This is routed IPv4 connectivity, not an Ethernet bridge:
-  mDNS/broadcast device discovery may not work across the tunnel.
-- All clients need Tailscale; home LAN devices do not.
-- No inbound port forwarding is required even if the home internet
-  connection has a public IP. NAT traversal will try direct connections;
-  relays may be used otherwise.
-- Tailscale's hosted coordination service is an intentional dependency.
-- The `tailscale0` firewall interface is trusted on this gateway, so
-  keep tailnet membership and access-control rules restrictive.
+```sh
+sudo nixos-rebuild switch --flake .#home-vpn
+```
+
+An update deploys a new NixOS generation to the existing virtual
+disk; it does not reinstall the QCOW2. Keep the source checkout
+available or deploy from another NixOS build machine. Take a PVE
+snapshot before disruptive networking upgrades and use the PVE
+console to roll back a failed generation. A newly imported image
+will *not* contain the old VM's Tailscale enrollment state.
+
+The QCOW2 is intended for a fresh install only. Never clone a running
+or already-enrolled VM's disk to multiple live instances: that can
+duplicate machine identities and Tailscale credentials.
