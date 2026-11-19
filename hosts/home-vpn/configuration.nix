@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 
 {
   # Replace the hardware stub with nixos-generate-config output before deploying.
@@ -10,42 +10,22 @@
   networking.hostName = "home-vpn";
   system.stateVersion = "26.05"; # Match the initial installation release.
 
-  # The home-vpn host receives a dedicated age identity. Its public
-  # recipient must NOT be included in any other secrets' recipient sets.
-  sops = {
-    defaultSopsFile = ../../secrets/home-vpn.yaml;
-    defaultSopsFormat = "yaml";
-    age = {
-      keyFile = "/var/lib/sops-nix/key.txt";
-      generateKey = false;
-      sshKeyPaths = [ ];
-    };
-    secrets.wireguard_private_key = {
-      owner = "root";
-      mode = "0400";
-      restartUnits = [ "wg-quick-wg0.service" ];
-    };
-  };
-
-  networking.wg-quick.interfaces.wg0 = {
-    address = [ "10.77.0.1/24" ];
-    listenPort = 51820;
-    privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-
-    # Add each client with its public key and unique /32 tunnel address.
-    peers = [ ];
-  };
-
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  networking.nat = {
+  # Subnet-router mode enables IP forwarding. Tailscale handles its own
+  # encrypted tunnel, NAT and route management; no additional NAT or
+  # WireGuard private-key configuration is needed.
+  services.tailscale = {
     enable = true;
-    externalInterface = "enp1s0"; # Replace with actual LAN interface.
-    internalInterfaces = [ "wg0" ];
+    useRoutingFeatures = "server";
+    openFirewall = true;
   };
 
-  networking.firewall = {
-    enable = true;
-    allowedUDPPorts = [ 51820 ];
-    trustedInterfaces = [ "wg0" ];
-  };
+  networking.firewall.enable = true;
+  # Permits traffic from authenticated tailnet peers to services on this
+  # gateway. Tailnet policy still determines which peers can reach the LAN.
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+  # Announce the actual home LAN using:
+  #   sudo tailscale set --advertise-routes=192.168.1.0/24
+  # Then approve it in the tailnet admin console. No router port
+  # forwarding or public IP is required.
 }
