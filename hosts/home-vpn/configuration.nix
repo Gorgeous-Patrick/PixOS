@@ -1,31 +1,43 @@
-{ ... }:
+{ modulesPath, ... }:
 
 {
-  # Replace the hardware stub with nixos-generate-config output before deploying.
+  # Generic QEMU/Proxmox virtual hardware: no generated per-VM
+  # hardware-configuration.nix is necessary.
   imports = [
-    ./hardware-configuration.nix
+    "${modulesPath}/profiles/qemu-guest.nix"
     ../base-hosts/server.nix
   ];
 
   networking.hostName = "home-vpn";
-  system.stateVersion = "26.05"; # Match the initial installation release.
+  networking.useDHCP = true;
 
-  # Subnet-router mode enables IP forwarding. Tailscale handles its own
-  # encrypted tunnel, NAT and route management; no additional NAT or
-  # WireGuard private-key configuration is needed.
+  # The qcow image uses an ext4 filesystem labelled "nixos" and BIOS GRUB.
+  # Match the virtual disk to PVE's VirtIO block interface (/dev/vda).
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+    autoResize = true;
+  };
+  boot.growPartition = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+  };
+  boot.kernelParams = [ "console=ttyS0" ];
+
+  system.stateVersion = "26.05";
+
+  # Only persistent state is carried forward on routine rebuilds.
+  # Configure Tailscale once after first boot and keep /var/lib/tailscale
+  # on the VM's persistent root disk.
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
     openFirewall = true;
   };
-
   networking.firewall.enable = true;
-  # Permits traffic from authenticated tailnet peers to services on this
-  # gateway. Tailnet policy still determines which peers can reach the LAN.
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
 
-  # Announce the actual home LAN using:
-  #   sudo tailscale set --advertise-routes=192.168.1.0/24
-  # Then approve it in the tailnet admin console. No router port
-  # forwarding or public IP is required.
+  # Each VM needs a unique SSH host key and Tailscale identity.
+  # Never create reusable golden images from an already-enrolled VM.
 }
