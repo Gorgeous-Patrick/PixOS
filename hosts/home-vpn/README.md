@@ -21,11 +21,11 @@ nix build .#home-vpn-image
 ls -lh result/
 ```
 
-This exposes the standard NixOS `qcow` image variant as
+This exposes the standard NixOS `qemu` image variant as
 `packages.x86_64-linux.home-vpn-image`, so it can also be built with:
 
 ```sh
-nixos-rebuild build-image --flake .#home-vpn --image-variant qcow
+nixos-rebuild build-image --flake .#home-vpn --image-variant qemu
 ```
 
 **Before distributing an image**, configure an SSH authorized *public*
