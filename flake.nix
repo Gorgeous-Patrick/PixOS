@@ -406,6 +406,7 @@
           modules = [
             ./hosts/home-vpn/configuration.nix
             ./hosts/base-hosts/cache.nix
+            sops-nix.nixosModules.sops
           ];
         };
 
