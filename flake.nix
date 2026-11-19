@@ -400,6 +400,15 @@
 
       # NixOS hosts
       nixosConfigurations = {
+        # Headless WireGuard subnet router, no Home Manager or GUI.
+        home-vpn = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/home-vpn/configuration.nix
+            ./hosts/base-hosts/cache.nix
+          ];
+        };
+
         iso-server = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
