@@ -334,6 +334,12 @@
           "zsh"
           "nvim"
         ];
+        # The base server settings are also used by the lean home-vpn image;
+        # bundle options are only available in this full server module.
+        pixos.bundles = {
+          git.enable = true;
+          zsh.enable = true;
+        };
         _module.args.pixosIsDarwin = false;
         nixpkgs.overlays = [ pixosOverlay ];
       };

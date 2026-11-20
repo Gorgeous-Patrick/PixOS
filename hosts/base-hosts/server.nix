@@ -43,9 +43,4 @@
     dnsutils
     openssl
   ];
-
-  pixos.bundles = {
-    git.enable = true;
-    zsh.enable = true;
-  };
 }

@@ -21,6 +21,17 @@ nix build .#home-vpn-image
 ls -lh result/
 ```
 
+The image is an `x86_64-linux` derivation. On macOS, the unqualified
+`nix build .#home-vpn-image` command searches for a Darwin package and
+fails. Build on an x86_64-linux host, or configure a remote Linux Nix
+builder and select the package explicitly:
+
+```sh
+nix build .#packages.x86_64-linux.home-vpn-image
+```
+
+GitHub Actions also builds this image in the `build-home-vpn-image` job.
+
 This exposes the standard NixOS `qemu` image variant as
 `packages.x86_64-linux.home-vpn-image`, so it can also be built with:
 
