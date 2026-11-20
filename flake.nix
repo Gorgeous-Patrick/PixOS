@@ -334,6 +334,12 @@
           "zsh"
           "nvim"
         ];
+        # The base server settings are also used by the lean home-vpn image;
+        # bundle options are only available in this full server module.
+        pixos.bundles = {
+          git.enable = true;
+          zsh.enable = true;
+        };
         _module.args.pixosIsDarwin = false;
         nixpkgs.overlays = [ pixosOverlay ];
       };
@@ -342,6 +348,7 @@
         minimal = pixosMinimalRootPkgs;
         default = pixosMinimalRootPkgs;
         server-iso = self.nixosConfigurations.iso-server.config.system.build.isoImage;
+        home-vpn-image = self.nixosConfigurations.home-vpn.config.system.build.images.qemu;
       };
 
       packages.${darwinSystem} = {
@@ -400,6 +407,15 @@
 
       # NixOS hosts
       nixosConfigurations = {
+        # Headless Tailscale subnet router, no Home Manager or GUI.
+        home-vpn = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/home-vpn/configuration.nix
+            ./hosts/base-hosts/cache.nix
+          ];
+        };
+
         iso-server = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [

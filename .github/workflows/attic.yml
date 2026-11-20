@@ -38,6 +38,17 @@ jobs:
           inputs-from: .
       - run: nix build .#nixosConfigurations.framework.config.system.build.toplevel
 
+  build-home-vpn-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+        with:
+          install_url: https://releases.nixos.org/nix/nix-2.35.1/install
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - run: nix build .#home-vpn-image
+
   build-macos:
     runs-on: macos-latest
     steps:
